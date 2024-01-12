@@ -13,7 +13,6 @@ def user_exists(form, field):
 
 class ClubForm(FlaskForm):
     title = StringField('title', validators=[DataRequired(), Length(max=50)])
-    user_id = IntegerField('user_id', validators=[DataRequired()])
     is_public = BooleanField('is_public')
 
 class ClubBooksForm(FlaskForm):

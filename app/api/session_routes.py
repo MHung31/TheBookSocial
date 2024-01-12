@@ -1,7 +1,7 @@
 from flask import Blueprint, jsonify, request
 from flask_login import login_required, current_user
-from app.models import User, Book, db
-from app.forms import FavoritesForm
+from app.models import User, Book, db, Club
+from app.forms import FavoritesForm, ClubForm, ClubMembersForm, ClubBooksForm
 
 session_routes = Blueprint('session', __name__)
 
@@ -37,3 +37,28 @@ def favorites_remove():
         db.session.commit()
         return {"message": "Successfully removed from favorites"}
 
+@session_routes.route('/clubs')
+@login_required
+def get_session_clubs():
+    clubs = Club.query.join(User.members_clubs).filter(User.id==current_user.id).all()
+    return {'clubs': [club.to_dict() for club in clubs]}
+
+@session_routes.route('/clubs', methods=['POST'])
+@login_required
+def create_club():
+    data = request.json
+    form = ClubForm()
+    form['csrf_token'].data = request.cookies['csrf_token']
+    if form.validate_on_submit():
+        new_club = Club(
+            title = data['title'],
+            user_id = current_user.id,
+            is_public = data['is_public']
+        )
+        db.session.add(new_club)
+        db.session.commit()
+        user = User.query.get(current_user.id)
+        user.members_clubs.append(new_club)
+        db.session.commit()
+        return new_club.to_dict()
+    return form.errors, 401

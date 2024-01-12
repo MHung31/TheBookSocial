@@ -873,7 +873,7 @@ Return all the clubs that the current user is a part of.
 - Request
 
   - Method: GET
-  - URL: /api/clubs/current
+  - URL: /api/session/clubs
   - Body: none
 
 - Successful Response
