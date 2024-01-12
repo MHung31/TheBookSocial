@@ -13,7 +13,9 @@ def preview():
 @book_routes.route('/<int:id>')
 def full(id):
     book = Book.query.get(id)
-    return book.to_dict_full()
+    if book:
+        return book.to_dict_full()
+    return {'error': 'Book not found'}
 
 
 @book_routes.route('/<int:id>/comments')
@@ -21,7 +23,9 @@ def book_comments(id):
     comments = Comment.query.join(Book.book_comments).filter(Book.id==id).all()
     return {'comments': [comment.to_dict() for comment in comments]}
 
+
 @book_routes.route('/<int:id>/comments', methods=['POST'])
+@login_required
 def add_book_comments(id):
     data=request.json
     form = CommentForm()
@@ -38,13 +42,15 @@ def add_book_comments(id):
     return form.errors, 401
 
 @book_routes.route('/<int:id>/bookmark')
+@login_required
 def get_bookmark(id):
-    bookmark = Bookmark.query.join(Book).filter(Book.id==id).first()
+    bookmark = Bookmark.query.join(Book).filter(Book.id==id, User.id==current_user.id).first()
     if bookmark:
         return {'bookmark': bookmark.to_dict()}
     return {'bookmark': 'None'}
 
 @book_routes.route('/<int:id>/bookmark', methods=['POST'])
+@login_required
 def add_bookmark(id):
     data=request.json
     form = BookmarkForm()
@@ -59,4 +65,3 @@ def add_bookmark(id):
         db.session.commit()
         return new_bookmark.to_dict()
     return form.errors, 401
-

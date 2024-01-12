@@ -6,8 +6,11 @@ from app.forms import CommentForm, BookmarkForm
 bookmark_routes = Blueprint('bookmarks', __name__)
 
 @bookmark_routes.route('/<int:id>', methods=['PUT'])
+@login_required
 def update_book_comments(id):
     bookmark = Bookmark.query.get(id)
+    if not bookmark:
+        return {'bookmark': 'None'}
     data = request.json
     form = BookmarkForm()
     form['csrf_token'].data = request.cookies['csrf_token']
