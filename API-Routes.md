@@ -44,7 +44,7 @@ Returns the information about the current user that is logged in.
 - Request
 
   - Method: GET
-  - URL: /api/session
+  - URL: /api/auth
   - Body: none
 
 - Successful Response when there is a logged in user
@@ -91,7 +91,7 @@ information.
 - Request
 
   - Method: POST
-  - URL: /api/session
+  - URL: /api/auth/login
   - Headers:
     - Content-Type: application/json
   - Body:
@@ -164,7 +164,7 @@ user's information.
 - Request
 
   - Method: POST
-  - URL: /api/users
+  - URL: /api/auth/signup
   - Headers:
     - Content-Type: application/json
   - Body:
@@ -285,6 +285,38 @@ Returns all the books.
     }
     ```
 
+### Get book specified by id
+
+Returns full book specified by id
+
+- Require Authentication: false
+- Request
+
+  - Method: GET
+  - URL: /api/books/:bookId
+  - Body: none
+
+- Successful Response
+
+  - Status Code: 200
+  - Headers:
+    - Content-Type: application/json
+  - Body:
+
+    ```json
+    {
+      "Book_Details": [
+        {
+          "id": 1,
+          "title": "Harry Potter",
+          "author": "J.K. Rowling",
+          "content": "Once upon a time...",
+          "preview": "image url"
+        }
+      ]
+    }
+    ```
+
 ### Get all Favorite books
 
 Returns all the favorite books of the current user.
@@ -315,6 +347,66 @@ Returns all the favorite books of the current user.
           "updatedAt": "2021-11-20 10:06:40"
         }
       ]
+    }
+    ```
+
+### Add to Favorite books
+
+Add to favorite books of the current user.
+
+- Require Authentication: true
+- Request
+
+  - Method: POST
+  - URL: /api/session/favorites
+  - Body:
+    ```json
+    {
+      "user_id": 1,
+      "book_id": 2
+    }
+    ```
+
+- Successful Response
+
+  - Status Code: 200
+  - Headers:
+    - Content-Type: application/json
+  - Body:
+
+    ```json
+    {
+      "message": "Successfully added to favorites"
+    }
+    ```
+
+### Remove from Favorite books
+
+Remove from favorite books of the current user.
+
+- Require Authentication: true
+- Request
+
+  - Method: DELETE
+  - URL: /api/session/favorites
+  - Body:
+    ```json
+    {
+      "user_id": 1,
+      "book_id": 2
+    }
+    ```
+
+- Successful Response
+
+  - Status Code: 200
+  - Headers:
+    - Content-Type: application/json
+  - Body:
+
+    ```json
+    {
+      "message": "Successfully removed from favorites"
     }
     ```
 
@@ -371,7 +463,7 @@ Create and return a new comment for a book specified by id.
 - Require Authentication: true
 
   - Method: POST
-  - URL: /api/books/:bookId
+  - URL: /api/books/:bookId/comments
   - Headers:
     - Content-Type: application/json
   - Body:

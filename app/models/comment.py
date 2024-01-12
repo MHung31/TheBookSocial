@@ -7,7 +7,7 @@ class Comment(db.Model, UserMixin):
 
     if environment == "production":
         __table_args__ = {'schema': SCHEMA}
-        
+
     id = db.Column(db.Integer, primary_key=True)
     comment = db.Column(db.String(255), nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod("users.id")), nullable=False)
@@ -24,6 +24,7 @@ class Comment(db.Model, UserMixin):
 
     def to_dict(self):
         return {
+            "id": self.id,
             "comment": self.comment,
             "user_id": self.user_id,
             "book_id": self.book_id,
