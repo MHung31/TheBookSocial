@@ -28,7 +28,15 @@ class Book(db.Model, UserMixin):
     books_users = db.relationship("User", secondary=favorites, back_populates="users_books")
     books_clubs = db.relationship("Club", secondary=club_books, back_populates="clubs_books")
 
-    def to_dict(self):
+    def to_dict_preview(self):
+        return {
+            "id": self.id,
+            "title": self.title,
+            "author": self.author,
+            "preview": self.preview
+        }
+
+    def to_dict_full(self):
         return {
             "id": self.id,
             "title": self.title,
