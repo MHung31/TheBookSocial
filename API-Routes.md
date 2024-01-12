@@ -561,6 +561,7 @@ Updates and returns an existing reading position.
 - Require Authentication: true
 - Require proper authorization: Bookmark must belong to the current user
 - Request
+
   - Method: PUT
   - URL: /api/bookmark/:bookmarkId
   - Headers:
@@ -1107,7 +1108,7 @@ Add a member to an existing Club
 Delete an existing member by its specified id in a specified club id
 
 - Require Authentication: true
-- Require proper authorization: Club must belong to the current user 
+- Require proper authorization: Club must belong to the current user
 - Request
 
   - Method: DELETE
@@ -1137,5 +1138,87 @@ Delete an existing member by its specified id in a specified club id
     ```json
     {
       "message": "Club couldn't be found"
+    }
+    ```
+
+## Friends
+
+### Add Friend
+
+Add a friend to users friend list
+
+- Require Authentication: true
+
+  - Method: Post
+  - URL: /api/session/friends
+  - Headers:
+    - Content-Type: application/json
+  - Body:
+
+    ```json
+    {
+      "follower_id": 1,
+      "following_id": 2
+    }
+    ```
+
+- Successful Response
+
+  - Status Code: 200
+  - Headers:
+    - Content-Type: application/json
+  - Body:
+
+    ```json
+    {
+      "id": 1,
+      "follower_id": 1,
+      "following_id": 2,
+      "createdAt": "2021-11-19 20:39:36",
+      "updatedAt": "2021-11-20 10:06:40"
+    }
+    ```
+
+### Remove a friend
+
+Removes a friend from your friend list
+
+- Require Authentication: true
+
+  - Method: DELETE
+  - URL: /api/friends/:friendId
+  - Headers:
+    - Content-Type: application/json
+  - Body:
+
+    ```json
+    {
+      "id": 1
+    }
+    ```
+
+- Successful Response
+
+  - Status Code: 200
+  - Headers:
+    - Content-Type: application/json
+  - Body:
+
+    ```json
+    {
+      "message": "Successfully deleted"
+    }
+    ```
+
+- Error response: Couldn't find a Friend with the specified id
+
+  - Status Code: 404
+  - Headers:
+    - Content-Type: application/json
+  - Body:
+
+    ```json
+    {
+      "message": "Friend couldn't be found"
     }
     ```
