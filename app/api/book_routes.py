@@ -1,7 +1,7 @@
 from flask import Blueprint, jsonify, request
 from flask_login import login_required, current_user
-from app.models import User, Book, Comment, db
-from app.forms import CommentForm
+from app.models import User, Book, Comment, db, Bookmark
+from app.forms import CommentForm, BookmarkForm
 
 book_routes = Blueprint('books', __name__)
 
@@ -37,4 +37,26 @@ def add_book_comments(id):
         return new_comment.to_dict()
     return form.errors, 401
 
+@book_routes.route('/<int:id>/bookmark')
+def get_bookmark(id):
+    bookmark = Bookmark.query.join(Book).filter(Book.id==id).first()
+    if bookmark:
+        return {'bookmark': bookmark.to_dict()}
+    return {'bookmark': 'None'}
+
+@book_routes.route('/<int:id>/bookmark', methods=['POST'])
+def add_bookmark(id):
+    data=request.json
+    form = BookmarkForm()
+    form['csrf_token'].data = request.cookies['csrf_token']
+    if form.validate_on_submit():
+        new_bookmark = Bookmark(
+            user_id = current_user.id,
+            book_id = id,
+            position = data['position']
+        )
+        db.session.add(new_bookmark)
+        db.session.commit()
+        return new_bookmark.to_dict()
+    return form.errors, 401
 

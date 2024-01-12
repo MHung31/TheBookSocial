@@ -33,7 +33,8 @@ class Book(db.Model, UserMixin):
             "id": self.id,
             "title": self.title,
             "author": self.author,
-            "preview": self.preview
+            "preview": self.preview,
+            "length": len(self.content)
         }
 
     def to_dict_full(self):

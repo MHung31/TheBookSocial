@@ -607,6 +607,34 @@ Deletes an existing Comment.
 
 ## Bookmark
 
+### Get bookmark
+
+Get a reading position for the current user of book specified by id
+
+- Require Authentication: true
+
+  - Method: GET
+  - URL: /api/books/:bookId/bookmark
+  - Headers:
+    - Content-Type: application/json
+  - Body: None
+
+- Successful Response
+
+  - Status Code: 200
+  - Headers:
+    - Content-Type: application/json
+  - Body:
+
+    ```json
+    {
+      "id": 1,
+      "user_id": 2,
+      "book_id": 3,
+      "position": 603,
+    }
+    ```
+
 ### Create bookmark
 
 Creates a reading position for the current user of book specified by id
@@ -614,7 +642,7 @@ Creates a reading position for the current user of book specified by id
 - Require Authentication: true
 
   - Method: Post
-  - URL: /api/books/:bookId/session-bookmark
+  - URL: /api/books/:bookId/bookmark
   - Headers:
     - Content-Type: application/json
   - Body:
