@@ -12,6 +12,7 @@ from .api.comment_routes import comment_routes
 from .api.session_routes import session_routes
 from .api.bookmark_routes import bookmark_routes
 from .api.reaction_routes import reaction_routes
+from .api.club_routes import club_routes
 from .seeds import seed_commands
 from .config import Config
 
@@ -38,6 +39,7 @@ app.register_blueprint(session_routes, url_prefix='/api/session')
 app.register_blueprint(comment_routes, url_prefix='/api/comments')
 app.register_blueprint(bookmark_routes, url_prefix='/api/bookmarks')
 app.register_blueprint(reaction_routes, url_prefix='/api/reactions')
+app.register_blueprint(club_routes, url_prefix='/api/clubs')
 db.init_app(app)
 Migrate(app, db)
 
