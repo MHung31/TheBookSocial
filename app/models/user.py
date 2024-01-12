@@ -2,6 +2,14 @@ from .db import db, environment, SCHEMA, add_prefix_for_prod
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import UserMixin
 from datetime import datetime
+from .book import favorites
+from .club import club_members
+
+friends = db.Table("friends",
+                       db.Model.metadata,
+                       db.Column("follower_id", db.Integer, db.ForeignKey(add_prefix_for_prod("users.id")), primary_key=True),
+                       db.Column("following_id", db.Integer, db.ForeignKey(add_prefix_for_prod("users.id")), primary_key=True),
+                       )
 
 class User(db.Model, UserMixin):
     __tablename__ = 'users'
@@ -18,6 +26,15 @@ class User(db.Model, UserMixin):
     avatar = db.Column(db.String(255), default="none")
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
     updated_at = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
+
+    # follower_following  = db.relationship("User", secondary=friends, back_populates="following_follower")
+    # following_follower  = db.relationship("User", secondary=friends, back_populates="following_follower")
+    members_clubs = db.relationship("Club", secondary=club_members, back_populates="clubs_members")
+    users_books  = db.relationship("Book", secondary=favorites, back_populates="books_users")
+    user_bookmarks  = db.relationship("Bookmark", back_populates="bookmarks_user", cascade="all, delete-orphan")
+    owner_clubs  = db.relationship("Club", back_populates="clubs_owner")
+    user_comments  = db.relationship("Comment", back_populates="comments_user", cascade="all, delete-orphan")
+    user_reactions  = db.relationship("Reaction", back_populates="reactions_user", cascade="all, delete-orphan")
 
     @property
     def password(self):

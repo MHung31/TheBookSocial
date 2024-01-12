@@ -7,7 +7,8 @@ class Comment(db.Model, UserMixin):
 
     if environment == "production":
         __table_args__ = {'schema': SCHEMA}
-
+        
+    id = db.Column(db.Integer, primary_key=True)
     comment = db.Column(db.String(255), nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod("users.id")), nullable=False)
     book_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod("books.id")), nullable=False)
@@ -16,6 +17,10 @@ class Comment(db.Model, UserMixin):
     flagged = db.Column(db.Boolean, default=False)
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
     updated_at = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
+
+    comment_reactions  = db.relationship("Reaction", back_populates="reactions_comment", cascade="all, delete-orphan")
+    comments_user  = db.relationship("User", back_populates="user_comments")
+    comments_book  = db.relationship("Book", back_populates="book_comments")
 
     def to_dict(self):
         return {

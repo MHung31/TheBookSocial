@@ -16,6 +16,8 @@ class Reaction(db.Model, UserMixin):
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
     updated_at = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
 
+    reactions_comment  = db.relationship("Comment", back_populates="comment_reactions")
+    reactions_user  = db.relationship("User", back_populates="user_reactions")
 
     def to_dict(self):
         return {
