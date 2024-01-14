@@ -631,7 +631,7 @@ Get a reading position for the current user of book specified by id
       "id": 1,
       "user_id": 2,
       "book_id": 3,
-      "position": 603,
+      "position": 603
     }
     ```
 
@@ -1129,7 +1129,7 @@ Delete an existing book by its specified id in a specified club id
 - Request
 
   - Method: DELETE
-  - URL: /api/clubs_books/:club_booksId
+  - URL: /api/clubs/:clubId/books/:bookId
   - Body: none
 
 - Successful Response
@@ -1141,7 +1141,7 @@ Delete an existing book by its specified id in a specified club id
 
     ```json
     {
-      "message": "Successfully deleted"
+      "message": "Book removed from club"
     }
     ```
 
@@ -1154,7 +1154,7 @@ Delete an existing book by its specified id in a specified club id
 
     ```json
     {
-      "message": "Club couldn't be found"
+      "message": "Club not found"
     }
     ```
 

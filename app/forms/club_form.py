@@ -16,7 +16,7 @@ class ClubForm(FlaskForm):
     is_public = BooleanField('is_public')
 
 class ClubBooksForm(FlaskForm):
-    user_id = IntegerField('user_id', validators=[DataRequired()])
+    club_id = IntegerField('club_id', validators=[DataRequired()])
     book_id = IntegerField('book_id', validators=[DataRequired()])
 
 class ClubMembersForm(FlaskForm):
