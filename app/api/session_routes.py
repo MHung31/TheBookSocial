@@ -67,8 +67,10 @@ def create_club():
 @session_routes.route('/friends')
 @login_required
 def get_friends():
-    friends_list = User.query.join(User.followed).filter(User.followed.follower_id == current_user.id).all()
-    return {'friends': [friend.to_dict() for friend in friends_list]}
+    self = User.query.get(current_user.id)
+    friends_list = self.friends_list()
+    print('friends list------',friends_list)
+    return {'friends':[friend.to_dict() for friend in friends_list]}
 
 @session_routes.route('/friends', methods=['POST'])
 @login_required

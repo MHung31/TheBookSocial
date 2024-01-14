@@ -58,3 +58,6 @@ class User(db.Model, UserMixin):
             "last_name": self.last_name,
             "avatar": self.avatar
         }
+
+    def friends_list(self):
+        return self.query.join(friends, (friends.c.follower_id==self.id)).all()
