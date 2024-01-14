@@ -35,7 +35,8 @@ def add_book_comments(id):
             comment = data["comment"],
             user_id = current_user.id,
             book_id = id,
-            book_location = data["book_location"])
+            book_location = data["book_location"],
+            visibility = data["visibility"])
         db.session.add(new_comment)
         db.session.commit()
         return new_comment.to_dict()

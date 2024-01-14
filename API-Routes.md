@@ -62,9 +62,7 @@ Returns the information about the current user that is logged in.
         "lastName": "Smith",
         "email": "john.smith@gmail.com",
         "username": "JohnSmith",
-        "avatar": "url",
-        "createdAt": "2021-11-19 20:39:36",
-        "updatedAt": "2021-11-20 10:06:40"
+        "avatar": "url"
       }
     }
     ```
@@ -118,9 +116,7 @@ information.
         "lastName": "Smith",
         "email": "john.smith@gmail.com",
         "username": "JohnSmith",
-        "avatar": "url",
-        "createdAt": "2021-11-19 20:39:36",
-        "updatedAt": "2021-11-20 10:06:40"
+        "avatar": "url"
       }
     }
     ```
@@ -171,8 +167,8 @@ user's information.
 
     ```json
     {
-      "firstName": "John",
-      "lastName": "Smith",
+      "first_name": "John",
+      "last_name": "Smith",
       "email": "john.smith@gmail.com",
       "username": "JohnSmith",
       "password": "secret password",
@@ -191,12 +187,10 @@ user's information.
     {
       "user": {
         "id": 1,
-        "firstName": "John",
-        "lastName": "Smith",
+        "first_name": "John",
+        "last_name": "Smith",
         "email": "john.smith@gmail.com",
-        "username": "JohnSmith",
-        "createdAt": "2021-11-19 20:39:36",
-        "updatedAt": "2021-11-20 10:06:40"
+        "username": "JohnSmith"
       }
     }
     ```
@@ -278,6 +272,7 @@ Returns all the books.
         {
           "id": 1,
           "title": "Harry Potter",
+          "length": 1000,
           "author": "J.K. Rowling",
           "preview": "image url"
         }
@@ -305,15 +300,11 @@ Returns full book specified by id
 
     ```json
     {
-      "Book_Details": [
-        {
-          "id": 1,
-          "title": "Harry Potter",
-          "author": "J.K. Rowling",
-          "content": "Once upon a time...",
-          "preview": "image url"
-        }
-      ]
+      "id": 1,
+      "title": "Harry Potter",
+      "author": "J.K. Rowling",
+      "content": "Once upon a time...",
+      "preview": "image url"
     }
     ```
 
@@ -337,7 +328,7 @@ Returns all the favorite books of the current user.
 
     ```json
     {
-      "Books": [
+      "favorites": [
         {
           "id": 1,
           "title": "Harry Potter",
@@ -362,7 +353,6 @@ Add to favorite books of the current user.
   - Body:
     ```json
     {
-      "user_id": 1,
       "book_id": 2
     }
     ```
@@ -388,14 +378,8 @@ Remove from favorite books of the current user.
 - Request
 
   - Method: DELETE
-  - URL: /api/session/favorites
-  - Body:
-    ```json
-    {
-      "user_id": 1,
-      "book_id": 2
-    }
-    ```
+  - URL: /api/session/favorites/:bookId
+  - Body: None
 
 - Successful Response
 
@@ -432,7 +416,7 @@ Returns all the comments for a book specified by id.
 
     ```json
     {
-      "Comments": [
+      "comments": [
         {
           "id": 1,
           "comment": "This is my favorite part!",
@@ -440,19 +424,6 @@ Returns all the comments for a book specified by id.
           "updatedAt": "2021-11-20 10:06:40"
         }
       ]
-    }
-    ```
-
-- Error response: Couldn't find a Book with the specified id
-
-  - Status Code: 404
-  - Headers:
-    - Content-Type: application/json
-  - Body:
-
-    ```json
-    {
-      "message": "Book couldn't be found"
     }
     ```
 
@@ -472,9 +443,7 @@ Create and return a new comment for a book specified by id.
     {
       "comment": "This is my favorite part",
       "visibility": "Club1; Club2",
-      "book_location": 56,
-      "book_id": 2,
-      "user_id": 3
+      "book_location": "56:76"
     }
     ```
 
@@ -494,8 +463,7 @@ Create and return a new comment for a book specified by id.
       "user_id": 3,
       "book_location": 56,
       "flagged": false,
-      "createdAt": "2021-11-19 20:39:36",
-      "updatedAt": "2021-11-20 10:06:40"
+      "createdAt": "2021-11-19 20:39:36"
     }
     ```
 
@@ -549,21 +517,7 @@ Create and return a new comment for a book specified by id.
       "user_id": 3,
       "book_location": 56,
       "flagged": false,
-      "createdAt": "2021-11-19 20:39:36",
-      "updatedAt": "2021-11-20 10:06:40"
-    }
-    ```
-
-- Error response: Couldn't find a Book with the specified id
-
-  - Status Code: 404
-  - Headers:
-    - Content-Type: application/json
-  - Body:
-
-    ```json
-    {
-      "message": "Book couldn't be found"
+      "createdAt": "2021-11-19 20:39:36"
     }
     ```
 
@@ -649,9 +603,6 @@ Creates a reading position for the current user of book specified by id
 
     ```json
     {
-      "id": 1,
-      "user_id": 2,
-      "book_id": 3,
       "position": 603
     }
     ```
@@ -668,9 +619,7 @@ Creates a reading position for the current user of book specified by id
       "id": 1,
       "user_id": 2,
       "book_id": 3,
-      "position": 603,
-      "createdAt": "2021-11-19 20:39:36",
-      "updatedAt": "2021-11-20 10:06:40"
+      "position": 603
     }
     ```
 
@@ -683,14 +632,13 @@ Updates and returns an existing reading position.
 - Request
 
   - Method: PUT
-  - URL: /api/bookmark/:bookmarkId
+  - URL: /api/bookmarks/:bookmarkId
   - Headers:
     - Content-Type: application/json
   - Body:
 
     ```json
     {
-      "id": 1,
       "position": 603
     }
     ```
@@ -707,22 +655,7 @@ Updates and returns an existing reading position.
       "id": 1,
       "user_id": 2,
       "book_id": 3,
-      "position": 603,
-      "createdAt": "2021-11-19 20:39:36",
-      "updatedAt": "2021-11-20 10:06:40"
-    }
-    ```
-
-- Error response: Couldn't find a Book with the specified id
-
-  - Status Code: 404
-  - Headers:
-    - Content-Type: application/json
-  - Body:
-
-    ```json
-    {
-      "message": "Book couldn't be found"
+      "position": 603
     }
     ```
 
@@ -735,7 +668,7 @@ Returns all the reactions of a comment specified by id
 - Require Authentication: true
 
   - Method: GET
-  - URL: /api/comment/:commentId/reactions
+  - URL: /api/comments/:commentId/reactions
   - Body: none
 
 - Successful Response
@@ -759,19 +692,6 @@ Returns all the reactions of a comment specified by id
           "flagger": false
         }
       ]
-    }
-    ```
-
-- Error response: Couldn't find a Comment with the specified id
-
-  - Status Code: 404
-  - Headers:
-    - Content-Type: application/json
-  - Body:
-
-    ```json
-    {
-      "message": "Comment couldn't be found"
     }
     ```
 
@@ -805,10 +725,11 @@ Create and return a new reaction for a Comment specified by id.
     ```json
     {
       "id": 1,
+      "comment_id": 1,
+      "user_id": 1,
       "reaction": "&#128517",
       "flagger": false,
-      "createdAt": "2021-11-19 20:39:36",
-      "updatedAt": "2021-11-19 20:39:36"
+      "createdAt": "2021-11-19 20:39:36"
     }
     ```
 
@@ -859,7 +780,7 @@ Delete an existing reaction.
 
     ```json
     {
-      "message": "Reaction couldn't be found"
+      "message": "Reaction not found"
     }
     ```
 
