@@ -8,7 +8,7 @@ from .club import club_members
 friends = db.Table("friends",
                        db.Model.metadata,
                        db.Column("follower_id", db.Integer, db.ForeignKey(add_prefix_for_prod("users.id")), primary_key=True),
-                       db.Column("following_id", db.Integer, db.ForeignKey(add_prefix_for_prod("users.id")), primary_key=True),
+                       db.Column("following_id", db.Integer, db.ForeignKey(add_prefix_for_prod("users.id")), primary_key=True)
                        )
 
 class User(db.Model, UserMixin):
@@ -27,8 +27,10 @@ class User(db.Model, UserMixin):
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
     updated_at = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
 
-    # follower_following  = db.relationship("User", secondary=friends, back_populates="following_follower")
-    # following_follower  = db.relationship("User", secondary=friends, back_populates="following_follower")
+    following = db.relationship('User',
+                               secondary=friends,
+                               primaryjoin=(friends.c.follower_id == id),
+                               secondaryjoin=(friends.c.following_id == id), backref='followed')
     members_clubs = db.relationship("Club", secondary=club_members, back_populates="clubs_members")
     users_books  = db.relationship("Book", secondary=favorites, back_populates="books_users")
     user_bookmarks  = db.relationship("Bookmark", back_populates="bookmarks_user", cascade="all, delete-orphan")

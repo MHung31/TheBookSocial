@@ -62,3 +62,33 @@ def create_club():
         db.session.commit()
         return new_club.to_dict()
     return form.errors, 401
+
+# Todo: Query for friends
+@session_routes.route('/friends')
+@login_required
+def get_friends():
+    friends_list = User.query.join(User.followed).filter(User.followed.follower_id == current_user.id).all()
+    return {'friends': [friend.to_dict() for friend in friends_list]}
+
+@session_routes.route('/friends', methods=['POST'])
+@login_required
+def add_friends():
+    data = request.json
+    self = User.query.get(current_user.id)
+    friend = User.query.get(data['user_id'])
+    if not friend:
+        return {'error': 'User not found'}
+    self.following.append(friend)
+    db.session.commit()
+    return {"message": 'Friend added'}
+
+@session_routes.route('/friends/<int:friendId>', methods=['DELETE'])
+@login_required
+def remove_friends(friendId):
+    self = User.query.get(current_user.id)
+    friend = User.query.get(friendId)
+    if not friend:
+        return {'error': 'User not found'}
+    self.following.remove(friend)
+    db.session.commit()
+    return {"message": 'Friend removed'}

@@ -1232,7 +1232,7 @@ Delete an existing member by its specified id in a specified club id
 - Request
 
   - Method: DELETE
-  - URL: /api/clubs_members/:club_booksId
+  - URL: /api/clubs/:clubId/members/:memberId
   - Body: none
 
 - Successful Response
@@ -1262,6 +1262,39 @@ Delete an existing member by its specified id in a specified club id
     ```
 
 ## Friends
+
+### Get all Friends
+
+Get all users on friend list
+
+- Require Authentication: true
+
+  - Method: GET
+  - URL: /api/session/friends
+  - Headers:
+    - Content-Type: application/json
+  - Body: None
+
+- Successful Response
+
+  - Status Code: 200
+  - Headers:
+    - Content-Type: application/json
+  - Body:
+
+    ```json
+    {
+      "friends": [
+        {
+          "id": 1,
+          "follower_id": 1,
+          "following_id": 2,
+          "createdAt": "2021-11-19 20:39:36",
+          "updatedAt": "2021-11-20 10:06:40"
+        }
+      ]
+    }
+    ```
 
 ### Add Friend
 
