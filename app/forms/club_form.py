@@ -9,16 +9,12 @@ def user_exists(form, field):
     user = User.query.filter(User.email == email).first()
     if not user:
         raise ValidationError('Email provided not found.')
-
-
 class ClubForm(FlaskForm):
     title = StringField('title', validators=[DataRequired(), Length(max=50)])
     is_public = BooleanField('is_public')
 
 class ClubBooksForm(FlaskForm):
-    club_id = IntegerField('club_id', validators=[DataRequired()])
     book_id = IntegerField('book_id', validators=[DataRequired()])
 
 class ClubMembersForm(FlaskForm):
     user_id = IntegerField('user_id', validators=[DataRequired(), user_exists])
-    club_id = IntegerField('club_id', validators=[DataRequired()])

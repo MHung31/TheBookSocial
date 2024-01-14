@@ -806,13 +806,12 @@ Return all the clubs that the current user is a part of.
 
     ```json
     {
-      "Clubs": [
+      "clubs": [
         {
           "id": 1,
           "title": "Fiction Fans",
           "is_public": false,
-          "createdAt": "2021-11-19 20:39:36",
-          "updatedAt": "2021-11-19 20:39:36"
+          "user_id": 1
         }
       ]
     }
@@ -846,10 +845,10 @@ Create and return a new Club
 
     ```json
     {
+      "id": 1,
       "title": "Fiction Fans",
       "is_public": false,
-      "createdAt": "2021-11-19 20:39:36",
-      "updatedAt": "2021-11-19 20:39:36"
+      "user_id": 1
     }
     ```
 
@@ -902,8 +901,7 @@ Update and return an existing Club.
       "id": 1,
       "title": "Fiction Fans",
       "is_public": false,
-      "createdAt": "2021-11-19 20:39:36",
-      "updatedAt": "2021-11-20 10:06:40"
+      "user_id": 1
     }
     ```
 
@@ -994,12 +992,13 @@ Return all the books of a club specified by its id
 
     ```json
     {
-      "Books": [
+      "books": [
         {
           "id": 1,
           "title": "Harry Potter",
           "author": "J.K. Rowling",
-          "preview": "url"
+          "preview": "url",
+          "length": 1057
         }
       ]
     }
@@ -1019,8 +1018,7 @@ Add a book to an existing Club
 
     ```json
     {
-      "book_id": 2,
-      "club_id": 1
+      "book_id": 2
     }
     ```
 
@@ -1032,13 +1030,7 @@ Add a book to an existing Club
   - Body:
 
     ```json
-    {
-      "id": 1,
-      "book_id": 2,
-      "club_id": 1,
-      "createdAt": "2021-11-19 20:39:36",
-      "updatedAt": "2021-11-19 20:39:36"
-    }
+    { "message": "Book added to club" }
     ```
 
 ### Delete an existing book in a club
@@ -1066,19 +1058,6 @@ Delete an existing book by its specified id in a specified club id
     }
     ```
 
-- Error response: Couldn't find a Club with the specified id
-
-  - Status Code: 404
-  - Headers:
-    - Content-Type: application/json
-  - Body:
-
-    ```json
-    {
-      "message": "Club not found"
-    }
-    ```
-
 ### Get all of the members of a club specified by its id
 
 Return all the members of a club specified by its id
@@ -1099,10 +1078,14 @@ Return all the members of a club specified by its id
 
     ```json
     {
-      "Members": [
+      "members": [
         {
-          "username": "FictionFan123",
-          "avatar": "url"
+          "avatar": "avatar-demo",
+          "email": "demo@aa.io",
+          "first_name": "De",
+          "id": 1,
+          "last_name": "Mo",
+          "username": "Demo"
         }
       ]
     }
@@ -1122,8 +1105,7 @@ Add a member to an existing Club
 
     ```json
     {
-      "user_id": 2,
-      "club_id": 1
+      "user_id": 2
     }
     ```
 
@@ -1134,14 +1116,11 @@ Add a member to an existing Club
     - Content-Type: application/json
   - Body:
 
-    ```json
-    {
-      "id": 1,
-      "user_id": 2,
-      "club_id": 1,
-      "createdAt": "2021-11-19 20:39:36",
-      "updatedAt": "2021-11-19 20:39:36"
-    }
+        ```json
+        {"message": "Member added to club"}
+
+    ```
+
     ```
 
 ### Delete an existing member in a club
@@ -1165,20 +1144,7 @@ Delete an existing member by its specified id in a specified club id
 
     ```json
     {
-      "message": "Successfully deleted"
-    }
-    ```
-
-- Error response: Couldn't find a Club with the specified id
-
-  - Status Code: 404
-  - Headers:
-    - Content-Type: application/json
-  - Body:
-
-    ```json
-    {
-      "message": "Club couldn't be found"
+      "message": "Member removed from club"
     }
     ```
 
@@ -1205,13 +1171,24 @@ Get all users on friend list
 
     ```json
     {
-      "friends": [
+      "followers": [
         {
-          "id": 1,
-          "follower_id": 1,
-          "following_id": 2,
-          "createdAt": "2021-11-19 20:39:36",
-          "updatedAt": "2021-11-20 10:06:40"
+          "avatar": "avatar-marnie",
+          "email": "marnie@aa.io",
+          "first_name": "mar",
+          "id": 2,
+          "last_name": "nie",
+          "username": "marnie"
+        }
+      ],
+      "following": [
+        {
+          "avatar": "avatar-marnie",
+          "email": "marnie@aa.io",
+          "first_name": "mar",
+          "id": 2,
+          "last_name": "nie",
+          "username": "marnie"
         }
       ]
     }
@@ -1231,8 +1208,7 @@ Add a friend to users friend list
 
     ```json
     {
-      "follower_id": 1,
-      "following_id": 2
+      "user_id": 1
     }
     ```
 
@@ -1244,13 +1220,7 @@ Add a friend to users friend list
   - Body:
 
     ```json
-    {
-      "id": 1,
-      "follower_id": 1,
-      "following_id": 2,
-      "createdAt": "2021-11-19 20:39:36",
-      "updatedAt": "2021-11-20 10:06:40"
-    }
+    {"message": "Friend added"}
     ```
 
 ### Remove a friend
@@ -1263,12 +1233,7 @@ Removes a friend from your friend list
   - URL: /api/friends/:friendId
   - Headers:
     - Content-Type: application/json
-  - Body:
-
-    ```json
-    {
-      "id": 1
-    }
+  - Body: None
     ```
 
 - Successful Response
@@ -1280,19 +1245,6 @@ Removes a friend from your friend list
 
     ```json
     {
-      "message": "Successfully deleted"
-    }
-    ```
-
-- Error response: Couldn't find a Friend with the specified id
-
-  - Status Code: 404
-  - Headers:
-    - Content-Type: application/json
-  - Body:
-
-    ```json
-    {
-      "message": "Friend couldn't be found"
+      "message": "Friend removed"
     }
     ```
