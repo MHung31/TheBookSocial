@@ -13,7 +13,10 @@ club_members = db.Table("club_members",
                        db.Column("user_id", db.Integer, db.ForeignKey(add_prefix_for_prod("users.id")), primary_key=True),
                        db.Column("club_id", db.Integer, db.ForeignKey(add_prefix_for_prod("clubs.id")), primary_key=True),
                        )
-
+if environment == "production":
+    club_books.schema = SCHEMA
+if environment == "production":
+    club_members.schema = SCHEMA
 class Club(db.Model, UserMixin):
     __tablename__ = 'clubs'
 

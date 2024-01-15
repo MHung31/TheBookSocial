@@ -24,6 +24,8 @@ def update_book_comments(id):
 @login_required
 def delete_book_comments(id):
     comment = Comment.query.get(id)
+    if not comment:
+        return {"message": "Comment couldn't be found"}
     db.session.delete(comment)
     db.session.commit()
     return {'message': 'Successfully deleted comment'}
@@ -39,6 +41,9 @@ def post_reactions(id):
     data = request.json
     form = ReactionForm()
     form['csrf_token'].data = request.cookies['csrf_token']
+    existing_reaction = Reaction.query.join(Comment.comment_reactions).filter(Reaction.user_id==current_user.id).first()
+    if existing_reaction:
+        return {"message": "User already has a reaction for this comment"}
     if form.validate_on_submit():
         new_reaction = Reaction(
             reaction = data['reaction'],

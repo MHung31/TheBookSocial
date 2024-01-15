@@ -25,5 +25,6 @@ class Reaction(db.Model, UserMixin):
             "reaction": self.reaction,
             "user_id": self.user_id,
             "comment_id": self.comment_id,
-            "flagger": self.flagger
+            "flagger": self.flagger,
+            "created_at": self.created_at
         }

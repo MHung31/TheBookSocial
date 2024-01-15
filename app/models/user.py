@@ -11,6 +11,8 @@ friends = db.Table("friends",
                        db.Column("following_id", db.Integer, db.ForeignKey(add_prefix_for_prod("users.id")), primary_key=True)
                        )
 
+if environment == "production":
+    friends.schema = SCHEMA
 class User(db.Model, UserMixin):
     __tablename__ = 'users'
 
@@ -28,9 +30,10 @@ class User(db.Model, UserMixin):
     updated_at = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
 
     following = db.relationship('User',
-                               secondary=friends,
-                               primaryjoin=(friends.c.follower_id == id),
-                               secondaryjoin=(friends.c.following_id == id), backref='followed')
+                            secondary=friends,
+                            primaryjoin=(friends.c.follower_id == id),
+                            secondaryjoin=(friends.c.following_id == id), backref=db.backref("followed", lazy="dynamic"),
+                            lazy="dynamic")
     members_clubs = db.relationship("Club", secondary=club_members, back_populates="clubs_members")
     users_books  = db.relationship("Book", secondary=favorites, back_populates="books_users")
     user_bookmarks  = db.relationship("Bookmark", back_populates="bookmarks_user", cascade="all, delete-orphan")
@@ -58,6 +61,3 @@ class User(db.Model, UserMixin):
             "last_name": self.last_name,
             "avatar": self.avatar
         }
-
-    def friends_list(self):
-        return self.query.join(friends, (friends.c.follower_id==self.id)).all()

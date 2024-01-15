@@ -4,5 +4,4 @@ from wtforms.validators import DataRequired, Email, ValidationError, Length
 from app.models import User
 
 class FavoritesForm(FlaskForm):
-    user_id = IntegerField('user_id', validators=[DataRequired()])
     book_id = IntegerField('book_id', validators=[DataRequired()])

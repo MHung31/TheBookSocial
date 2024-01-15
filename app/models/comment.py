@@ -13,7 +13,7 @@ class Comment(db.Model, UserMixin):
     user_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod("users.id")), nullable=False)
     book_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod("books.id")), nullable=False)
     book_location = db.Column(db.String(40), nullable=False)
-    visibility = db.Column(db.Boolean, default=True)
+    visibility = db.Column(db.String(40), default="private")
     flagged = db.Column(db.Boolean, default=False)
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
     updated_at = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)

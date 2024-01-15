@@ -8,7 +8,6 @@ session_routes = Blueprint('session', __name__)
 @session_routes.route('/favorites')
 @login_required
 def favorites():
-    if current_user.is_authenticated:
         favorites = Book.query.join(User.users_books).filter(User.id==current_user.id).all()
         return {'favorites': [book.to_dict_preview() for book in favorites]}
 
@@ -19,20 +18,19 @@ def favorites_add():
     form['csrf_token'].data = request.cookies['csrf_token']
     if form.validate_on_submit():
         data=request.json
-        user = User.query.get(data['user_id'])
+        user = User.query.get(current_user.id)
         book = Book.query.get(data['book_id'])
         user.users_books.append(book)
         db.session.commit()
         return {"message": "Successfully added to favorites"}
     return form.errors, 401
 
-@session_routes.route('/favorites', methods=['DELETE'])
+@session_routes.route('/favorites/<int:bookId>', methods=['DELETE'])
 @login_required
-def favorites_remove():
-    data=request.json
+def favorites_remove(bookId):
     if current_user.is_authenticated:
-        user = User.query.get(data['user_id'])
-        book = Book.query.get(data['book_id'])
+        user = User.query.get(current_user.id)
+        book = Book.query.get(bookId)
         user.users_books.remove(book)
         db.session.commit()
         return {"message": "Successfully removed from favorites"}
@@ -63,14 +61,14 @@ def create_club():
         return new_club.to_dict()
     return form.errors, 401
 
-# Todo: Query for friends
 @session_routes.route('/friends')
 @login_required
 def get_friends():
     self = User.query.get(current_user.id)
-    friends_list = self.friends_list()
-    print('friends list------',friends_list)
-    return {'friends':[friend.to_dict() for friend in friends_list]}
+    return {
+        "following": [user.to_dict() for user in self.following.all()],
+        "followers": [user.to_dict() for user in self.followed.all()]
+        }
 
 @session_routes.route('/friends', methods=['POST'])
 @login_required

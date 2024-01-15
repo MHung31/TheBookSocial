@@ -27,7 +27,7 @@ def delete_club(id):
     club = Club.query.get(id)
     db.session.delete(club)
     db.session.commit()
-    return {'message': 'Successfully deleted comment'}
+    return {'message': 'Successfully deleted club'}
 
 @club_routes.route('/<int:id>/books')
 @login_required

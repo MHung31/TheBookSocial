@@ -9,6 +9,8 @@ favorites = db.Table("favorites",
                        db.Column("book_id", db.Integer, db.ForeignKey(add_prefix_for_prod("books.id")), primary_key=True),
                        )
 
+if environment == "production":
+    favorites.schema = SCHEMA
 class Book(db.Model, UserMixin):
     __tablename__ = 'books'
 
