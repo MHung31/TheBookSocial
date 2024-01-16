@@ -1,0 +1,33 @@
+.login-modal {
+  border: rgb(97, 97, 114) 1px solid;
+  background-color: white;
+  color: black;
+  border-radius: 5px;
+  padding: 20px;
+  width: 250px;
+}
+
+.login-modal > form {
+  display: flex;
+  flex-direction: column;
+}
+
+.login-modal > * button {
+  height: 35px;
+  width: 100px;
+  margin: 0px auto;
+  margin-top: 20px;
+  background-color: white;
+  color: black;
+  font-weight: bold;
+}
+
+.login-modal > h2 {
+  margin: 0px;
+  padding: 0px;
+  text-align: center;
+}
+
+.login-modal > * label {
+  margin-top: 10px;
+}
