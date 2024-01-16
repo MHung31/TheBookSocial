@@ -1,0 +1,14 @@
+.landing-page-all {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.Landing-Page {
+  background-color: white;
+  padding-left: 20px;
+  color: black;
+}
+
+.Landing-Page > h4 {
+  margin: 10px 0px;
+}
