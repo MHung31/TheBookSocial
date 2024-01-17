@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams, useNavigate, NavLink } from "react-router-dom";
 import "./SidePanel.css";
 // import SideItem from "./SideItem";
 // import { publicBoardsThunk, myBoardsThunk } from "../../redux/board";
@@ -45,15 +45,12 @@ function SidePanel() {
     <div className="side-panel-component">
       <ul>
         <h4>
-          <i class="fa-solid fa-user fa"></i> Titles
+        <i class="fa-solid fa-book-open"></i> <span>Titles</span>
         </h4>
-
-        {/* {ownedBoardsMenu &&
-          Object.values(ownedBoards).map((item) => <SideItem item={item} />)} */}
-      </ul>
-      <ul>
+        <NavLink to={`/session`}>All Titles</NavLink>
+        <NavLink to={`/session/favorites`}>Favorites</NavLink>
         <h4>
-          <i class="fa-solid fa-users fa-2xs"></i>Clubs
+          <i class="fa-solid fa-users-rectangle"></i><span>Clubs</span>
         </h4>
         {/* {sharedBoardsMenu &&
           Object.values(sharedBoards).map((item) => <SideItem item={item} />)} */}

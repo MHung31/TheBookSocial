@@ -19,38 +19,36 @@
 
 .side-panel-component > * a {
   text-decoration: none;
-  color: lightgray;
+  color: black;
   display: flex;
   justify-content: space-between;
   margin: 0px 0px;
   padding: 10px 10px;
+  /* border-bottom: 1px solid rgb(81, 81, 102); */
 }
 
 .side-panel-component > ul {
   margin: 0px;
   padding: 0px;
-  border-bottom: solid rgb(81, 81, 102) 1px;
-}
-
-.side-panel-component > * li {
-  list-style-type: none;
 }
 
 .side-panel-component > * h4 {
   display: flex;
-  justify-content: space-between;
+
   margin: 0px;
   padding: 10px;
+  /* border-bottom: solid rgb(81, 81, 102) 1px; */
 }
 
-.item-preview {
-  display: flex;
-  min-height: 20px;
-  min-width: 25px;
-  border-radius: 3px;
-  margin-right: 5px;
+.side-panel-component > * a {
+  margin-left: 40px;
 }
 
+.side-panel-component > * h4 > span {
+    margin-left: 10px;
+  }
+
+/* check if needed */
 .side-item > * div {
   display: flex;
   align-items: center;
