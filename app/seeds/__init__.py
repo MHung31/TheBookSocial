@@ -28,5 +28,5 @@ def seed():
 @seed_commands.command('undo')
 def undo():
     undo_users()
-    undo_books
+    undo_books()
     # Add other undo functions here

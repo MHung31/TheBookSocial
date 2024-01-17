@@ -1,18 +1,29 @@
 a.book-preview {
-    display: flex;
-    height: 75px;
-    width: 150px;
-    border: 1px black solid;
-    border-radius: 5px;
-    color: white;
-    padding: 10px;
-    margin: 10px;
-    white-space: normal;
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
+  display: flex;
+  height: 350px;
+  width: 200px;
+  color: black;
+  padding: 10px;
+  margin: 10px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
 
-  .Landing-Page > * a {
-    text-decoration: none;
-    font-weight: bold;
-  }
+.book-preview-content > img {
+  width: 200px;
+  object-fit: contain;
+  box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.43);
+}
+
+.book-preview-content > h5 {
+  margin: 3px ;
+  padding: 0px;
+  font-weight: lighter;
+  text-overflow: ellipsis;
+}
+
+.book-preview-content > h3 {
+  margin: 3px;
+  padding: 0px;
+  text-overflow: ellipsis;
+}
