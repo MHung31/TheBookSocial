@@ -1,0 +1,18 @@
+a.book-preview {
+    display: flex;
+    height: 75px;
+    width: 150px;
+    border: 1px black solid;
+    border-radius: 5px;
+    color: white;
+    padding: 10px;
+    margin: 10px;
+    white-space: normal;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .Landing-Page > * a {
+    text-decoration: none;
+    font-weight: bold;
+  }

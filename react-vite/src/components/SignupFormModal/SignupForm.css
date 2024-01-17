@@ -1,0 +1,57 @@
+.signup-modal {
+  border: rgb(97, 97, 114) 1px solid;
+  background-color: white;
+  color: black;
+  border-radius: 5px;
+  padding: 20px;
+  margin: 5px;
+  width: 250px;
+}
+
+.signup-modal > form {
+  display: flex;
+  flex-direction: column;
+}
+
+.signup-modal > * button {
+  height: 35px;
+  width: 100px;
+  margin: 0px auto;
+  margin-top: 20px;
+  background-color: white;
+  color: black;
+  font-weight: bold;
+}
+
+.signup-modal > h2 {
+  margin: 0px;
+  padding: 0px;
+  text-align: center;
+}
+
+.signup-modal > * label {
+  margin-top: 10px;
+}
+
+.sign-up-error {
+  color: red;
+}
+
+#sign-up-button-disabled {
+  background-color: darkgrey;
+}
+
+#sign-up-button-disabled:hover {
+  cursor: auto;
+}
+
+.signup-modal > * ::placeholder {
+  color: rgb(186, 186, 186);
+}
+
+.signup-modal > p {
+  text-align: center;
+  margin: 1px;
+  font-size: x-small;
+  font-style: italic;
+}

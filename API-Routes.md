@@ -44,7 +44,7 @@ Returns the information about the current user that is logged in.
 - Request
 
   - Method: GET
-  - URL: /api/session
+  - URL: /api/auth
   - Body: none
 
 - Successful Response when there is a logged in user
@@ -62,9 +62,7 @@ Returns the information about the current user that is logged in.
         "lastName": "Smith",
         "email": "john.smith@gmail.com",
         "username": "JohnSmith",
-        "avatar": "url",
-        "createdAt": "2021-11-19 20:39:36",
-        "updatedAt": "2021-11-20 10:06:40"
+        "avatar": "url"
       }
     }
     ```
@@ -91,7 +89,7 @@ information.
 - Request
 
   - Method: POST
-  - URL: /api/session
+  - URL: /api/auth/login
   - Headers:
     - Content-Type: application/json
   - Body:
@@ -118,9 +116,7 @@ information.
         "lastName": "Smith",
         "email": "john.smith@gmail.com",
         "username": "JohnSmith",
-        "avatar": "url",
-        "createdAt": "2021-11-19 20:39:36",
-        "updatedAt": "2021-11-20 10:06:40"
+        "avatar": "url"
       }
     }
     ```
@@ -164,15 +160,15 @@ user's information.
 - Request
 
   - Method: POST
-  - URL: /api/users
+  - URL: /api/auth/signup
   - Headers:
     - Content-Type: application/json
   - Body:
 
     ```json
     {
-      "firstName": "John",
-      "lastName": "Smith",
+      "first_name": "John",
+      "last_name": "Smith",
       "email": "john.smith@gmail.com",
       "username": "JohnSmith",
       "password": "secret password",
@@ -191,12 +187,10 @@ user's information.
     {
       "user": {
         "id": 1,
-        "firstName": "John",
-        "lastName": "Smith",
+        "first_name": "John",
+        "last_name": "Smith",
         "email": "john.smith@gmail.com",
-        "username": "JohnSmith",
-        "createdAt": "2021-11-19 20:39:36",
-        "updatedAt": "2021-11-20 10:06:40"
+        "username": "JohnSmith"
       }
     }
     ```
@@ -278,10 +272,39 @@ Returns all the books.
         {
           "id": 1,
           "title": "Harry Potter",
+          "length": 1000,
           "author": "J.K. Rowling",
           "preview": "image url"
         }
       ]
+    }
+    ```
+
+### Get book specified by id
+
+Returns full book specified by id
+
+- Require Authentication: false
+- Request
+
+  - Method: GET
+  - URL: /api/books/:bookId
+  - Body: none
+
+- Successful Response
+
+  - Status Code: 200
+  - Headers:
+    - Content-Type: application/json
+  - Body:
+
+    ```json
+    {
+      "id": 1,
+      "title": "Harry Potter",
+      "author": "J.K. Rowling",
+      "content": "Once upon a time...",
+      "preview": "image url"
     }
     ```
 
@@ -305,7 +328,7 @@ Returns all the favorite books of the current user.
 
     ```json
     {
-      "Books": [
+      "favorites": [
         {
           "id": 1,
           "title": "Harry Potter",
@@ -315,6 +338,59 @@ Returns all the favorite books of the current user.
           "updatedAt": "2021-11-20 10:06:40"
         }
       ]
+    }
+    ```
+
+### Add to Favorite books
+
+Add to favorite books of the current user.
+
+- Require Authentication: true
+- Request
+
+  - Method: POST
+  - URL: /api/session/favorites
+  - Body:
+    ```json
+    {
+      "book_id": 2
+    }
+    ```
+
+- Successful Response
+
+  - Status Code: 200
+  - Headers:
+    - Content-Type: application/json
+  - Body:
+
+    ```json
+    {
+      "message": "Successfully added to favorites"
+    }
+    ```
+
+### Remove from Favorite books
+
+Remove from favorite books of the current user.
+
+- Require Authentication: true
+- Request
+
+  - Method: DELETE
+  - URL: /api/session/favorites/:bookId
+  - Body: None
+
+- Successful Response
+
+  - Status Code: 200
+  - Headers:
+    - Content-Type: application/json
+  - Body:
+
+    ```json
+    {
+      "message": "Successfully removed from favorites"
     }
     ```
 
@@ -340,7 +416,7 @@ Returns all the comments for a book specified by id.
 
     ```json
     {
-      "Comments": [
+      "comments": [
         {
           "id": 1,
           "comment": "This is my favorite part!",
@@ -351,19 +427,6 @@ Returns all the comments for a book specified by id.
     }
     ```
 
-- Error response: Couldn't find a Book with the specified id
-
-  - Status Code: 404
-  - Headers:
-    - Content-Type: application/json
-  - Body:
-
-    ```json
-    {
-      "message": "Book couldn't be found"
-    }
-    ```
-
 ### Add a comment for a book specified by id
 
 Create and return a new comment for a book specified by id.
@@ -371,7 +434,7 @@ Create and return a new comment for a book specified by id.
 - Require Authentication: true
 
   - Method: POST
-  - URL: /api/books/:bookId
+  - URL: /api/books/:bookId/comments
   - Headers:
     - Content-Type: application/json
   - Body:
@@ -380,9 +443,7 @@ Create and return a new comment for a book specified by id.
     {
       "comment": "This is my favorite part",
       "visibility": "Club1; Club2",
-      "book_location": 56,
-      "book_id": 2,
-      "user_id": 3
+      "book_location": "56:76"
     }
     ```
 
@@ -402,8 +463,7 @@ Create and return a new comment for a book specified by id.
       "user_id": 3,
       "book_location": 56,
       "flagged": false,
-      "createdAt": "2021-11-19 20:39:36",
-      "updatedAt": "2021-11-20 10:06:40"
+      "createdAt": "2021-11-19 20:39:36"
     }
     ```
 
@@ -457,21 +517,7 @@ Create and return a new comment for a book specified by id.
       "user_id": 3,
       "book_location": 56,
       "flagged": false,
-      "createdAt": "2021-11-19 20:39:36",
-      "updatedAt": "2021-11-20 10:06:40"
-    }
-    ```
-
-- Error response: Couldn't find a Book with the specified id
-
-  - Status Code: 404
-  - Headers:
-    - Content-Type: application/json
-  - Body:
-
-    ```json
-    {
-      "message": "Book couldn't be found"
+      "createdAt": "2021-11-19 20:39:36"
     }
     ```
 
@@ -515,14 +561,21 @@ Deletes an existing Comment.
 
 ## Bookmark
 
-### Create bookmark
+### Get bookmark
 
-Creates a reading position for the current user of book specified by id
+Get a reading position for the current user of book specified by id
 
 - Require Authentication: true
 
-  - Method: Post
-  - URL: /api/books/:bookId/session-bookmark
+  - Method: GET
+  - URL: /api/books/:bookId/bookmark
+  - Headers:
+    - Content-Type: application/json
+  - Body: None
+
+- Successful Response
+
+  - Status Code: 200
   - Headers:
     - Content-Type: application/json
   - Body:
@@ -532,6 +585,24 @@ Creates a reading position for the current user of book specified by id
       "id": 1,
       "user_id": 2,
       "book_id": 3,
+      "position": 603
+    }
+    ```
+
+### Create bookmark
+
+Creates a reading position for the current user of book specified by id
+
+- Require Authentication: true
+
+  - Method: Post
+  - URL: /api/books/:bookId/bookmark
+  - Headers:
+    - Content-Type: application/json
+  - Body:
+
+    ```json
+    {
       "position": 603
     }
     ```
@@ -548,9 +619,7 @@ Creates a reading position for the current user of book specified by id
       "id": 1,
       "user_id": 2,
       "book_id": 3,
-      "position": 603,
-      "createdAt": "2021-11-19 20:39:36",
-      "updatedAt": "2021-11-20 10:06:40"
+      "position": 603
     }
     ```
 
@@ -561,15 +630,15 @@ Updates and returns an existing reading position.
 - Require Authentication: true
 - Require proper authorization: Bookmark must belong to the current user
 - Request
+
   - Method: PUT
-  - URL: /api/bookmark/:bookmarkId
+  - URL: /api/bookmarks/:bookmarkId
   - Headers:
     - Content-Type: application/json
   - Body:
 
     ```json
     {
-      "id": 1,
       "position": 603
     }
     ```
@@ -586,22 +655,7 @@ Updates and returns an existing reading position.
       "id": 1,
       "user_id": 2,
       "book_id": 3,
-      "position": 603,
-      "createdAt": "2021-11-19 20:39:36",
-      "updatedAt": "2021-11-20 10:06:40"
-    }
-    ```
-
-- Error response: Couldn't find a Book with the specified id
-
-  - Status Code: 404
-  - Headers:
-    - Content-Type: application/json
-  - Body:
-
-    ```json
-    {
-      "message": "Book couldn't be found"
+      "position": 603
     }
     ```
 
@@ -614,7 +668,7 @@ Returns all the reactions of a comment specified by id
 - Require Authentication: true
 
   - Method: GET
-  - URL: /api/comment/:commentId/reactions
+  - URL: /api/comments/:commentId/reactions
   - Body: none
 
 - Successful Response
@@ -638,19 +692,6 @@ Returns all the reactions of a comment specified by id
           "flagger": false
         }
       ]
-    }
-    ```
-
-- Error response: Couldn't find a Comment with the specified id
-
-  - Status Code: 404
-  - Headers:
-    - Content-Type: application/json
-  - Body:
-
-    ```json
-    {
-      "message": "Comment couldn't be found"
     }
     ```
 
@@ -684,10 +725,11 @@ Create and return a new reaction for a Comment specified by id.
     ```json
     {
       "id": 1,
+      "comment_id": 1,
+      "user_id": 1,
       "reaction": "&#128517",
       "flagger": false,
-      "createdAt": "2021-11-19 20:39:36",
-      "updatedAt": "2021-11-19 20:39:36"
+      "createdAt": "2021-11-19 20:39:36"
     }
     ```
 
@@ -738,7 +780,7 @@ Delete an existing reaction.
 
     ```json
     {
-      "message": "Reaction couldn't be found"
+      "message": "Reaction not found"
     }
     ```
 
@@ -752,7 +794,7 @@ Return all the clubs that the current user is a part of.
 - Request
 
   - Method: GET
-  - URL: /api/clubs/current
+  - URL: /api/session/clubs
   - Body: none
 
 - Successful Response
@@ -764,13 +806,12 @@ Return all the clubs that the current user is a part of.
 
     ```json
     {
-      "Clubs": [
+      "clubs": [
         {
           "id": 1,
           "title": "Fiction Fans",
           "is_public": false,
-          "createdAt": "2021-11-19 20:39:36",
-          "updatedAt": "2021-11-19 20:39:36"
+          "user_id": 1
         }
       ]
     }
@@ -804,10 +845,10 @@ Create and return a new Club
 
     ```json
     {
+      "id": 1,
       "title": "Fiction Fans",
       "is_public": false,
-      "createdAt": "2021-11-19 20:39:36",
-      "updatedAt": "2021-11-19 20:39:36"
+      "user_id": 1
     }
     ```
 
@@ -860,8 +901,7 @@ Update and return an existing Club.
       "id": 1,
       "title": "Fiction Fans",
       "is_public": false,
-      "createdAt": "2021-11-19 20:39:36",
-      "updatedAt": "2021-11-20 10:06:40"
+      "user_id": 1
     }
     ```
 
@@ -952,12 +992,13 @@ Return all the books of a club specified by its id
 
     ```json
     {
-      "Books": [
+      "books": [
         {
           "id": 1,
           "title": "Harry Potter",
           "author": "J.K. Rowling",
-          "preview": "url"
+          "preview": "url",
+          "length": 1057
         }
       ]
     }
@@ -977,8 +1018,7 @@ Add a book to an existing Club
 
     ```json
     {
-      "book_id": 2,
-      "club_id": 1
+      "book_id": 2
     }
     ```
 
@@ -990,13 +1030,7 @@ Add a book to an existing Club
   - Body:
 
     ```json
-    {
-      "id": 1,
-      "book_id": 2,
-      "club_id": 1,
-      "createdAt": "2021-11-19 20:39:36",
-      "updatedAt": "2021-11-19 20:39:36"
-    }
+    { "message": "Book added to club" }
     ```
 
 ### Delete an existing book in a club
@@ -1008,7 +1042,7 @@ Delete an existing book by its specified id in a specified club id
 - Request
 
   - Method: DELETE
-  - URL: /api/clubs_books/:club_booksId
+  - URL: /api/clubs/:clubId/books/:bookId
   - Body: none
 
 - Successful Response
@@ -1020,20 +1054,7 @@ Delete an existing book by its specified id in a specified club id
 
     ```json
     {
-      "message": "Successfully deleted"
-    }
-    ```
-
-- Error response: Couldn't find a Club with the specified id
-
-  - Status Code: 404
-  - Headers:
-    - Content-Type: application/json
-  - Body:
-
-    ```json
-    {
-      "message": "Club couldn't be found"
+      "message": "Book removed from club"
     }
     ```
 
@@ -1057,10 +1078,14 @@ Return all the members of a club specified by its id
 
     ```json
     {
-      "Members": [
+      "members": [
         {
-          "username": "FictionFan123",
-          "avatar": "url"
+          "avatar": "avatar-demo",
+          "email": "demo@aa.io",
+          "first_name": "De",
+          "id": 1,
+          "last_name": "Mo",
+          "username": "Demo"
         }
       ]
     }
@@ -1080,8 +1105,7 @@ Add a member to an existing Club
 
     ```json
     {
-      "user_id": 2,
-      "club_id": 1
+      "user_id": 2
     }
     ```
 
@@ -1092,14 +1116,11 @@ Add a member to an existing Club
     - Content-Type: application/json
   - Body:
 
-    ```json
-    {
-      "id": 1,
-      "user_id": 2,
-      "club_id": 1,
-      "createdAt": "2021-11-19 20:39:36",
-      "updatedAt": "2021-11-19 20:39:36"
-    }
+        ```json
+        {"message": "Member added to club"}
+
+    ```
+
     ```
 
 ### Delete an existing member in a club
@@ -1107,11 +1128,11 @@ Add a member to an existing Club
 Delete an existing member by its specified id in a specified club id
 
 - Require Authentication: true
-- Require proper authorization: Club must belong to the current user 
+- Require proper authorization: Club must belong to the current user
 - Request
 
   - Method: DELETE
-  - URL: /api/clubs_members/:club_booksId
+  - URL: /api/clubs/:clubId/members/:memberId
   - Body: none
 
 - Successful Response
@@ -1123,19 +1144,107 @@ Delete an existing member by its specified id in a specified club id
 
     ```json
     {
-      "message": "Successfully deleted"
+      "message": "Member removed from club"
     }
     ```
 
-- Error response: Couldn't find a Club with the specified id
+## Friends
 
-  - Status Code: 404
+### Get all Friends
+
+Get all users on friend list
+
+- Require Authentication: true
+
+  - Method: GET
+  - URL: /api/session/friends
+  - Headers:
+    - Content-Type: application/json
+  - Body: None
+
+- Successful Response
+
+  - Status Code: 200
   - Headers:
     - Content-Type: application/json
   - Body:
 
     ```json
     {
-      "message": "Club couldn't be found"
+      "followers": [
+        {
+          "avatar": "avatar-marnie",
+          "email": "marnie@aa.io",
+          "first_name": "mar",
+          "id": 2,
+          "last_name": "nie",
+          "username": "marnie"
+        }
+      ],
+      "following": [
+        {
+          "avatar": "avatar-marnie",
+          "email": "marnie@aa.io",
+          "first_name": "mar",
+          "id": 2,
+          "last_name": "nie",
+          "username": "marnie"
+        }
+      ]
+    }
+    ```
+
+### Add Friend
+
+Add a friend to users friend list
+
+- Require Authentication: true
+
+  - Method: Post
+  - URL: /api/session/friends
+  - Headers:
+    - Content-Type: application/json
+  - Body:
+
+    ```json
+    {
+      "user_id": 1
+    }
+    ```
+
+- Successful Response
+
+  - Status Code: 200
+  - Headers:
+    - Content-Type: application/json
+  - Body:
+
+    ```json
+    {"message": "Friend added"}
+    ```
+
+### Remove a friend
+
+Removes a friend from your friend list
+
+- Require Authentication: true
+
+  - Method: DELETE
+  - URL: /api/friends/:friendId
+  - Headers:
+    - Content-Type: application/json
+  - Body: None
+    ```
+
+- Successful Response
+
+  - Status Code: 200
+  - Headers:
+    - Content-Type: application/json
+  - Body:
+
+    ```json
+    {
+      "message": "Friend removed"
     }
     ```

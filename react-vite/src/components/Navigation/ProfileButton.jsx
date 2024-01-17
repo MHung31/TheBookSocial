@@ -4,6 +4,7 @@ import { thunkLogout } from "../../redux/session";
 import OpenModalMenuItem from "./OpenModalMenuItem";
 import LoginFormModal from "../LoginFormModal";
 import SignupFormModal from "../SignupFormModal";
+import "./Navigation.css";
 
 function ProfileButton() {
   const dispatch = useDispatch();
@@ -11,6 +12,27 @@ function ProfileButton() {
   const user = useSelector((store) => store.session.user);
   const ulRef = useRef();
 
+  const demoUser = async () => {
+    const demoUser = {
+      email: "demo@demo.io",
+      password: "password",
+    };
+    const serverResponse = await dispatch(thunkLogin(demoUser));
+
+    if (serverResponse) {
+      dispatch(
+        thunkSignup({
+          email: "demo@demo.io",
+          username: "demouser",
+          password: "password",
+          first_name: "demo",
+          last_name: "user",
+        })
+      );
+    } else {
+      navigate("/session/");
+    }
+  };
   const toggleMenu = (e) => {
     e.stopPropagation(); // Keep from bubbling up to document and triggering closeMenu
     setShowMenu(!showMenu);
@@ -39,22 +61,34 @@ function ProfileButton() {
   };
 
   return (
-    <>
-      <button onClick={toggleMenu}>
-        <i className="fas fa-user-circle" />
-      </button>
+    <div>
+      {user ? (
+        <>
+          <button className="profile-logged-in" onClick={toggleMenu}>
+            {user.first_name[0] + user.last_name[0]}
+          </button>
+        </>
+      ) : (
+        <>
+          <button className="login-button" onClick={toggleMenu}>
+            Sign in
+          </button>
+        </>
+      )}
+
       {showMenu && (
         <ul className={"profile-dropdown"} ref={ulRef}>
           {user ? (
             <>
-              <li>{user.username}</li>
+              <h4>Account</h4>
+              <li>{`${user.username} ${user.last_name[0]}`}</li>
               <li>{user.email}</li>
               <li>
                 <button onClick={logout}>Log Out</button>
               </li>
             </>
           ) : (
-            <>
+            <div className="login-signup">
               <OpenModalMenuItem
                 itemText="Log In"
                 onItemClick={closeMenu}
@@ -64,12 +98,15 @@ function ProfileButton() {
                 itemText="Sign Up"
                 onItemClick={closeMenu}
                 modalComponent={<SignupFormModal />}
-              />
-            </>
+              />{" "}
+              <p onClick={demoUser} id="demo-login">
+                Demo Login
+              </p>
+            </div>
           )}
         </ul>
       )}
-    </>
+    </div>
   );
 }
 
