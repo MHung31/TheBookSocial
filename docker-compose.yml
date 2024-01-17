@@ -1,4 +1,4 @@
-version: "3"
+version: '3'
 services:
   web:
     build: .
@@ -9,7 +9,7 @@ services:
       - FLASK_ENV=${FLASK_ENV}
       - SECRET_KEY=${SECRET_KEY}
       - SCHEMA=${SCHEMA}
-      - DATABASE_URL=postgres://app_academy_projects_wtok_user:QTKN33377IjDesFXBF9Mrp9IbsJ4GIMp@dpg-cm8qbqun7f5s73cg89f0-a.ohio-postgres.render.com/app_academy_projects_wtok
+      - DATABASE_URL=postgresql://${DATABASE_USER}:${DATABASE_PASSWORD}@db:5432/${DATABASE_DB}
     depends_on:
       - db
 
