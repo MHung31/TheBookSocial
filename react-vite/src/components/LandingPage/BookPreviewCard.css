@@ -33,9 +33,17 @@ a.book-preview {
 
 .favorite-star {
   position: relative;
-  bottom: 60px;
+  bottom: 50px;
   left: 190px;
   width: 10px;
   height: 10px;
   font-size: x-large;
+  cursor: pointer;
+}
+
+.progress-bar {
+  height: 10px;
+  width: 190px;
+  border: 1px solid black;
+  margin: 3px 5px;
 }

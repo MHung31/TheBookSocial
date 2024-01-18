@@ -16,27 +16,28 @@ function BookPreviewCard({ book }) {
   const club = pathname.startsWith("/clubs/");
   let { author, id, length, preview, title } = book;
   const favorites = useSelector((state) => state.books.favorite_books);
-  const [isFavorite, setIsFavorite] = useState(favorites[id]);
 
   const toggleFavorite = () => {
     const book = { book_id: id };
-    if (isFavorite) {
+    if (favorites[id]) {
       dispatch(thunkDeleteFavoriteBook(id));
     } else {
       dispatch(thunkAddFavoriteBook(book));
     }
-    setIsFavorite(!isFavorite);
-
   };
   return (
     <div>
       <NavLink to={`/books/${id}`} className="book-preview">
         <div className="book-preview-content">
           <img src={preview} alt="Preview Not Available" />
-
+          <div
+            className="progress-bar"
+            style={{
+              background: `linear-gradient(90deg, green 0 70%, white 0% 100%)`,
+            }}
+          ></div>
           <h3 className="preview-title">{title}</h3>
           <h5 className="preview-author">{author}</h5>
-          <div className="progress-bar"></div>
         </div>
       </NavLink>{" "}
       <div onClick={toggleFavorite} className="favorite-star">
