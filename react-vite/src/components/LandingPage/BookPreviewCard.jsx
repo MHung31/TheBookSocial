@@ -3,6 +3,8 @@ import "./BookPreviewCard.css";
 import { useState, useEffect, useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import {
+  thunkSetAllBooks,
+  thunkSetFavoriteBooks,
   thunkAddFavoriteBook,
   thunkDeleteFavoriteBook,
 } from "../../redux/books";
@@ -24,6 +26,7 @@ function BookPreviewCard({ book }) {
       dispatch(thunkAddFavoriteBook(book));
     }
     setIsFavorite(!isFavorite);
+
   };
   return (
     <div>
@@ -37,7 +40,7 @@ function BookPreviewCard({ book }) {
         </div>
       </NavLink>{" "}
       <div onClick={toggleFavorite} className="favorite-star">
-        {isFavorite ? (
+        {favorites[id] ? (
           <i class="fa-solid fa-star" style={{ color: "gold" }}></i>
         ) : (
           <i class="fa-regular fa-star"></i>

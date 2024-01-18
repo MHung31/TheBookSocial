@@ -112,7 +112,6 @@ function booksReducer(books = initialState, action) {
         ...books,
         favorite_books: { ...books.favorite_books },
       };
-      console.log(new_books.favorite_books);
       delete new_books.favorite_books[action.payload];
       return new_books;
 
