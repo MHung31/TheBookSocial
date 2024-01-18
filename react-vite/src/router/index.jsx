@@ -15,7 +15,16 @@ export const router = createBrowserRouter([
         element: <HomePage />,
       },
       {
-        path: "/session",
+        path: "/favorites",
+        element: <LandingPage />,
+      },
+      {
+        path: "/all",
+        element: <LandingPage />,
+      },
+
+      {
+        path: "/clubs/:clubId",
         element: <LandingPage />,
       },
     ],

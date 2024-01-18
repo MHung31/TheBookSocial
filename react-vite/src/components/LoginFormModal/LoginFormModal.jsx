@@ -27,7 +27,7 @@ function LoginFormModal() {
       setErrors(serverResponse);
     } else {
       closeModal();
-      navigate("/session");
+      navigate("/all");
     }
   };
 

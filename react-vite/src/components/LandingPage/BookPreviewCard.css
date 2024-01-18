@@ -17,14 +17,25 @@ a.book-preview {
 }
 
 .book-preview-content > h5 {
-  margin: 3px ;
+  margin: 3px;
   padding: 0px;
   font-weight: lighter;
   text-overflow: ellipsis;
+  max-width: 160px;
 }
 
 .book-preview-content > h3 {
   margin: 3px;
   padding: 0px;
   text-overflow: ellipsis;
+  max-width: 160px;
+}
+
+.favorite-star {
+  position: relative;
+  bottom: 60px;
+  left: 190px;
+  width: 10px;
+  height: 10px;
+  font-size: x-large;
 }

@@ -50,8 +50,8 @@ function SidePanel() {
         <h4>
           <i class="fa-solid fa-book-open"></i> <span>Titles</span>
         </h4>
-        <NavLink to={`/session`}>All Titles</NavLink>
-        <NavLink to={`/session/favorites`}>Favorites</NavLink>
+        <NavLink to={`/all`}>All Titles</NavLink>
+        <NavLink to={`/favorites`}>Favorites</NavLink>
         <h4>
           <i class="fa-solid fa-users-rectangle"></i>
           <span>Clubs</span>

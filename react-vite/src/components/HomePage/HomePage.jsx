@@ -8,7 +8,7 @@ function HomePage() {
   const sessionUser = useSelector((state) => state.session.user);
 
   useEffect(() => {
-    if (sessionUser) navigate("/session/");
+    if (sessionUser) navigate("/all");
   }, [sessionUser]);
 
   return <div>Homepage</div>;

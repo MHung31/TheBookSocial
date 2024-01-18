@@ -12,7 +12,6 @@ export const thunkSessionClubs = () => async (dispatch) => {
   const response = await fetch("/api/session/clubs");
   if (response.ok) {
     const data = await response.json();
-    console.log('--------',data);
     if (data.errors) {
       return;
     }
