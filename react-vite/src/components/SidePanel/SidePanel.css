@@ -17,14 +17,16 @@
   overflow-y: auto;
 }
 
-.side-panel-component > * a {
+.side-panel-component > * a,
+.side-panel-component > * div {
   text-decoration: none;
   color: black;
   display: flex;
   justify-content: space-between;
   margin: 0px 0px;
-  padding: 10px 10px;
-  /* border-bottom: 1px solid rgb(81, 81, 102); */
+  padding: 5px 10px;
+  border: none;
+  background-color: white;
 }
 
 .side-panel-component > ul {
@@ -40,38 +42,35 @@
   /* border-bottom: solid rgb(81, 81, 102) 1px; */
 }
 
-.side-panel-component > * a {
-  margin-left: 40px;
+.side-panel-component > * a,
+.side-panel-component > * div {
+  margin: 0px 40px;
+  border-radius: 5px;
 }
 
 .side-panel-component > * h4 > span {
-    margin-left: 10px;
-  }
+  margin-left: 10px;
+}
 
 /* check if needed */
-.side-item > * div {
-  display: flex;
-  align-items: center;
-  justify-content: start;
-  white-space: nowrap;
-  overflow: hidden;
+.side-item > * a {
+  color: black;
+  text-overflow: ellipsis;
 }
 
-.side-item:hover .item-ellipsis {
-  visibility: visible;
+.side-panel-component .active,
+.side-panel-component > * div .active {
+  background-color: rgba(200, 150, 13, 0.532);
 }
-
-.item-ellipsis {
-  visibility: hidden;
-  margin-left: 5px;
-}
-
-.side-panel-component > * .toggle-menu {
+.side-panel-component > * a:hover,
+.side-panel-component > * div:hover {
+  background-color: rgba(177, 133, 13, 0.153);
   cursor: pointer;
 }
 
-.side-item .active {
-  background-color: rgba(255, 255, 255, 0.19);
+.side-panel-component > * div {
+  font-style: oblique;
+  font-size: medium;
 }
 
 .toggle-menu > * i {
