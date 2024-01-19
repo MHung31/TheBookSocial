@@ -10,6 +10,8 @@ function LandingPage() {
   const location = useLocation();
   const { pathname } = location;
   const dispatch = useDispatch();
+
+
   let books = {};
   if (pathname === "/all") {
     books = useSelector((state) => state.books.all_books);
@@ -23,6 +25,7 @@ function LandingPage() {
     const clubId = pathname.split("/")[2];
     // books = useSelector((state) => state.books.club[clubId]);
     books = useSelector((state) => state.books.all_books);
+
   }
   const bookState = useSelector((state) => state.books);
   const sessionUser = useSelector((state) => state.session.user);
@@ -50,6 +53,7 @@ function LandingPage() {
   if (!books) return <></>;
 
   return (
+
     <div className="Side-Panel">
       <SidePanel />
       <div className="Landing-Page">

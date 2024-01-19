@@ -270,11 +270,12 @@ Returns all the books.
     {
       "Books": [
         {
+          "author": "JK Rowling1",
           "id": 1,
-          "title": "Harry Potter",
-          "length": 1000,
-          "author": "J.K. Rowling",
-          "preview": "image url"
+          "length": 4220,
+          "num_comments": 20,
+          "preview": "https://m.media-amazon.com/images/I/71RVt35ZAbL._SL1200_.jpg",
+          "title": "Harry Potter1"
         }
       ]
     }
@@ -1240,6 +1241,7 @@ Removes a friend from your friend list
   - Headers:
     - Content-Type: application/json
   - Body: None
+
     ```
 
     ```

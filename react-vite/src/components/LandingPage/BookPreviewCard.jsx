@@ -14,7 +14,7 @@ function BookPreviewCard({ book }) {
   const dispatch = useDispatch();
   const { pathname } = location;
   const club = pathname.startsWith("/clubs/");
-  let { author, id, length, preview, title } = book;
+  let { author, id, length, preview, title, num_comments } = book;
   const favorites = useSelector((state) => state.books.favorite_books);
 
   const toggleFavorite = () => {
@@ -38,6 +38,10 @@ function BookPreviewCard({ book }) {
           ></div>
           <h3 className="preview-title">{title}</h3>
           <h5 className="preview-author">{author}</h5>
+          <h5 className="preview-comments-count">
+          <i class="fa-sharp fa-regular fa-comment"></i>
+            {` ${num_comments}`}
+          </h5>
         </div>
       </NavLink>{" "}
       <div onClick={toggleFavorite} className="favorite-star">

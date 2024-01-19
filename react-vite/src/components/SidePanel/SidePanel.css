@@ -13,7 +13,7 @@
   display: flex;
   flex-direction: column;
   border-right: solid rgb(81, 81, 102) 1px;
-  min-height: 90vh;
+  height: calc(100vh - 51px);
   overflow-y: auto;
 }
 
@@ -32,6 +32,7 @@
 .side-panel-component > ul {
   margin: 0px;
   padding: 0px;
+  text-overflow: ellipsis;
 }
 
 .side-panel-component > * h4 {
@@ -44,17 +45,24 @@
 
 .side-panel-component > * a,
 .side-panel-component > * div {
-  margin: 0px 40px;
+  margin: 0px 0px;
+  margin-right: 20px;
+  margin-left: 40px;
   border-radius: 5px;
 }
 
 .side-panel-component > * h4 > span {
-  margin-left: 10px;
+  margin-left: 5px;
 }
 
 /* check if needed */
 .side-item > * a {
+  display: block;
   color: black;
+  text-overflow: ellipsis;
+}
+
+.side-item > {
   text-overflow: ellipsis;
 }
 
@@ -62,8 +70,8 @@
 .side-panel-component > * div .active {
   background-color: rgba(200, 150, 13, 0.532);
 }
-.side-panel-component > * a:hover,
-.side-panel-component > * div:hover {
+.side-panel-component > * a:hover:not(.active),
+.side-panel-component > * div:hover:not(.create-club-form):not(.panel-footer) {
   background-color: rgba(177, 133, 13, 0.153);
   cursor: pointer;
 }
@@ -75,4 +83,35 @@
 
 .toggle-menu > * i {
   margin-right: 10px;
+}
+
+.club-submit {
+  background-color: white;
+  margin-left: 1px;
+}
+.create-club-form > * label {
+  font-weight: bold;
+}
+
+.panel-footer {
+  height: 100px;
+}
+
+.create-club-form {
+  display: flex;
+  padding-left: 40px;
+}
+
+.side-item:hover .item-ellipsis {
+  visibility: visible;
+}
+.item-ellipsis {
+  visibility: hidden;
+  margin-left: 5px;
+}
+
+.side-item > * li {
+  display: flex;
+  flex-direction: column;
+  list-style-type: none;
 }

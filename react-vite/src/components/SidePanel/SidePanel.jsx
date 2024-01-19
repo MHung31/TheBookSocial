@@ -4,7 +4,7 @@ import { useParams, useNavigate, NavLink } from "react-router-dom";
 import "./SidePanel.css";
 import SideItem from "./SideItem";
 // import { publicBoardsThunk, myBoardsThunk } from "../../redux/board";
-import { thunkSessionClubs } from "../../redux/clubs";
+import { thunkSessionClubs, thunkCreateClub } from "../../redux/clubs";
 
 function SidePanel() {
   const dispatch = useDispatch();
@@ -12,6 +12,8 @@ function SidePanel() {
   const { id } = useParams();
   const sessionUser = useSelector((state) => state.session.user);
   const clubs = useSelector((state) => state.clubs);
+  const [createBoardMenu, setCreateBoardMenu] = useState(false);
+  const [title, setTitle] = useState("");
   //   const myBoards = useSelector((state) => state.boards.myBoards);
   //   const publicBoards = useSelector((state) => state.boards.publicBoards);
   //   const [ownedBoards, setOwnedBoards] = useState({});
@@ -27,22 +29,15 @@ function SidePanel() {
     dispatch(thunkSessionClubs());
   }, [dispatch]);
 
-  const createClub = () => {
+  const createClubToggle = () => {
+    setCreateBoardMenu(!createBoardMenu);
+  };
 
-  }
-  //   useEffect(() => {
-  //     let tempOwnedBoards = {};
-  //     let tempSharedBoards = {};
-  //     for (let key in myBoards) {
-  //       if (sessionUser.id === myBoards[key].user_id) {
-  //         tempOwnedBoards[key] = myBoards[key];
-  //       } else {
-  //         tempSharedBoards[key] = myBoards[key];
-  //       }
-  //     }
-  //     setOwnedBoards(tempOwnedBoards);
-  //     setSharedBoards(tempSharedBoards);
-  //   }, [myBoards, publicBoards, id, boards]);
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    dispatch(thunkCreateClub({ title: title, is_public: false }));
+    setCreateBoardMenu(!createBoardMenu);
+  };
 
   return (
     <div className="side-panel-component">
@@ -59,7 +54,31 @@ function SidePanel() {
         {Object.values(clubs).map((club) => (
           <SideItem club={club} />
         ))}
-        <div className="create-club" onClick={createClub}>Create Club</div>
+        <div className="create-club" onClick={createClubToggle}>
+          Create Club
+        </div>
+        {createBoardMenu ? (
+          <div className="create-club-form">
+            <form onSubmit={handleSubmit}>
+              <label>Enter Club Name</label>
+              <input
+                type="text"
+                value={title}
+                onChange={(e) => setTitle(e.target.value)}
+                required
+                maxlength="20"
+                minlength="3"
+                style={{width:"110px"}}
+              />
+              <button type="submit" className="club-submit">
+                <i class="fa-solid fa-check"></i>
+              </button>
+            </form>
+          </div>
+        ) : (
+          <></>
+        )}
+        <div className="panel-footer">{' '}</div>
       </ul>
     </div>
   );
