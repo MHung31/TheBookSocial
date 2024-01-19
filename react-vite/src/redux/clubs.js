@@ -9,8 +9,13 @@ const GET_CLUB_MEMBERS = "clubs/members";
 const ADD_CLUB_MEMBER = "clubs/add-member";
 const DELETE_CLUB_MEMBER = "clubs/delete-member";
 
+//working on adding books to clubs
 //just finished add club book thunk, need to add to reducer
 //next verify with get_club books works on the club pages
+//then verify adding books works
+//then work on deleting books from clubs
+//then club members
+//then edit club options modal finish
 
 const addClubBook = (book) => ({
   type: ADD_CLUB_BOOK,

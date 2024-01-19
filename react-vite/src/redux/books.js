@@ -103,10 +103,9 @@ function booksReducer(books = initialState, action) {
       new_books.favorite_books = new_fav_books;
       return new_books;
     case ADD_FAVORITE_BOOK:
-      return {
-        ...books,
-        ...(books.favorite_books[action.payload.id] = action.payload),
-      };
+      new_books = { ...books, favorite_books: { ...books.favorite_books } };
+      new_books.favorite_books[action.payload.id] = action.payload;
+      return new_books;
     case DELETE_FAVORITE_BOOK:
       new_books = {
         ...books,
