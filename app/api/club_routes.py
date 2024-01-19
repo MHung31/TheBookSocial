@@ -47,7 +47,7 @@ def club_add_books(id):
         return {'error': 'Book not found'}
     club.clubs_books.append(book)
     db.session.commit()
-    return {'message': "Book added to club"}
+    return book.to_dict_preview()
 
 @club_routes.route('/<int:clubId>/books/<int:bookId>', methods=['DELETE'])
 @login_required

@@ -2,6 +2,35 @@ const GET_CLUBS = "clubs/session";
 const CREATE_CLUB = "clubs/create";
 const EDIT_CLUB = "clubs/edit";
 const DELETE_CLUB = "clubs/delete";
+const GET_CLUB_BOOKS = "clubs/books";
+const ADD_CLUB_BOOK = "clubs/add-book";
+const DELETE_CLUB_BOOK = "clubs/delete-book";
+const GET_CLUB_MEMBERS = "clubs/members";
+const ADD_CLUB_MEMBER = "clubs/add-member";
+const DELETE_CLUB_MEMBER = "clubs/delete-member";
+
+//just finished add club book thunk, need to add to reducer
+//next verify with get_club books works on the club pages
+
+const addClubBook = (book) => ({
+  type: ADD_CLUB_BOOK,
+  payload: book,
+});
+
+export const thunkAddClubBook = (bookId, clubId) => async (dispatch) => {
+  const response = await fetch(`/api/clubs/${clubId}/books`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(bookId),
+  });
+  if (response.ok) {
+    const data = await response.json();
+    if (data.errors) {
+      return;
+    }
+    dispatch(addClubBook(data));
+  }
+};
 
 const getSessionClubs = (sessionClubs) => ({
   type: GET_CLUBS,

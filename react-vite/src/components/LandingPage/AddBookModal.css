@@ -1,0 +1,14 @@
+.add-book-modal {
+  height: 500px;
+  width: 800px;
+  background-color: white;
+
+  border-radius: 5px;
+}
+
+.searched-books {
+  display: flex;
+  flex-wrap: wrap;
+  overflow-y: auto;
+  height: 440px;
+}

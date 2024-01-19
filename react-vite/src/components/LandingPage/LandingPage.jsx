@@ -5,12 +5,15 @@ import { thunkSetAllBooks, thunkSetFavoriteBooks } from "../../redux/books";
 import BookPreviewCard from "./BookPreviewCard";
 import SidePanel from "../SidePanel";
 import { useLocation } from "react-router-dom";
+import { useModal } from "../../context/Modal";
+import AddBookModal from "./AddBookModal";
 
 function LandingPage() {
   const location = useLocation();
+  const { setModalContent } = useModal();
   const { pathname } = location;
   const dispatch = useDispatch();
-
+  let isClub = false;
 
   let books = {};
   if (pathname === "/all") {
@@ -25,11 +28,12 @@ function LandingPage() {
     const clubId = pathname.split("/")[2];
     // books = useSelector((state) => state.books.club[clubId]);
     books = useSelector((state) => state.books.all_books);
-
+    isClub = true;
   }
-  const bookState = useSelector((state) => state.books);
-  const sessionUser = useSelector((state) => state.session.user);
-  const ulRef = useRef();
+
+  const addBook = () => {
+    setModalContent(<AddBookModal />);
+  };
 
   useEffect(() => {
     dispatch(thunkSetFavoriteBooks());
@@ -53,13 +57,22 @@ function LandingPage() {
   if (!books) return <></>;
 
   return (
-
     <div className="Side-Panel">
       <SidePanel />
       <div className="Landing-Page">
         {Object.values(books).map((book) => {
           return <BookPreviewCard book={book} />;
         })}
+        <>
+          {isClub ? (
+            <div onClick={addBook} className="add-book">
+              <i class="fa-solid fa-book"></i>
+              <div>Add book</div>
+            </div>
+          ) : (
+            <></>
+          )}
+        </>
       </div>
     </div>
   );
