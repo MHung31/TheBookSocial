@@ -6,7 +6,9 @@ import { useState, useEffect } from "react";
 
 function ClubOptions({ clubId }) {
   const dispatch = useDispatch();
-  const { id, title, user_id } = useSelector((state) => state.clubs[clubId]);
+  const { id, title, user_id } = useSelector(
+    (state) => state.clubs.clubs[clubId]
+  );
   // const { id, is_public, background_image, name } = item;
   // const { setModalContent } = useModal();
   // const [boardOptions, setBoardOptions] = useState(true);

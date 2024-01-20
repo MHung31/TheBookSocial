@@ -11,7 +11,7 @@ function SidePanel() {
   const navigate = useNavigate();
   const { id } = useParams();
   const sessionUser = useSelector((state) => state.session.user);
-  const clubs = useSelector((state) => state.clubs);
+  const clubs = useSelector((state) => state.clubs.clubs);
   const [createBoardMenu, setCreateBoardMenu] = useState(false);
   const [title, setTitle] = useState("");
   //   const myBoards = useSelector((state) => state.boards.myBoards);

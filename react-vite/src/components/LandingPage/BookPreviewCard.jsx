@@ -1,4 +1,4 @@
-import { NavLink, useLocation } from "react-router-dom";
+import { NavLink, useLocation, useParams } from "react-router-dom";
 import "./BookPreviewCard.css";
 import { useState, useEffect, useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
@@ -8,8 +8,13 @@ import {
   thunkAddFavoriteBook,
   thunkDeleteFavoriteBook,
 } from "../../redux/books";
+import { thunkDeleteClubBook } from "../../redux/clubs";
+import DeleteConfirmModal from "../DeleteConfirmModal";
+import { useModal } from "../../context/Modal";
 
 function BookPreviewCard({ book }) {
+  const { setModalContent } = useModal();
+  const { clubId } = useParams();
   const location = useLocation();
   const dispatch = useDispatch();
   const { pathname } = location;
@@ -25,8 +30,23 @@ function BookPreviewCard({ book }) {
       dispatch(thunkAddFavoriteBook(book));
     }
   };
+
+  const removeBook = (e) => {
+    setModalContent(
+      <DeleteConfirmModal
+        thunk={thunkDeleteClubBook}
+        message="Remove book from club?"
+        clubId={clubId}
+        bookId={id}
+      />
+    );
+  };
+
   return (
-    <div>
+    <div className="preview-card">
+      <div className="club-remove-book" onClick={removeBook}>
+        <i class="fa-solid fa-circle-xmark"></i>
+      </div>
       <NavLink to={`/books/${id}`} className="book-preview">
         <div className="book-preview-content">
           <img src={preview} alt="Preview Not Available" />
@@ -39,7 +59,7 @@ function BookPreviewCard({ book }) {
           <h3 className="preview-title">{title}</h3>
           <h5 className="preview-author">{author}</h5>
           <h5 className="preview-comments-count">
-          <i class="fa-sharp fa-regular fa-comment"></i>
+            <i class="fa-sharp fa-regular fa-comment"></i>
             {` ${num_comments}`}
           </h5>
         </div>

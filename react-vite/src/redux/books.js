@@ -5,6 +5,7 @@ const SET_BOOK_DETAILS = "books/details";
 const ADD_FAVORITE_BOOK = "/books/favorites/add";
 const DELETE_FAVORITE_BOOK = "/books/favorites/delete";
 
+
 const setAllBooks = (allBooks) => ({
   type: SET_ALL_BOOKS,
   payload: allBooks,
@@ -79,7 +80,6 @@ export const thunkDeleteFavoriteBook = (id) => async (dispatch) => {
 const initialState = {
   all_books: {},
   favorite_books: {},
-  club_books: {},
   book_details: {},
 };
 

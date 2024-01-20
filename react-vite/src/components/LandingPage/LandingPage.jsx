@@ -4,11 +4,14 @@ import "./LandingPage.css";
 import { thunkSetAllBooks, thunkSetFavoriteBooks } from "../../redux/books";
 import BookPreviewCard from "./BookPreviewCard";
 import SidePanel from "../SidePanel";
+import { useParams } from "react-router-dom";
 import { useLocation } from "react-router-dom";
 import { useModal } from "../../context/Modal";
 import AddBookModal from "./AddBookModal";
+import { thunkGetClubBooks } from "../../redux/clubs";
 
 function LandingPage() {
+  const { clubId } = useParams();
   const location = useLocation();
   const { setModalContent } = useModal();
   const { pathname } = location;
@@ -25,9 +28,7 @@ function LandingPage() {
   }
 
   if (pathname.startsWith("/clubs/")) {
-    const clubId = pathname.split("/")[2];
-    // books = useSelector((state) => state.books.club[clubId]);
-    books = useSelector((state) => state.books.all_books);
+    books = useSelector((state) => state.clubs.club_books);
     isClub = true;
   }
 
@@ -38,6 +39,9 @@ function LandingPage() {
   useEffect(() => {
     dispatch(thunkSetFavoriteBooks());
     dispatch(thunkSetAllBooks());
+    if (pathname.startsWith("/clubs/")) {
+      dispatch(thunkGetClubBooks(clubId));
+    }
   }, [dispatch, pathname]);
 
   // useEffect(() => {
@@ -54,7 +58,12 @@ function LandingPage() {
   //   setSharedBoards(tempSharedBoards);
   // }, [allBooks]);
 
-  if (!books) return <></>;
+  if (!books)
+    return (
+      <>
+        <SidePanel />
+      </>
+    );
 
   return (
     <div className="Side-Panel">

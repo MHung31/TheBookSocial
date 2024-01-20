@@ -10,12 +10,43 @@ const ADD_CLUB_MEMBER = "clubs/add-member";
 const DELETE_CLUB_MEMBER = "clubs/delete-member";
 
 //working on adding books to clubs
-//just finished add club book thunk, need to add to reducer
-//next verify with get_club books works on the club pages
-//then verify adding books works
 //then work on deleting books from clubs
 //then club members
 //then edit club options modal finish
+
+const removeClubBooks = (book) => ({
+  type: DELETE_CLUB_BOOK,
+  payload: book,
+});
+
+const getClubBooks = (books) => ({
+  type: GET_CLUB_BOOKS,
+  payload: books,
+});
+
+export const thunkDeleteClubBook = (bookId, clubId) => async (dispatch) => {
+  const response = await fetch(`/api/clubs/${clubId}/books/${bookId}`, {
+    method: "DELETE",
+  });
+  if (response.ok) {
+    const data = await response.json();
+    if (data.errors) {
+      return;
+    }
+    dispatch(removeClubBooks(bookId));
+  }
+};
+
+export const thunkGetClubBooks = (clubId) => async (dispatch) => {
+  const response = await fetch(`/api/clubs/${clubId}/books`);
+  if (response.ok) {
+    const data = await response.json();
+    if (data.errors) {
+      return;
+    }
+    dispatch(getClubBooks(data.books));
+  }
+};
 
 const addClubBook = (book) => ({
   type: ADD_CLUB_BOOK,
@@ -76,19 +107,36 @@ export const thunkCreateClub = (clubInfo) => async (dispatch) => {
 
 const initialState = {
   clubs: {},
+  club_books: {},
+  club_members: {},
 };
 
 function clubsReducer(clubs = initialState, action) {
   let new_clubs = {};
   switch (action.type) {
     case GET_CLUBS:
+      new_clubs = { ...clubs, clubs: {} };
       action.payload.forEach((club) => {
-        new_clubs[club.id] = club;
+        new_clubs.clubs[club.id] = club;
       });
       return new_clubs;
     case CREATE_CLUB:
       new_clubs = { ...clubs };
       new_clubs[action.payload.id] = action.payload;
+      return new_clubs;
+    case ADD_CLUB_BOOK:
+      new_clubs = { ...clubs, club_books: { ...clubs.club_books } };
+      new_clubs.club_books[action.payload.id] = action.payload;
+      return new_clubs;
+    case GET_CLUB_BOOKS:
+      new_clubs = { ...clubs, club_books: {} };
+      action.payload.forEach((book) => {
+        new_clubs.club_books[book.id] = book;
+      });
+      return new_clubs;
+    case DELETE_CLUB_BOOK:
+      new_clubs = { ...clubs, club_books: { ...clubs.club_books } };
+      delete new_clubs.club_books[action.payload];
       return new_clubs;
     default:
       return clubs;
