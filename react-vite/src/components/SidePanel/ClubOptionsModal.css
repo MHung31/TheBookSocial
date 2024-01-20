@@ -1,8 +1,7 @@
 .club-modal-options {
   height: 510px;
-  width: 450px;
+  width: 410px;
   background-color: white;
-  border: 1px black solid;
   border-radius: 5px;
   padding: 20px;
   display: flex;
@@ -14,7 +13,7 @@
 .club-options-button {
   background-color: white;
   height: 40px;
-  width: 250px;
+  width: 300px;
   font-size: medium;
   margin: 5px 10px;
   color: white;
@@ -75,7 +74,6 @@
   height: 280px;
   overflow-y: auto;
   padding: 0px 20px;
-  border: 1px solid black;
 }
 
 .club-add-member > input {

@@ -60,9 +60,16 @@ function ClubOptions({ clubId }) {
         ) : (
           <></>
         )}
-        {isOwner ? (<button className="club-options-button delete-yes" onClick={deleteClub}>
-          Delete Club
-        </button>):<></>}
+        {isOwner ? (
+          <button
+            className="club-options-button delete-yes"
+            onClick={deleteClub}
+          >
+            Delete Club
+          </button>
+        ) : (
+          <></>
+        )}
         <button className="club-options-button delete-no" onClick={closeModal}>
           Close
         </button>
