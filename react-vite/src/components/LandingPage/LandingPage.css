@@ -1,12 +1,12 @@
-.landing-page-all {
+.Landing-Page {
   display: flex;
   flex-wrap: wrap;
-}
-
-.Landing-Page {
   background-color: white;
   padding-left: 20px;
   color: black;
+  overflow-y: auto;
+  align-content: flex-start;
+  height: calc(100vh - 51px);
 }
 
 .Landing-Page > h4 {

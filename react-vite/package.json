@@ -29,5 +29,6 @@
     "redux-logger": "^3.0.6",
     "vite": "^4.4.5",
     "vite-plugin-eslint": "^1.8.1"
-  }
+  },
+  "proxy": "http://localhost:8000"
 }

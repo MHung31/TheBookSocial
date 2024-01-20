@@ -1,17 +1,20 @@
 /* TODO: Add sitewide styles */
 html {
-    margin: 0px auto;
-    min-height: 100vh;
-    margin: 0;
-    overflow-y: hidden;
-  }
+  margin: 0px auto;
+  min-height: 100vh;
+  margin: 0;
+}
 
-  button,
-  .login-signup {
-    cursor: pointer;
-  }
+button,
+.login-signup {
+  cursor: pointer;
+}
 
-  body {
-    min-height: 100vh;
-    margin: 0;
-  }
+body {
+  min-height: 100vh;
+  margin: 0;
+}
+
+a {
+  text-decoration: none;
+}

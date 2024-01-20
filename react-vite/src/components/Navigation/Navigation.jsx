@@ -15,7 +15,7 @@ function Navigation() {
     <ul className="navigation">
       <li>
         {user ? (
-          <NavLink id="logo" to="/">
+          <NavLink id="logo" to="/all">
             <i class="fa-solid fa-book-bookmark"></i> TheBookSocial
           </NavLink>
         ) : (

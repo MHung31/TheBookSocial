@@ -22,7 +22,7 @@ def favorites_add():
         book = Book.query.get(data['book_id'])
         user.users_books.append(book)
         db.session.commit()
-        return {"message": "Successfully added to favorites"}
+        return {"added": book.to_dict_preview()}
     return form.errors, 401
 
 @session_routes.route('/favorites/<int:bookId>', methods=['DELETE'])

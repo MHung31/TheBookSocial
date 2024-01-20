@@ -2,6 +2,7 @@ from .db import db, environment, SCHEMA, add_prefix_for_prod
 from flask_login import UserMixin
 from datetime import datetime
 from .club import club_books
+from .comment import Comment
 
 favorites = db.Table("favorites",
                        db.Model.metadata,
@@ -36,7 +37,8 @@ class Book(db.Model, UserMixin):
             "title": self.title,
             "author": self.author,
             "preview": self.preview,
-            "length": len(self.content)
+            "length": len(self.content),
+            'num_comments': len(self.book_comments)
         }
 
     def to_dict_full(self):

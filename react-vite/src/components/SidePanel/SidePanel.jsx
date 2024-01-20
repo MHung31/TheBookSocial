@@ -1,16 +1,19 @@
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams, useNavigate, NavLink } from "react-router-dom";
 import "./SidePanel.css";
-// import SideItem from "./SideItem";
+import SideItem from "./SideItem";
 // import { publicBoardsThunk, myBoardsThunk } from "../../redux/board";
+import { thunkSessionClubs, thunkCreateClub } from "../../redux/clubs";
 
 function SidePanel() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { id } = useParams();
   const sessionUser = useSelector((state) => state.session.user);
-  const boards = useSelector((state) => state.boards);
+  const clubs = useSelector((state) => state.clubs.clubs);
+  const [createBoardMenu, setCreateBoardMenu] = useState(false);
+  const [title, setTitle] = useState("");
   //   const myBoards = useSelector((state) => state.boards.myBoards);
   //   const publicBoards = useSelector((state) => state.boards.publicBoards);
   //   const [ownedBoards, setOwnedBoards] = useState({});
@@ -23,40 +26,59 @@ function SidePanel() {
   }
 
   useEffect(() => {
-    // dispatch(publicBoardsThunk());
-    // dispatch(myBoardsThunk());
+    dispatch(thunkSessionClubs());
   }, [dispatch]);
 
-  //   useEffect(() => {
-  //     let tempOwnedBoards = {};
-  //     let tempSharedBoards = {};
-  //     for (let key in myBoards) {
-  //       if (sessionUser.id === myBoards[key].user_id) {
-  //         tempOwnedBoards[key] = myBoards[key];
-  //       } else {
-  //         tempSharedBoards[key] = myBoards[key];
-  //       }
-  //     }
-  //     setOwnedBoards(tempOwnedBoards);
-  //     setSharedBoards(tempSharedBoards);
-  //   }, [myBoards, publicBoards, id, boards]);
+  const createClubToggle = () => {
+    setCreateBoardMenu(!createBoardMenu);
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    dispatch(thunkCreateClub({ title: title, is_public: false }));
+    setCreateBoardMenu(!createBoardMenu);
+  };
 
   return (
     <div className="side-panel-component">
       <ul>
         <h4>
-          <i class="fa-solid fa-user fa"></i> Titles
+          <i class="fa-solid fa-book-open"></i> <span>Titles</span>
         </h4>
-
-        {/* {ownedBoardsMenu &&
-          Object.values(ownedBoards).map((item) => <SideItem item={item} />)} */}
-      </ul>
-      <ul>
+        <NavLink to={`/all`}>All Titles</NavLink>
+        <NavLink to={`/favorites`}>Favorites</NavLink>
         <h4>
-          <i class="fa-solid fa-users fa-2xs"></i>Clubs
+          <i class="fa-solid fa-users-rectangle"></i>
+          <span>Clubs</span>
         </h4>
-        {/* {sharedBoardsMenu &&
-          Object.values(sharedBoards).map((item) => <SideItem item={item} />)} */}
+        {Object.values(clubs).map((club) => (
+          <SideItem club={club} />
+        ))}
+        <div className="create-club" onClick={createClubToggle}>
+          Create Club
+        </div>
+        {createBoardMenu ? (
+          <div className="create-club-form">
+            <form onSubmit={handleSubmit}>
+              <label>Enter Club Name</label>
+              <input
+                type="text"
+                value={title}
+                onChange={(e) => setTitle(e.target.value)}
+                required
+                maxlength="20"
+                minlength="3"
+                style={{width:"110px"}}
+              />
+              <button type="submit" className="club-submit">
+                <i class="fa-solid fa-check"></i>
+              </button>
+            </form>
+          </div>
+        ) : (
+          <></>
+        )}
+        <div className="panel-footer">{' '}</div>
       </ul>
     </div>
   );

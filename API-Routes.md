@@ -270,11 +270,12 @@ Returns all the books.
     {
       "Books": [
         {
+          "author": "JK Rowling1",
           "id": 1,
-          "title": "Harry Potter",
-          "length": 1000,
-          "author": "J.K. Rowling",
-          "preview": "image url"
+          "length": 4220,
+          "num_comments": 20,
+          "preview": "https://m.media-amazon.com/images/I/71RVt35ZAbL._SL1200_.jpg",
+          "title": "Harry Potter1"
         }
       ]
     }
@@ -366,7 +367,13 @@ Add to favorite books of the current user.
 
     ```json
     {
-      "message": "Successfully added to favorites"
+      "added": {
+        "author": "JK Rowling1",
+        "id": 1,
+        "length": 4220,
+        "preview": "https://m.media-amazon.com/images/I/71RVt35ZAbL._SL1200_.jpg",
+        "title": "Harry Potter1"
+      }
     }
     ```
 
@@ -1220,7 +1227,7 @@ Add a friend to users friend list
   - Body:
 
     ```json
-    {"message": "Friend added"}
+    { "message": "Friend added" }
     ```
 
 ### Remove a friend
@@ -1234,6 +1241,9 @@ Removes a friend from your friend list
   - Headers:
     - Content-Type: application/json
   - Body: None
+
+    ```
+
     ```
 
 - Successful Response

@@ -1,18 +1,126 @@
 a.book-preview {
-    display: flex;
-    height: 75px;
-    width: 150px;
-    border: 1px black solid;
-    border-radius: 5px;
-    color: white;
-    padding: 10px;
-    margin: 10px;
-    white-space: normal;
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
+  display: flex;
+  height: 370px;
+  width: 200px;
+  color: black;
+  padding: 10px;
+  margin: 10px;
+  overflow: hidden;
+}
 
-  .Landing-Page > * a {
-    text-decoration: none;
-    font-weight: bold;
-  }
+.add-book {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-evenly;
+  border-radius: 5px;
+  height: 200px;
+  width: 130px;
+  color: black;
+  padding: 10px;
+  margin: auto 55px;
+  overflow: hidden;
+  color: rgba(200, 150, 13, 0.532);
+  cursor: pointer;
+  font-weight: bold;
+  font-size: 20px;
+}
+
+.add-book > i {
+  font-size: 120px;
+}
+
+.book-preview-content > img {
+  max-width: 200px;
+  max-height: 300px;
+  object-fit: contain;
+  box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.43);
+}
+
+.book-preview-content > h5 {
+  margin: 3px;
+  padding: 0px;
+  font-weight: lighter;
+  text-overflow: ellipsis;
+  max-width: 160px;
+}
+
+.book-preview-content > h3 {
+  margin: 3px;
+  padding: 0px;
+  text-overflow: ellipsis;
+  max-width: 160px;
+}
+
+.favorite-star {
+  position: relative;
+  bottom: 50px;
+  left: 190px;
+  width: 10px;
+  height: 10px;
+  font-size: x-large;
+  cursor: pointer;
+}
+
+.progress-bar {
+  height: 10px;
+  width: 190px;
+  border: 1px solid black;
+  margin: 3px 5px;
+}
+
+.book-preview-search {
+  display: flex;
+  height: 250px;
+  width: 150px;
+  color: black;
+  padding: 10px;
+  margin: 10px;
+  overflow: hidden;
+  cursor: pointer;
+}
+
+.book-preview-search > .book-preview-content > img {
+  max-width: 150px;
+  max-height: 200px;
+  object-fit: contain;
+  box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.43);
+}
+
+.book-preview-search > .book-preview-content > h5 {
+  margin: 3px;
+  padding: 0px;
+  font-weight: lighter;
+  text-overflow: ellipsis;
+  max-width: 160px;
+  font-size: 15px;
+}
+
+.book-preview-search > .book-preview-content > h3 {
+  margin: 3px;
+  padding: 0px;
+  text-overflow: ellipsis;
+  max-width: 160px;
+  font-size: 15px;
+}
+
+.search-header {
+  display: flex;
+  height: 30px;
+  align-items: center;
+  margin: 10px 20px;
+}
+
+.club-remove-book {
+  position: relative;
+  left: 210px;
+  top: 35px;
+  font-size: 20px;
+  visibility: hidden;
+  z-index: 2;
+  cursor: pointer;
+}
+
+.preview-card:hover .club-remove-book {
+  visibility: visible;
+}

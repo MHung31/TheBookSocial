@@ -1,0 +1,26 @@
+version: '3'
+services:
+  web:
+    build: .
+    # Add any ENV variables:
+
+    environment:
+      - FLASK_APP=app
+      - FLASK_ENV=${FLASK_ENV}
+      - SECRET_KEY=${SECRET_KEY}
+      - SCHEMA=${SCHEMA}
+      - DATABASE_URL=postgresql://${DATABASE_USER}:${DATABASE_PASSWORD}@db:5432/${DATABASE_DB}
+    depends_on:
+      - db
+
+    ports:
+      - "8000:8000"
+
+  db:
+    image: postgres
+    environment:
+      - POSTGRES_PASSWORD=${DATABASE_PASSWORD}
+      - POSTGRES_USER=${DATABASE_USER}
+      - POSTGRES_DB=${DATABASE_DB}
+    ports:
+      - "5432:5432"

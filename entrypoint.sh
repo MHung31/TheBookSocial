@@ -10,6 +10,7 @@ if [ "$FLASK_ENV" = "production" ]; then
     sleep 3
     # Standard database migrations
     flask db upgrade
+    flask seed undo
     flask seed all
 
     # Start Gunicorn for production
