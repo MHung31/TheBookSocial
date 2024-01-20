@@ -1112,7 +1112,7 @@ Add a member to an existing Club
 
     ```json
     {
-      "user_id": 2
+      "user_id": 3
     }
     ```
 
@@ -1123,11 +1123,15 @@ Add a member to an existing Club
     - Content-Type: application/json
   - Body:
 
-        ```json
-        {"message": "Member added to club"}
-
-    ```
-
+    ```json
+    {
+      "avatar": "avatar-bobbie",
+      "email": "bobbie@aa.io",
+      "first_name": "bob",
+      "id": 3,
+      "last_name": "bie",
+      "username": "bobbie"
+    }
     ```
 
 ### Delete an existing member in a club

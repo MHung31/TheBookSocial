@@ -21,7 +21,7 @@ function AddBookModal() {
   return (
     <div className="add-book-modal">
       <div className="search-header">
-        <h4>Search Title</h4> <label></label>
+        <h4>Search Title</h4> 
         &#x1F50E;&#xFE0E;
         <input
           type="text"
