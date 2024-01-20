@@ -1,10 +1,12 @@
 import "./ClubOptionsModal.css";
+import './AddUserSearchResults.css'
 
 function ClubMemberTile({ member, clubOwner }) {
   const isOwner = clubOwner === member.id;
   return (
     <div className="club-member-tile">
       <div className="club-member-info">
+        <img className='search-avatar' src={member.avatar}/>
         {member.username}{" "}
         <span>
           {isOwner ? (

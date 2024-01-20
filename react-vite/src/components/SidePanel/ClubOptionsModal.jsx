@@ -6,6 +6,8 @@ import { useState, useEffect } from "react";
 import { thunkDeleteClub, thunkGetClubMembers } from "../../redux/clubs";
 import DeleteConfirmModal from "../DeleteConfirmModal";
 import ClubMemberTile from "./ClubMemberTile";
+import { thunkGetAllUsers } from "../../redux/session";
+import AddUserSearchResults from "./AddUserSearchResults";
 
 function ClubOptions({ clubId }) {
   const { setModalContent, closeModal } = useModal();
@@ -18,6 +20,14 @@ function ClubOptions({ clubId }) {
   const members = useSelector((state) => state.clubs.club_members);
   const sessionUser = useSelector((state) => state.session.user);
   const isOwner = sessionUser.id === user_id;
+  const allUsers = useSelector((state) => state.session.all_users);
+  let filteredUsers = [];
+
+  if (searchMember.length > 0) {
+    filteredUsers = Object.values(allUsers).filter((user) =>
+      user.username.toLowerCase().includes(searchMember.toLowerCase())
+    );
+  }
 
   const deleteClub = () => {
     setModalContent(
@@ -31,8 +41,8 @@ function ClubOptions({ clubId }) {
 
   useEffect(() => {
     dispatch(thunkGetClubMembers(clubId));
+    dispatch(thunkGetAllUsers());
   }, [dispatch]);
-
   return (
     <div className="club-modal-options">
       <h2>{title}</h2>
@@ -47,6 +57,15 @@ function ClubOptions({ clubId }) {
             onChange={(e) => setSearchMember(e.target.value)}
             required
           />
+          {searchMember ? (
+            <div className="searched-members">
+              {Object.values(filteredUsers).map((user) => (
+                <AddUserSearchResults user={user} />
+              ))}
+            </div>
+          ) : (
+            <></>
+          )}
         </div>
         <div className="club-current-members">
           {Object.values(members).map((member) => (

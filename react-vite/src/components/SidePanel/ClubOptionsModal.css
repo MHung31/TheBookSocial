@@ -60,6 +60,7 @@
   justify-content: space-between;
   padding: 10px;
   margin: 2px 0px;
+  align-items: center;
 }
 
 .club-add-member {
@@ -80,4 +81,24 @@
   height: 20px;
   width: 180px;
   margin: 0px 3px;
+}
+
+.searched-members {
+  position: absolute;
+  top: 132px;
+  left: 176px;
+  width: 210px;
+  height: 100px;
+  overflow-y: auto;
+}
+
+.club-member-info {
+  display: flex;
+  align-items: center;
+}
+
+.remove-member {
+  cursor: pointer;
+  padding: 5px;
+  font-size: larger;
 }
