@@ -55,6 +55,7 @@ function BookPreviewCard({ book }) {
         <div className="book-preview-content">
           <img src={preview} alt="Preview Not Available" />
           <div
+            title="Progress Bar"
             className="progress-bar"
             style={{
               background: `linear-gradient(90deg, green 0 70%, white 0% 100%)`,

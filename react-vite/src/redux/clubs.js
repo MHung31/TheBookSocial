@@ -9,10 +9,8 @@ const GET_CLUB_MEMBERS = "clubs/members";
 const ADD_CLUB_MEMBER = "clubs/add-member";
 const DELETE_CLUB_MEMBER = "clubs/delete-member";
 
-//working on adding books to clubs
-//then work on deleting books from clubs
-//then club members
-//then edit club options modal finish
+//then club members, get, add, delete
+//then edit/delete club options modal finish
 
 const removeClubBooks = (book) => ({
   type: DELETE_CLUB_BOOK,
@@ -111,35 +109,35 @@ const initialState = {
   club_members: {},
 };
 
-function clubsReducer(clubs = initialState, action) {
+function clubsReducer(clubStore = initialState, action) {
   let new_clubs = {};
   switch (action.type) {
     case GET_CLUBS:
-      new_clubs = { ...clubs, clubs: {} };
+      new_clubs = { ...clubStore, clubs: {} };
       action.payload.forEach((club) => {
         new_clubs.clubs[club.id] = club;
       });
       return new_clubs;
     case CREATE_CLUB:
-      new_clubs = { ...clubs };
-      new_clubs[action.payload.id] = action.payload;
+      new_clubs = { ...clubStore, clubs: { ...clubStore.clubs } };
+      new_clubs.clubs[action.payload.id] = action.payload;
       return new_clubs;
     case ADD_CLUB_BOOK:
-      new_clubs = { ...clubs, club_books: { ...clubs.club_books } };
+      new_clubs = { ...clubStore, club_books: { ...clubStore.club_books } };
       new_clubs.club_books[action.payload.id] = action.payload;
       return new_clubs;
     case GET_CLUB_BOOKS:
-      new_clubs = { ...clubs, club_books: {} };
+      new_clubs = { ...clubStore, club_books: {} };
       action.payload.forEach((book) => {
         new_clubs.club_books[book.id] = book;
       });
       return new_clubs;
     case DELETE_CLUB_BOOK:
-      new_clubs = { ...clubs, club_books: { ...clubs.club_books } };
+      new_clubs = { ...clubStore, club_books: { ...clubStore.club_books } };
       delete new_clubs.club_books[action.payload];
       return new_clubs;
     default:
-      return clubs;
+      return clubStore;
   }
 }
 
