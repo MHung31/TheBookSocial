@@ -12,6 +12,24 @@ const DELETE_CLUB_MEMBER = "clubs/delete-member";
 //then club members, get, add, delete
 //then edit/delete club options modal finish
 
+const deleteClub = (clubId) => ({
+  type: DELETE_CLUB,
+  payload: clubId,
+});
+
+export const thunkDeleteClub = (clubId) => async (dispatch) => {
+  const response = await fetch(`/api/clubs/${clubId}`, {
+    method: "DELETE",
+  });
+  if (response.ok) {
+    const data = await response.json();
+    if (data.errors) {
+      return;
+    }
+    dispatch(deleteClub(clubId));
+  }
+};
+
 const removeClubBooks = (book) => ({
   type: DELETE_CLUB_BOOK,
   payload: book,
@@ -97,9 +115,10 @@ export const thunkCreateClub = (clubInfo) => async (dispatch) => {
   if (response.ok) {
     const data = await response.json();
     if (data.errors) {
-      return;
+      return data.errors;
     }
     dispatch(createClub(data));
+    return data;
   }
 };
 
@@ -135,6 +154,10 @@ function clubsReducer(clubStore = initialState, action) {
     case DELETE_CLUB_BOOK:
       new_clubs = { ...clubStore, club_books: { ...clubStore.club_books } };
       delete new_clubs.club_books[action.payload];
+      return new_clubs;
+    case DELETE_CLUB:
+      new_clubs = { ...clubStore, clubs: { ...clubStore.clubs } };
+      delete new_clubs.clubs[action.payload];
       return new_clubs;
     default:
       return clubStore;

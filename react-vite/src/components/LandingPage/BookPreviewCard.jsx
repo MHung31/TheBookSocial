@@ -34,10 +34,8 @@ function BookPreviewCard({ book }) {
   const removeBook = (e) => {
     setModalContent(
       <DeleteConfirmModal
-        thunk={thunkDeleteClubBook}
+        thunk={thunkDeleteClubBook(id, clubId)}
         message="Remove book from club?"
-        clubId={clubId}
-        bookId={id}
       />
     );
   };

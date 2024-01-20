@@ -3,12 +3,25 @@ import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { useModal } from "../../context/Modal";
 import { useState, useEffect } from "react";
+import { thunkDeleteClub } from "../../redux/clubs";
+import DeleteConfirmModal from "../DeleteConfirmModal";
 
 function ClubOptions({ clubId }) {
+  const { setModalContent } = useModal();
   const dispatch = useDispatch();
   const { id, title, user_id } = useSelector(
     (state) => state.clubs.clubs[clubId]
   );
+
+  const deleteClub = () => {
+    setModalContent(
+      <DeleteConfirmModal
+        thunk={thunkDeleteClub(clubId)}
+        message="Permanently delete this club?"
+        clubId={clubId}
+      />
+    );
+  };
   // const { id, is_public, background_image, name } = item;
   // const { setModalContent } = useModal();
   // const [boardOptions, setBoardOptions] = useState(true);
@@ -41,7 +54,7 @@ function ClubOptions({ clubId }) {
       <h3>Members</h3>
       <button>Add member</button>
       <button>Leave Club</button>
-      <button>Delete Club</button>
+      <button onClick={deleteClub}>Delete Club</button>
     </div>
   );
 }

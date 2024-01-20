@@ -5,20 +5,23 @@ import { thunkSetAllBooks, thunkSetFavoriteBooks } from "../../redux/books";
 import BookPreviewCard from "./BookPreviewCard";
 import SidePanel from "../SidePanel";
 import { useParams } from "react-router-dom";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useModal } from "../../context/Modal";
 import AddBookModal from "./AddBookModal";
 import { thunkGetClubBooks } from "../../redux/clubs";
 
 function LandingPage() {
+  const navigate = useNavigate();
   const { clubId } = useParams();
   const location = useLocation();
   const { setModalContent } = useModal();
   const { pathname } = location;
   const dispatch = useDispatch();
+  const clubs = useSelector((state) => state.clubs.clubs);
   let isClub = false;
 
   let books = {};
+
   if (pathname === "/all") {
     books = useSelector((state) => state.books.all_books);
   }
@@ -29,7 +32,11 @@ function LandingPage() {
 
   if (pathname.startsWith("/clubs/")) {
     books = useSelector((state) => state.clubs.club_books);
+
     isClub = true;
+    if (!clubs[clubId]) {
+      navigate("/");
+    }
   }
 
   const addBook = () => {

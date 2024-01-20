@@ -29,8 +29,11 @@ function SidePanel() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    dispatch(thunkCreateClub({ title: title, is_public: false }));
+    const response = await dispatch(
+      thunkCreateClub({ title: title, is_public: false })
+    );
     setCreateClubMenu(!createClubMenu);
+    navigate(`/clubs/${response.id}`);
   };
 
   return (
@@ -62,7 +65,7 @@ function SidePanel() {
                 required
                 maxlength="20"
                 minlength="3"
-                style={{width:"110px"}}
+                style={{ width: "110px" }}
               />
               <button type="submit" className="club-submit">
                 <i class="fa-solid fa-check"></i>
@@ -72,7 +75,7 @@ function SidePanel() {
         ) : (
           <></>
         )}
-        <div className="panel-footer">{' '}</div>
+        <div className="panel-footer"> </div>
       </ul>
     </div>
   );
