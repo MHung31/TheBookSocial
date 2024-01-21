@@ -8,24 +8,88 @@ const DELETE_CLUB_BOOK = "clubs/delete-book";
 const GET_CLUB_MEMBERS = "clubs/members";
 const ADD_CLUB_MEMBER = "clubs/add-member";
 const DELETE_CLUB_MEMBER = "clubs/delete-member";
-const RESET_CLUB_DATA = "clubs/reset-data";
-const LEAVE_CLUB_MEMBER = "/clubs/leave-member";
+const RESET_CLUB_USERS = "clubs/reset-users";
+const RESET_CLUB_BOOKS = "clubs/reset-books";
 
-//then club members, add, delete
-//then edit/leave club options modal finish
+const updateClub = (clubInfo) => ({
+  type: EDIT_CLUB,
+  payload: clubInfo,
+});
 
-const addClubMember = (memberId) => ({
-  type: ADD_CLUB_MEMBER,
+export const thunkUpdateClub = (clubInfo, clubId) => async (dispatch) => {
+  const response = await fetch(`/api/clubs/${clubId}`, {
+    method: "PUT",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(clubInfo),
+  });
+
+  if (response.ok) {
+    const data = await response.json();
+    if (data.errors) {
+      return data.errors;
+    }
+    // dispatch(updateClub(data));
+    dispatch(thunkSessionClubs());
+    return data;
+  }
+};
+
+const deleteClubMember = (memberId) => ({
+  type: DELETE_CLUB_MEMBER,
   payload: memberId,
 });
+
+export const thunkDeleteClubMember = (memberId, clubId) => async (dispatch) => {
+  const response = await fetch(`/api/clubs/${clubId}/members/${memberId}`, {
+    method: "DELETE",
+  });
+
+  if (response.ok) {
+    const data = await response.json();
+    if (data.errors) {
+      return data.errors;
+    }
+    dispatch(deleteClubMember(memberId));
+    dispatch(thunkSessionClubs());
+
+    return data;
+  }
+};
+
+const addClubMember = (memberInfo) => ({
+  type: ADD_CLUB_MEMBER,
+  payload: memberInfo,
+});
+
+export const thunkAddClubMember = (memberId, clubId) => async (dispatch) => {
+  const response = await fetch(`/api/clubs/${clubId}/members`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(memberId),
+  });
+
+  if (response.ok) {
+    const data = await response.json();
+    if (data.errors) {
+      return data.errors;
+    }
+    dispatch(addClubMember(data));
+    return data;
+  }
+};
 
 const getClubMembers = (members) => ({
   type: GET_CLUB_MEMBERS,
   payload: members,
 });
 
-export const thunkResetClubs = () => ({
-  type: RESET_CLUB_DATA,
+export const thunkResetClubsUsers = () => ({
+  type: RESET_CLUB_USERS,
+  payload: null,
+});
+
+export const thunkResetClubsBooks = () => ({
+  type: RESET_CLUB_BOOKS,
   payload: null,
 });
 
@@ -193,8 +257,22 @@ function clubsReducer(clubStore = initialState, action) {
         new_clubs.club_members[member.id] = member;
       });
       return new_clubs;
-    case RESET_CLUB_DATA:
-      new_clubs = { ...clubStore, club_members: {}, club_books: {} };
+    case RESET_CLUB_USERS:
+      new_clubs = { ...clubStore, club_members: {} };
+      return new_clubs;
+    case RESET_CLUB_BOOKS:
+      new_clubs = { ...clubStore, club_books: {} };
+      return new_clubs;
+    case ADD_CLUB_MEMBER:
+      new_clubs = { ...clubStore, club_members: { ...clubStore.club_members } };
+      new_clubs.club_members[action.payload.id] = action.payload;
+      return new_clubs;
+    case DELETE_CLUB_MEMBER:
+      new_clubs = {
+        ...clubStore,
+        club_members: { ...clubStore.club_members },
+      };
+      delete new_clubs.club_members[action.payload];
       return new_clubs;
     default:
       return clubStore;

@@ -6,7 +6,9 @@ import { useState, useEffect } from "react";
 import {
   thunkDeleteClub,
   thunkGetClubMembers,
-  thunkResetClubs,
+  thunkResetClubsUsers,
+  thunkDeleteClubMember,
+  thunkUpdateClub,
 } from "../../redux/clubs";
 import DeleteConfirmModal from "../DeleteConfirmModal";
 import ClubMemberTile from "./ClubMemberTile";
@@ -20,6 +22,7 @@ function ClubOptions({ clubId }) {
     (state) => state.clubs.clubs[clubId]
   );
   const [searchMember, setSearchMember] = useState("");
+  const [clubTitle, setClubTitle] = useState(title);
 
   const members = useSelector((state) => state.clubs.club_members);
   const sessionUser = useSelector((state) => state.session.user);
@@ -33,12 +36,19 @@ function ClubOptions({ clubId }) {
     );
   }
 
+  const leaveClub = () => {
+    setModalContent(
+      <DeleteConfirmModal
+        thunk={thunkDeleteClubMember(sessionUser.id, clubId)}
+        message="Leave this club?"
+      />
+    );
+  };
   const deleteClub = () => {
     setModalContent(
       <DeleteConfirmModal
         thunk={thunkDeleteClub(clubId)}
         message="Permanently delete this club?"
-        clubId={clubId}
       />
     );
   };
@@ -46,12 +56,34 @@ function ClubOptions({ clubId }) {
   useEffect(() => {
     dispatch(thunkGetClubMembers(clubId));
     dispatch(thunkGetAllUsers());
-    return () => dispatch(thunkResetClubs());
+    return () => dispatch(thunkResetClubsUsers());
   }, [dispatch]);
+
+  const updateTitle = (e) => {
+    e.preventDefault();
+    if (clubTitle.length < 1) {
+      setClubTitle(title);
+    } else {
+      const clubInfo = { title: clubTitle, is_public: false };
+      dispatch(thunkUpdateClub(clubInfo, clubId));
+    }
+  };
 
   return (
     <div className="club-modal-options">
-      <h2>{title}</h2>
+      {isOwner ? (
+        <input
+          className="live-club-title"
+          value={clubTitle}
+          onChange={(e) => setClubTitle(e.target.value)}
+          onBlur={updateTitle}
+          maxlength="20"
+          minlength="1"
+          required
+        />
+      ) : (
+        <h2>{title}</h2>
+      )}
       <div className="club-options-members">
         <h3>Club Members</h3>
         {isOwner ? (
@@ -67,7 +99,7 @@ function ClubOptions({ clubId }) {
             {searchMember ? (
               <div className="searched-members">
                 {Object.values(filteredUsers).map((user) => (
-                  <AddUserSearchResults user={user} />
+                  <AddUserSearchResults user={user} clubId={clubId} />
                 ))}
               </div>
             ) : (
@@ -78,14 +110,25 @@ function ClubOptions({ clubId }) {
           <></>
         )}
         <div className="club-current-members">
-          {Object.values(members).map((member) => (
-            <ClubMemberTile member={member} clubOwner={user_id} />
-          ))}
+          {Object.values(members)
+            .sort((a, b) => a.username.toLowerCase() < b.username.toLowerCase())
+            .map((member) => (
+              <ClubMemberTile
+                member={member}
+                clubId={clubId}
+                clubOwner={user_id}
+              />
+            ))}
         </div>
       </div>
       <div className="club-options-delete">
         {!isOwner ? (
-          <button className="club-options-button delete-yes">Leave Club</button>
+          <button
+            className="club-options-button delete-yes"
+            onClick={leaveClub}
+          >
+            Leave Club
+          </button>
         ) : (
           <></>
         )}

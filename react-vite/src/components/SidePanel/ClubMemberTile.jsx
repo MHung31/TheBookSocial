@@ -1,12 +1,17 @@
 import "./ClubOptionsModal.css";
 import "./AddUserSearchResults.css";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { thunkDeleteClubMember } from "../../redux/clubs";
 
-function ClubMemberTile({ member, clubOwner }) {
+function ClubMemberTile({ member, clubOwner, clubId }) {
+  const dispatch = useDispatch();
   const user = useSelector((state) => state.session.user);
   const isOwner = clubOwner === member.id;
   const isGuest = user.id !== clubOwner;
 
+  const deleteMember = () => {
+    dispatch(thunkDeleteClubMember(member.id, clubId));
+  };
   return (
     <div className="club-member-tile">
       <div className="club-member-info">
@@ -15,7 +20,7 @@ function ClubMemberTile({ member, clubOwner }) {
             <i class="fa-solid fa-crown" style={{ color: "gold" }}></i>
           </div>
         ) : (
-          <span className="tile-placeholder">{' '}</span>
+          <span className="tile-placeholder"> </span>
         )}
         <img className="search-avatar" src={member.avatar} />
 
@@ -24,7 +29,7 @@ function ClubMemberTile({ member, clubOwner }) {
       {isOwner || isGuest ? (
         <></>
       ) : (
-        <div className="remove-member">
+        <div onClick={deleteMember} className="remove-member">
           <i class="fa-solid fa-xmark"></i>
         </div>
       )}
