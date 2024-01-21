@@ -33,6 +33,7 @@ function SidePanel() {
       thunkCreateClub({ title: title, is_public: false })
     );
     setCreateClubMenu(!createClubMenu);
+    setTitle("");
     navigate(`/clubs/${response.id}`);
   };
 

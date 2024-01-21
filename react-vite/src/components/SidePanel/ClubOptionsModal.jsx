@@ -6,7 +6,7 @@ import { useState, useEffect } from "react";
 import {
   thunkDeleteClub,
   thunkGetClubMembers,
-  thunkResetClubs,
+  thunkResetClubsUsers,
 } from "../../redux/clubs";
 import DeleteConfirmModal from "../DeleteConfirmModal";
 import ClubMemberTile from "./ClubMemberTile";
@@ -46,7 +46,7 @@ function ClubOptions({ clubId }) {
   useEffect(() => {
     dispatch(thunkGetClubMembers(clubId));
     dispatch(thunkGetAllUsers());
-    return () => dispatch(thunkResetClubs());
+    return () => dispatch(thunkResetClubsUsers());
   }, [dispatch]);
 
   return (

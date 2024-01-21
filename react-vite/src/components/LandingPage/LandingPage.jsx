@@ -8,7 +8,7 @@ import { useParams } from "react-router-dom";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useModal } from "../../context/Modal";
 import AddBookModal from "./AddBookModal";
-import { thunkGetClubBooks } from "../../redux/clubs";
+import { thunkGetClubBooks, thunkResetClubsBooks } from "../../redux/clubs";
 
 function LandingPage() {
   const navigate = useNavigate();
@@ -18,7 +18,9 @@ function LandingPage() {
   const { pathname } = location;
   const dispatch = useDispatch();
   const clubs = useSelector((state) => state.clubs.clubs);
+  const sessionUser = useSelector((state) => state.session.user);
   let isClub = false;
+  let ownsClub = false;
 
   let books = {};
 
@@ -31,12 +33,12 @@ function LandingPage() {
   }
 
   if (pathname.startsWith("/clubs/")) {
-    books = useSelector((state) => state.clubs.club_books);
-
-    isClub = true;
     if (!clubs[clubId]) {
       navigate("/");
     }
+    books = useSelector((state) => state.clubs.club_books);
+    isClub = true;
+    ownsClub = clubs[clubId]?.user_id === sessionUser.id;
   }
 
   const addBook = () => {
@@ -48,22 +50,9 @@ function LandingPage() {
     dispatch(thunkSetAllBooks());
     if (pathname.startsWith("/clubs/")) {
       dispatch(thunkGetClubBooks(clubId));
+      return () => dispatch(thunkResetClubsBooks());
     }
   }, [dispatch, pathname]);
-
-  // useEffect(() => {
-  //   let tempOwnedBoards = {};
-  //   let tempSharedBoards = {};
-  //   for (let key in myBoards) {
-  //     if (sessionUser.id === myBoards[key].user_id) {
-  //       tempOwnedBoards[key] = myBoards[key];
-  //     } else {
-  //       tempSharedBoards[key] = myBoards[key];
-  //     }
-  //   }
-  //   setOwnedBoards(tempOwnedBoards);
-  //   setSharedBoards(tempSharedBoards);
-  // }, [allBooks]);
 
   if (!books)
     return (
@@ -80,7 +69,7 @@ function LandingPage() {
           return <BookPreviewCard book={book} />;
         })}
         <>
-          {isClub ? (
+          {isClub && ownsClub ? (
             <div onClick={addBook} className="add-book">
               <i class="fa-solid fa-book"></i>
               <div>Add book</div>

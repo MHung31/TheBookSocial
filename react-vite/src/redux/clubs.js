@@ -8,11 +8,12 @@ const DELETE_CLUB_BOOK = "clubs/delete-book";
 const GET_CLUB_MEMBERS = "clubs/members";
 const ADD_CLUB_MEMBER = "clubs/add-member";
 const DELETE_CLUB_MEMBER = "clubs/delete-member";
-const RESET_CLUB_DATA = "clubs/reset-data";
+const RESET_CLUB_USERS = "clubs/reset-users";
+const RESET_CLUB_BOOKS = "clubs/reset-books";
 const LEAVE_CLUB_MEMBER = "/clubs/leave-member";
 
-//then club members, add, delete
-//then edit/leave club options modal finish
+//club members, add, delete
+//club edit title/ guests leave club
 
 const addClubMember = (memberId) => ({
   type: ADD_CLUB_MEMBER,
@@ -24,8 +25,13 @@ const getClubMembers = (members) => ({
   payload: members,
 });
 
-export const thunkResetClubs = () => ({
-  type: RESET_CLUB_DATA,
+export const thunkResetClubsUsers = () => ({
+  type: RESET_CLUB_USERS,
+  payload: null,
+});
+
+export const thunkResetClubsBooks= () => ({
+  type: RESET_CLUB_BOOKS,
   payload: null,
 });
 
@@ -193,9 +199,12 @@ function clubsReducer(clubStore = initialState, action) {
         new_clubs.club_members[member.id] = member;
       });
       return new_clubs;
-    case RESET_CLUB_DATA:
-      new_clubs = { ...clubStore, club_members: {}, club_books: {} };
+    case RESET_CLUB_USERS:
+      new_clubs = { ...clubStore, club_members: {} };
       return new_clubs;
+      case RESET_CLUB_BOOKS:
+        new_clubs = { ...clubStore, club_books: {} };
+        return new_clubs;
     default:
       return clubStore;
   }

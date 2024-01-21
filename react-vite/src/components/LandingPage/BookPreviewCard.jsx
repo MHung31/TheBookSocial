@@ -21,6 +21,10 @@ function BookPreviewCard({ book }) {
   const isClub = pathname.startsWith("/clubs/");
   let { author, id, length, preview, title, num_comments } = book;
   const favorites = useSelector((state) => state.books.favorite_books);
+  const sessionUser = useSelector((state) => state.session.user);
+  const club = useSelector((state) => state.clubs.clubs[clubId]);
+  let ownsClub = false;
+  if (isClub) ownsClub = sessionUser.id === club.user_id;
 
   const toggleFavorite = () => {
     const book = { book_id: id };
@@ -42,7 +46,7 @@ function BookPreviewCard({ book }) {
 
   return (
     <div className="preview-card">
-      {isClub ? (
+      {isClub && ownsClub ? (
         <div className="club-remove-book" onClick={removeBook}>
           <i class="fa-solid fa-circle-xmark"></i>
         </div>
