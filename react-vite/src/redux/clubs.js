@@ -11,8 +11,6 @@ const DELETE_CLUB_MEMBER = "clubs/delete-member";
 const RESET_CLUB_USERS = "clubs/reset-users";
 const RESET_CLUB_BOOKS = "clubs/reset-books";
 
-//club edit title/ guests leave club
-
 const updateClub = (clubInfo) => ({
   type: EDIT_CLUB,
   payload: clubInfo,
