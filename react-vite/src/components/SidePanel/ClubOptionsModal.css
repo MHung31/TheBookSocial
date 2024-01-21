@@ -102,3 +102,11 @@
   padding: 5px;
   font-size: larger;
 }
+
+.crown {
+  margin: 0px;
+  padding: 0px;
+}
+.tile-placeholder {
+  width: 20px;
+}

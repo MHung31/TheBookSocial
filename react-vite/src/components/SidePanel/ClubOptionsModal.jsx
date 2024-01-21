@@ -3,7 +3,11 @@ import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { useModal } from "../../context/Modal";
 import { useState, useEffect } from "react";
-import { thunkDeleteClub, thunkGetClubMembers } from "../../redux/clubs";
+import {
+  thunkDeleteClub,
+  thunkGetClubMembers,
+  thunkResetClubs,
+} from "../../redux/clubs";
 import DeleteConfirmModal from "../DeleteConfirmModal";
 import ClubMemberTile from "./ClubMemberTile";
 import { thunkGetAllUsers } from "../../redux/session";
@@ -42,31 +46,37 @@ function ClubOptions({ clubId }) {
   useEffect(() => {
     dispatch(thunkGetClubMembers(clubId));
     dispatch(thunkGetAllUsers());
+    return () => dispatch(thunkResetClubs());
   }, [dispatch]);
+
   return (
     <div className="club-modal-options">
       <h2>{title}</h2>
       <div className="club-options-members">
         <h3>Club Members</h3>
-        <div className="club-add-member">
-          <h4>Add Member</h4>
-          &#x1F50E;&#xFE0E;
-          <input
-            type="text"
-            value={searchMember}
-            onChange={(e) => setSearchMember(e.target.value)}
-            required
-          />
-          {searchMember ? (
-            <div className="searched-members">
-              {Object.values(filteredUsers).map((user) => (
-                <AddUserSearchResults user={user} />
-              ))}
-            </div>
-          ) : (
-            <></>
-          )}
-        </div>
+        {isOwner ? (
+          <div className="club-add-member">
+            <h4>Add Member</h4>
+            &#x1F50E;&#xFE0E;
+            <input
+              type="text"
+              value={searchMember}
+              onChange={(e) => setSearchMember(e.target.value)}
+              required
+            />
+            {searchMember ? (
+              <div className="searched-members">
+                {Object.values(filteredUsers).map((user) => (
+                  <AddUserSearchResults user={user} />
+                ))}
+              </div>
+            ) : (
+              <></>
+            )}
+          </div>
+        ) : (
+          <></>
+        )}
         <div className="club-current-members">
           {Object.values(members).map((member) => (
             <ClubMemberTile member={member} clubOwner={user_id} />
