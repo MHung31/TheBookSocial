@@ -1,7 +1,112 @@
 .club-modal-options {
-  height: 500px;
-  width: 1000px;
+  height: 510px;
+  width: 410px;
   background-color: white;
-  border: 1px black solid;
   border-radius: 5px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.club-options-button {
+  background-color: white;
+  height: 40px;
+  width: 300px;
+  font-size: medium;
+  margin: 5px 10px;
+  color: white;
+  font-weight: bold;
+}
+
+.delete-yes {
+  background-color: rgb(251, 74, 74);
+}
+
+.delete-no {
+  background-color: gray;
+}
+
+.club-options-delete {
+  display: flex;
+  flex-direction: column;
+  margin-top: 10px;
+}
+
+.club-options-members {
+  height: 360px;
+  width: 400px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.club-modal-options > h2 {
+  margin: 0px 0px;
+  margin-bottom: 20px;
+  padding: 0px;
+}
+
+.club-modal-options > * h3 {
+  margin: 0px 0px;
+  padding: 0px;
+}
+
+.club-member-tile {
+  display: flex;
+  border: 1px solid black;
+  width: 250px;
+  justify-content: space-between;
+  padding: 10px;
+  margin: 2px 0px;
+  align-items: center;
+}
+
+.club-add-member {
+  display: flex;
+  height: 40px;
+  width: 320px;
+  align-items: center;
+  margin: 10px;
+}
+
+.club-current-members {
+  height: 280px;
+  overflow-y: auto;
+  padding: 0px 20px;
+}
+
+.club-add-member > input {
+  height: 20px;
+  width: 180px;
+  margin: 0px 3px;
+}
+
+.searched-members {
+  position: absolute;
+  top: 132px;
+  left: 176px;
+  width: 210px;
+  height: 100px;
+  overflow-y: auto;
+}
+
+.club-member-info {
+  display: flex;
+  align-items: center;
+}
+
+.remove-member {
+  cursor: pointer;
+  padding: 5px;
+  font-size: larger;
+}
+
+.crown {
+  margin: 0px;
+  padding: 0px;
+}
+.tile-placeholder {
+  width: 20px;
 }

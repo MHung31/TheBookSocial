@@ -8,11 +8,55 @@ const DELETE_CLUB_BOOK = "clubs/delete-book";
 const GET_CLUB_MEMBERS = "clubs/members";
 const ADD_CLUB_MEMBER = "clubs/add-member";
 const DELETE_CLUB_MEMBER = "clubs/delete-member";
+const RESET_CLUB_DATA = "clubs/reset-data";
+const LEAVE_CLUB_MEMBER = "/clubs/leave-member";
 
-//working on adding books to clubs
-//then work on deleting books from clubs
-//then club members
-//then edit club options modal finish
+//then club members, add, delete
+//then edit/leave club options modal finish
+
+const addClubMember = (memberId) => ({
+  type: ADD_CLUB_MEMBER,
+  payload: memberId,
+});
+
+const getClubMembers = (members) => ({
+  type: GET_CLUB_MEMBERS,
+  payload: members,
+});
+
+export const thunkResetClubs = () => ({
+  type: RESET_CLUB_DATA,
+  payload: null,
+});
+
+export const thunkGetClubMembers = (clubId) => async (dispatch) => {
+  const response = await fetch(`/api/clubs/${clubId}/members`);
+  if (response.ok) {
+    const data = await response.json();
+    if (data.errors) {
+      return;
+    }
+    dispatch(getClubMembers(data.members));
+  }
+};
+
+const deleteClub = (clubId) => ({
+  type: DELETE_CLUB,
+  payload: clubId,
+});
+
+export const thunkDeleteClub = (clubId) => async (dispatch) => {
+  const response = await fetch(`/api/clubs/${clubId}`, {
+    method: "DELETE",
+  });
+  if (response.ok) {
+    const data = await response.json();
+    if (data.errors) {
+      return;
+    }
+    dispatch(deleteClub(clubId));
+  }
+};
 
 const removeClubBooks = (book) => ({
   type: DELETE_CLUB_BOOK,
@@ -99,9 +143,10 @@ export const thunkCreateClub = (clubInfo) => async (dispatch) => {
   if (response.ok) {
     const data = await response.json();
     if (data.errors) {
-      return;
+      return data.errors;
     }
     dispatch(createClub(data));
+    return data;
   }
 };
 
@@ -111,35 +156,48 @@ const initialState = {
   club_members: {},
 };
 
-function clubsReducer(clubs = initialState, action) {
+function clubsReducer(clubStore = initialState, action) {
   let new_clubs = {};
   switch (action.type) {
     case GET_CLUBS:
-      new_clubs = { ...clubs, clubs: {} };
+      new_clubs = { ...clubStore, clubs: {} };
       action.payload.forEach((club) => {
         new_clubs.clubs[club.id] = club;
       });
       return new_clubs;
     case CREATE_CLUB:
-      new_clubs = { ...clubs };
-      new_clubs[action.payload.id] = action.payload;
+      new_clubs = { ...clubStore, clubs: { ...clubStore.clubs } };
+      new_clubs.clubs[action.payload.id] = action.payload;
       return new_clubs;
     case ADD_CLUB_BOOK:
-      new_clubs = { ...clubs, club_books: { ...clubs.club_books } };
+      new_clubs = { ...clubStore, club_books: { ...clubStore.club_books } };
       new_clubs.club_books[action.payload.id] = action.payload;
       return new_clubs;
     case GET_CLUB_BOOKS:
-      new_clubs = { ...clubs, club_books: {} };
+      new_clubs = { ...clubStore, club_books: {} };
       action.payload.forEach((book) => {
         new_clubs.club_books[book.id] = book;
       });
       return new_clubs;
     case DELETE_CLUB_BOOK:
-      new_clubs = { ...clubs, club_books: { ...clubs.club_books } };
+      new_clubs = { ...clubStore, club_books: { ...clubStore.club_books } };
       delete new_clubs.club_books[action.payload];
       return new_clubs;
+    case DELETE_CLUB:
+      new_clubs = { ...clubStore, clubs: { ...clubStore.clubs } };
+      delete new_clubs.clubs[action.payload];
+      return new_clubs;
+    case GET_CLUB_MEMBERS:
+      new_clubs = { ...clubStore, club_members: {} };
+      action.payload.forEach((member) => {
+        new_clubs.club_members[member.id] = member;
+      });
+      return new_clubs;
+    case RESET_CLUB_DATA:
+      new_clubs = { ...clubStore, club_members: {}, club_books: {} };
+      return new_clubs;
     default:
-      return clubs;
+      return clubStore;
   }
 }
 

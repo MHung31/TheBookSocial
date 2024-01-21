@@ -11,6 +11,7 @@ function SideItem({ club }) {
   const ulRef = useRef();
 
   const toggleMenu = (e) => {
+    e.preventDefault();
     setModalContent(<ClubOptions clubId={id} />);
   };
   useEffect(() => {

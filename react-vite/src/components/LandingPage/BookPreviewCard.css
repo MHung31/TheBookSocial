@@ -108,17 +108,21 @@ a.book-preview {
   display: flex;
   height: 30px;
   align-items: center;
-  margin: 10px 20px;
+  padding: 20px 20px;
 }
 
 .club-remove-book {
   position: relative;
   left: 210px;
-  top: 35px;
+  top: 12px;
   font-size: 20px;
   visibility: hidden;
   z-index: 2;
   cursor: pointer;
+  margin: 0px;
+  padding: 0px;
+  width: 0px;
+  height: 0px;
 }
 
 .preview-card:hover .club-remove-book {

@@ -80,7 +80,7 @@ def club_add_members(id):
         return {'error': 'User not found'}
     club.clubs_members.append(user)
     db.session.commit()
-    return {'message': "Member added to club"}
+    return user.to_dict()
 
 @club_routes.route('/<int:clubId>/members/<int:memberId>', methods=['DELETE'])
 @login_required

@@ -18,7 +18,7 @@ function BookPreviewCard({ book }) {
   const location = useLocation();
   const dispatch = useDispatch();
   const { pathname } = location;
-  const club = pathname.startsWith("/clubs/");
+  const isClub = pathname.startsWith("/clubs/");
   let { author, id, length, preview, title, num_comments } = book;
   const favorites = useSelector((state) => state.books.favorite_books);
 
@@ -34,23 +34,26 @@ function BookPreviewCard({ book }) {
   const removeBook = (e) => {
     setModalContent(
       <DeleteConfirmModal
-        thunk={thunkDeleteClubBook}
+        thunk={thunkDeleteClubBook(id, clubId)}
         message="Remove book from club?"
-        clubId={clubId}
-        bookId={id}
       />
     );
   };
 
   return (
     <div className="preview-card">
-      <div className="club-remove-book" onClick={removeBook}>
-        <i class="fa-solid fa-circle-xmark"></i>
-      </div>
+      {isClub ? (
+        <div className="club-remove-book" onClick={removeBook}>
+          <i class="fa-solid fa-circle-xmark"></i>
+        </div>
+      ) : (
+        <></>
+      )}
       <NavLink to={`/books/${id}`} className="book-preview">
         <div className="book-preview-content">
           <img src={preview} alt="Preview Not Available" />
           <div
+            title="Progress Bar"
             className="progress-bar"
             style={{
               background: `linear-gradient(90deg, green 0 70%, white 0% 100%)`,

@@ -2,17 +2,11 @@ import "./DeleteConfirmModal.css";
 import { useModal } from "../../context/Modal";
 import { useSelector, useDispatch } from "react-redux";
 
-function DeleteConfirmModal({
-  thunk,
-  message,
-  clubId = null,
-  memberId = null,
-  bookId = null,
-}) {
+function DeleteConfirmModal({ thunk, message }) {
   const { closeModal } = useModal();
   const dispatch = useDispatch();
   const deleteConfirmed = () => {
-    dispatch(thunk(bookId, clubId));
+    dispatch(thunk);
     closeModal();
   };
 
@@ -21,7 +15,7 @@ function DeleteConfirmModal({
       <h2>{message}</h2>
       <div className="delete-buttons-yes-no">
         <button className="delete-button delete-yes" onClick={deleteConfirmed}>
-          Remove
+          Confirm
         </button>
         <button className="delete-button delete-no" onClick={closeModal}>
           Cancel

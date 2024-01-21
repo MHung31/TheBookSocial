@@ -27,7 +27,7 @@ function BookPreviewCardSearch({ book }) {
     closeModal();
   };
   return (
-    <div onClick={addBook} className="book-preview-search">
+    <div title='Add book' onClick={addBook} className="book-preview-search">
       <div className="book-preview-content">
         <img src={preview} alt="Preview Not Available" />
 

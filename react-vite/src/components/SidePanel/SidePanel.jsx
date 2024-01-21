@@ -12,14 +12,8 @@ function SidePanel() {
   const { id } = useParams();
   const sessionUser = useSelector((state) => state.session.user);
   const clubs = useSelector((state) => state.clubs.clubs);
-  const [createBoardMenu, setCreateBoardMenu] = useState(false);
+  const [createClubMenu, setCreateClubMenu] = useState(false);
   const [title, setTitle] = useState("");
-  //   const myBoards = useSelector((state) => state.boards.myBoards);
-  //   const publicBoards = useSelector((state) => state.boards.publicBoards);
-  //   const [ownedBoards, setOwnedBoards] = useState({});
-  //   const [sharedBoards, setSharedBoards] = useState({});
-  //   const [ownedBoardsMenu, setOwnedBoardsMenu] = useState(true);
-  //   const [sharedBoardsMenu, setSharedBoardsMenu] = useState(false);
 
   if (!sessionUser) {
     navigate("/");
@@ -30,13 +24,16 @@ function SidePanel() {
   }, [dispatch]);
 
   const createClubToggle = () => {
-    setCreateBoardMenu(!createBoardMenu);
+    setCreateClubMenu(!createClubMenu);
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    dispatch(thunkCreateClub({ title: title, is_public: false }));
-    setCreateBoardMenu(!createBoardMenu);
+    const response = await dispatch(
+      thunkCreateClub({ title: title, is_public: false })
+    );
+    setCreateClubMenu(!createClubMenu);
+    navigate(`/clubs/${response.id}`);
   };
 
   return (
@@ -57,7 +54,7 @@ function SidePanel() {
         <div className="create-club" onClick={createClubToggle}>
           Create Club
         </div>
-        {createBoardMenu ? (
+        {createClubMenu ? (
           <div className="create-club-form">
             <form onSubmit={handleSubmit}>
               <label>Enter Club Name</label>
@@ -68,7 +65,7 @@ function SidePanel() {
                 required
                 maxlength="20"
                 minlength="3"
-                style={{width:"110px"}}
+                style={{ width: "110px" }}
               />
               <button type="submit" className="club-submit">
                 <i class="fa-solid fa-check"></i>
@@ -78,7 +75,7 @@ function SidePanel() {
         ) : (
           <></>
         )}
-        <div className="panel-footer">{' '}</div>
+        <div className="panel-footer"> </div>
       </ul>
     </div>
   );

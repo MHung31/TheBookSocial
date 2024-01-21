@@ -1,0 +1,17 @@
+.user-search-results {
+  border: 1px solid black;
+  height: 40px;
+  width: 186px;
+  background-color: white;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  font-weight: bold;
+}
+.search-avatar {
+  width: 35px;
+  height: 35px;
+  margin: 0px 5px;
+  border-radius: 40px;
+  object-fit: contain;
+}
