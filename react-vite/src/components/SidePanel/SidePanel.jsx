@@ -65,7 +65,7 @@ function SidePanel() {
                 onChange={(e) => setTitle(e.target.value)}
                 required
                 maxlength="20"
-                minlength="3"
+                minlength="1"
                 style={{ width: "110px" }}
               />
               <button type="submit" className="club-submit">

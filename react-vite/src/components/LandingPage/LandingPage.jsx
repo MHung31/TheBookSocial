@@ -38,7 +38,7 @@ function LandingPage() {
     }
     books = useSelector((state) => state.clubs.club_books);
     isClub = true;
-    ownsClub = clubs[clubId]?.user_id === sessionUser.id;
+    ownsClub = clubs[clubId]?.user_id === sessionUser?.id;
   }
 
   const addBook = () => {
@@ -46,11 +46,15 @@ function LandingPage() {
   };
 
   useEffect(() => {
-    dispatch(thunkSetFavoriteBooks());
-    dispatch(thunkSetAllBooks());
-    if (pathname.startsWith("/clubs/")) {
-      dispatch(thunkGetClubBooks(clubId));
-      return () => dispatch(thunkResetClubsBooks());
+    if (!sessionUser) {
+      navigate("/");
+    } else {
+      dispatch(thunkSetFavoriteBooks());
+      dispatch(thunkSetAllBooks());
+      if (pathname.startsWith("/clubs/")) {
+        dispatch(thunkGetClubBooks(clubId));
+        return () => dispatch(thunkResetClubsBooks());
+      }
     }
   }, [dispatch, pathname]);
 
