@@ -7,7 +7,9 @@
   overflow-y: auto;
   align-content: flex-start;
   height: calc(100vh - 51px);
+  scrollbar-width: thin;
 }
+
 
 .Landing-Page > h4 {
   margin: 10px 0px;

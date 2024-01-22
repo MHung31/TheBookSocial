@@ -91,13 +91,17 @@ function ClubOptions({ clubId }) {
             <h4>Add Member</h4>
             &#x1F50E;&#xFE0E;
             <input
+              id="search-member-input"
               type="text"
               value={searchMember}
               onChange={(e) => setSearchMember(e.target.value)}
               required
             />
             {searchMember ? (
-              <div className="searched-members">
+              <div
+                className="searched-members"
+                onClick={()=>setSearchMember("")}
+              >
                 {Object.values(filteredUsers).map((user) => (
                   <AddUserSearchResults user={user} clubId={clubId} />
                 ))}
