@@ -4,12 +4,17 @@ import { useSelector } from "react-redux";
 import ProfileButton from "./ProfileButton";
 import "./Navigation.css";
 import { useModal } from "../../context/Modal";
+import { useLocation, useNavigate } from "react-router-dom";
 
 function Navigation() {
   const { setModalContent } = useModal();
   const [showMenu, setShowMenu] = useState(false);
   const user = useSelector((store) => store.session.user);
   const ulRef = useRef();
+  const location = useLocation();
+  const { pathname } = location;
+  const navigate = useNavigate();
+
 
   return (
     <ul className="navigation">

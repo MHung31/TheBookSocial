@@ -1,0 +1,36 @@
+.book-opener {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+
+.book-preview > img {
+  object-fit: contain;
+  max-width: calc(100vw / 2);
+  max-height: calc(100vh - 51px);
+}
+.book-preview {
+  margin: auto;
+}
+
+.book-opener {
+  overflow-y: hidden;
+}
+
+.book-title-author {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border-right: 2px solid rgba(0, 0, 0, 0.119);
+}
+
+.book-content {
+  font-size: x-large;
+  word-wrap: break-word;
+  white-space: pre-wrap;
+  font-family: "Times New Roman", Times, serif;
+  line-height: 40px;
+  overflow-y: auto;
+  max-height: calc(100vh - 100px);
+  padding: 0vh 20vw;
+}
