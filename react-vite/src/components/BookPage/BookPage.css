@@ -34,3 +34,46 @@
   max-height: calc(100vh - 100px);
   padding: 0vh 20vw;
 }
+
+.comment {
+  border-bottom: 3px double rgba(200, 150, 13, 0.532);
+  cursor: pointer;
+  padding-bottom: 5px;
+}
+
+.comment-content {
+  position: absolute;
+  visibility: hidden;
+  display: flex;
+  border: 1px solid black;
+  background-color: rgb(250, 236, 227);
+  border-radius: 5px;
+  padding: 5px;
+  font-size: large;
+  margin-left: 10px;
+  width: 300px;
+  height: 150px;
+}
+
+.comment:hover .comment-content {
+  visibility: visible;
+}
+
+.comment-avatar {
+  width: 50px;
+  height: 50px;
+  margin: 0px 0px;
+  border-radius: 40px;
+  object-fit: contain;
+}
+.comment-user {
+  font-weight: bold;
+  padding-top: 6px;
+  height: 30px;
+}
+
+.comment-message {
+  overflow-y: auto;
+  height: 100px;
+  width: 240px;
+}
