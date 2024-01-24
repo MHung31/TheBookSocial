@@ -17,31 +17,47 @@ function BookPage() {
   const bookComments = useSelector((state) => state.comments);
   if (book.error) return <>Book not found</>;
   let { author, content, id, preview, title } = book;
+  const [showComment, setShowComment] = useState(false);
+  const [comment, setComment] = useState("");
+  const [avatar, setAvatar] = useState("");
+  const [userName, setUsername] = useState("");
+  const [currComment, setCurrComment] = useState(-1);
+  const ulRef = useRef();
 
-  if (Object.values(bookComments) && book) {
-    Object.values(bookComments).forEach((comment) => {
+  let buildBook; 
+  const commentMenu = (commentId) => {
+    if (showComment && commentId === currComment) {
+      setShowComment(false);
+      return;
+    }
+
+    setComment(bookComments[commentId].comment);
+    setAvatar(bookComments[commentId].user.avatar);
+    setUsername(bookComments[commentId].user.username);
+    setCurrComment(commentId);
+    setShowComment(true);
+  };
+
+
+
+  if (Object.values(bookComments).length && book) {
+    buildBook = Object.values(bookComments).map((comment) => {
       const position = comment.book_location.split(":");
       let text = content.slice(Number(position[0]), Number(position[1]));
-      let commentInsert = (
-        <span className="comment">
-          {text}
-          <span className="comment-content">
-            <img className="comment-avatar" src={comment.user.avatar} />
-            <div>
-              <div className="comment-user">{comment.user.username}</div>
-              <div className="comment-message">{comment.comment}</div>
-            </div>
-          </span>
-        </span>
-      );
-      content = (
+      let commentInsert = <span className="comment">{text}</span>;
+
+      return (
         <>
           {content.slice(0, position[0])}
-          {commentInsert}
+          <span ref={ulRef} onClick={() => commentMenu(comment.id)}>
+            {commentInsert}
+          </span>
           {content.slice(position[1])}
         </>
       );
     });
+  } else {
+    buildBook = content;
   }
 
   useEffect(() => {
@@ -50,19 +66,24 @@ function BookPage() {
   }, [dispatch]);
 
   if (!book) return <></>;
-  //   console.log(content);
   return (
     <div className="book-details">
-      {/* <div className="book-opener">
-        <div className="book-title-author">
-          <h1>{title}</h1>
-          <h3>{author}</h3>
-        </div>
-        <div className="book-preview">
-          <img src={preview} />
-        </div>
-      </div> */}
-      <p className="book-content">{content}</p>
+      <p className="book-content">{buildBook}</p>
+      {showComment && (
+        <span className="comment-content">
+          <img className="comment-avatar" src={avatar} />
+          <div>
+            <div
+              className="close-comment"
+              onClick={() => setShowComment(false)}
+            >
+              <i class="fa-solid fa-xmark"></i>
+            </div>
+            <div className="comment-user">{userName}</div>
+            <div className="comment-message">{comment}</div>
+          </div>
+        </span>
+      )}
     </div>
   );
 }
