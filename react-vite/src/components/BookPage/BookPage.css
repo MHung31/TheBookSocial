@@ -36,7 +36,7 @@
 }
 
 .comment {
-  border-bottom: 3px double rgba(200, 150, 13, 0.532);
+  border-bottom: 3px double rgba(200, 150, 13, 0.693);
   cursor: pointer;
   padding-bottom: 5px;
   position: static;

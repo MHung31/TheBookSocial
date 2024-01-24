@@ -24,7 +24,7 @@ function BookPage() {
   const [currComment, setCurrComment] = useState(-1);
   const ulRef = useRef();
 
-  let buildBook; 
+  let buildBook;
   const commentMenu = (commentId) => {
     if (showComment && commentId === currComment) {
       setShowComment(false);
@@ -38,24 +38,57 @@ function BookPage() {
     setShowComment(true);
   };
 
+  //   if (Object.values(bookComments).length && book) {
+  //     buildBook = Object.values(bookComments).map((comment) => {
+  //       const position = comment.book_location.split(":");
+  //       let text = content.slice(Number(position[0]), Number(position[1]));
+  //       let commentInsert = <span className="comment">{text}</span>;
 
+  //       return (
+  //         <>
+  //           {content.slice(0, position[0])}
+  //           <span ref={ulRef} onClick={() => commentMenu(comment.id)}>
+  //             {commentInsert}
+  //           </span>
+  //           {content.slice(position[1])}
+  //         </>
+  //       );
+  //     });
+  //   } else {
+  //     buildBook = content;
+  //   }
 
   if (Object.values(bookComments).length && book) {
-    buildBook = Object.values(bookComments).map((comment) => {
+    let currPosition = content.length;
+    let sortedComments = Object.values(bookComments).sort((a, b) => {
+      let posA = Number(a.book_location.split(":")[0]);
+      let posB = Number(b.book_location.split(":")[0]);
+      if (posA > posB) return -1;
+      return b;
+    });
+
+    buildBook = sortedComments.map((comment) => {
       const position = comment.book_location.split(":");
       let text = content.slice(Number(position[0]), Number(position[1]));
       let commentInsert = <span className="comment">{text}</span>;
-
+      let postContent = content.slice(position[1], currPosition);
+      currPosition = position[0];
       return (
         <>
-          {content.slice(0, position[0])}
           <span ref={ulRef} onClick={() => commentMenu(comment.id)}>
             {commentInsert}
           </span>
-          {content.slice(position[1])}
+          {postContent}
         </>
       );
     });
+
+    if (currPosition !== 0) {
+      let lastPart = <>{content.slice(0, currPosition)}</>;
+      buildBook.push(lastPart);
+    }
+
+    buildBook.reverse();
   } else {
     buildBook = content;
   }
