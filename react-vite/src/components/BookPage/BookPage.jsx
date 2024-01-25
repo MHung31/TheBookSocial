@@ -7,6 +7,7 @@ import { thunkGetBookDetails } from "../../redux/books";
 import "./BookPage.css";
 import { getBookComments } from "../../redux/comments";
 import ReactionModal from "../ReactionModal";
+import { thunkGetReactions, thunkResetReactions } from "../../redux/reactions";
 
 function BookPage() {
   const { bookId } = useParams();
@@ -66,16 +67,16 @@ function BookPage() {
   };
   const createReaction = (e) => {
     e.preventDefault();
-    console.log("in creation");
     setModalContent(<ReactionModal commentId={currComment} />);
   };
-  let buildBook;
+
   const commentMenu = (commentId) => {
     if (showComment && commentId === currComment) {
       setShowComment(false);
+      dispatch(thunkResetReactions());
       return;
     }
-
+    dispatch(thunkGetReactions(commentId));
     setComment(bookComments[commentId].comment);
     setAvatar(bookComments[commentId].user.avatar);
     setUsername(bookComments[commentId].user.username);
@@ -83,6 +84,7 @@ function BookPage() {
     setShowComment(true);
   };
 
+  let buildBook;
   if (Object.values(bookComments).length && book) {
     let currPosition = content.length;
     let sortedComments = Object.values(bookComments).sort((a, b) => {
@@ -133,7 +135,10 @@ function BookPage() {
           <div>
             <div
               className="close-comment"
-              onClick={() => setShowComment(false)}
+              onClick={() => {
+                setShowComment(false);
+                dispatch(thunkResetReactions());
+              }}
             >
               <i class="fa-solid fa-xmark"></i>
             </div>
