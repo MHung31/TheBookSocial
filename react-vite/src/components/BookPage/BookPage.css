@@ -52,7 +52,7 @@
   font-size: medium;
   margin-left: 10px;
   width: 350px;
-  height: 150px;
+  height: 175px;
   bottom: 1px;
   left: 36%;
 }
@@ -82,10 +82,12 @@
   width: 290px;
 }
 .comment-reactions {
-  height: 30px;
+  height: 50px;
   width: 290px;
   display: flex;
   align-items: center;
+  flex-wrap: wrap;
+  overflow-y: auto;
 }
 
 .add-emoji {
@@ -102,4 +104,13 @@
   width: 20px;
   cursor: pointer;
   color: gray;
+  left: 20px;
+  bottom: 10px;
+}
+
+.reaction-display {
+  border: 1px solid gray;
+  border-radius: 8px;
+  margin: 3px;
+  width: 40px;
 }

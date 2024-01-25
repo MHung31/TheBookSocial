@@ -17,6 +17,7 @@ function BookPage() {
   const dispatch = useDispatch();
   const book = useSelector((state) => state.books.book_details);
   const bookComments = useSelector((state) => state.comments);
+  const commentReactions = useSelector((state) => state.reactions);
   if (book.error) return <>Book not found</>;
   let { author, content, id, preview, title } = book;
   const [showComment, setShowComment] = useState(false);
@@ -45,26 +46,116 @@ function BookPage() {
   //17 - 💯 &#128175;
   //18 - 🏅 &#127941;
 
-  const reactionList = {
-    1: 0,
-    2: 0,
-    3: 0,
-    4: 0,
-    5: 0,
-    6: 0,
-    7: 0,
-    8: 0,
-    9: 0,
-    10: 0,
-    11: 0,
-    12: 0,
-    13: 0,
-    14: 0,
-    15: 0,
-    16: 0,
-    17: 0,
-    18: 0,
-  };
+  let reactionList = [];
+
+  if (Object.values(commentReactions).length) {
+    Object.values(commentReactions).forEach((reaction) => {
+      if (reactionList[reaction.reaction]) {
+        reactionList[reaction.reaction] += 1;
+      } else reactionList[reaction.reaction] = 1;
+    });
+
+  }
+
+  let reactionComponent = [];
+
+  if (reactionList.length) {
+    for (let key in reactionList) {
+      switch (key) {
+        case "1":
+          reactionComponent.push(
+            <div className="reaction-display">&#128525;{reactionList[key]}</div>
+          );
+          break;
+        case "2":
+          reactionComponent.push(
+            <div className="reaction-display">&#128526;{reactionList[key]}</div>
+          );
+          break;
+        case "3":
+          reactionComponent.push(
+            <div className="reaction-display">&#128514;{reactionList[key]}</div>
+          );
+          break;
+        case "4":
+          reactionComponent.push(
+            <div className="reaction-display">&#128531;{reactionList[key]}</div>
+          );
+          break;
+        case "5":
+          reactionComponent.push(
+            <div className="reaction-display">&#128530;{reactionList[key]}</div>
+          );
+          break;
+        case "6":
+          reactionComponent.push(
+            <div className="reaction-display">&#128561;{reactionList[key]}</div>
+          );
+          break;
+        case "7":
+          reactionComponent.push(
+            <div className="reaction-display">&#128545;{reactionList[key]}</div>
+          );
+          break;
+        case "8":
+          reactionComponent.push(
+            <div className="reaction-display">&#128557;{reactionList[key]}</div>
+          );
+          break;
+        case "9":
+          reactionComponent.push(
+            <div className="reaction-display">&#129300;{reactionList[key]}</div>
+          );
+          break;
+        case "10":
+          reactionComponent.push(
+            <div className="reaction-display">&#129402;{reactionList[key]}</div>
+          );
+          break;
+        case "11":
+          reactionComponent.push(
+            <div className="reaction-display">&#128128;{reactionList[key]}</div>
+          );
+          break;
+        case "12":
+          reactionComponent.push(
+            <div className="reaction-display">&#129318;{reactionList[key]}</div>
+          );
+          break;
+        case "13":
+          reactionComponent.push(
+            <div className="reaction-display">&#128591;{reactionList[key]}</div>
+          );
+          break;
+        case "14":
+          reactionComponent.push(
+            <div className="reaction-display">&#129505;{reactionList[key]}</div>
+          );
+          break;
+        case "15":
+          reactionComponent.push(
+            <div className="reaction-display">&#128293;{reactionList[key]}</div>
+          );
+          break;
+        case "16":
+          reactionComponent.push(
+            <div className="reaction-display">&#128164;{reactionList[key]}</div>
+          );
+          break;
+        case "17":
+          reactionComponent.push(
+            <div className="reaction-display">&#128175;{reactionList[key]}</div>
+          );
+          break;
+        case "18":
+          reactionComponent.push(
+            <div className="reaction-display">&#127941;{reactionList[key]}</div>
+          );
+          break;
+      }
+    }
+  }
+
   const createReaction = (e) => {
     e.preventDefault();
     setModalContent(<ReactionModal commentId={currComment} />);
@@ -145,6 +236,7 @@ function BookPage() {
             <div className="comment-user">{userName}</div>
             <div className="comment-message">{comment}</div>
             <div className="comment-reactions">
+              {reactionComponent}
               <div
                 className="add-reaction"
                 title="Add Reaction"
