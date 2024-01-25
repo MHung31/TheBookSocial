@@ -6,6 +6,7 @@ import { useModal } from "../../context/Modal";
 import { thunkGetBookDetails } from "../../redux/books";
 import "./BookPage.css";
 import { getBookComments } from "../../redux/comments";
+import ReactionModal from "../ReactionModal";
 
 function BookPage() {
   const { bookId } = useParams();
@@ -23,7 +24,51 @@ function BookPage() {
   const [userName, setUsername] = useState("");
   const [currComment, setCurrComment] = useState(-1);
   const ulRef = useRef();
+  //REACTION LEGEND
+  //1 - 😍 &#128525;
+  //2 - 😎 &#128526;
+  //3 - 😂 &#128514;
+  //4 - 😓 &#128531;
+  //5 - 😒 &#128530;
+  //6 - 😱 &#128561;
+  //7 - 😡 &#128545;
+  //8 - 😭 &#128557;
+  //9 - 🤔 &#129300;
+  //10 - 🥺 &#129402;
+  //11 - 💀 &#128128;
+  //12 - 🤦 &#129318;
+  //13 - 🙏 &#128591;
+  //14 - 🧡 &#129505;
+  //15 - 🔥 &#128293;
+  //16 - 💤 &#128164;
+  //17 - 💯 &#128175;
+  //18 - 🏅 &#127941;
 
+  const reactionList = {
+    1: 0,
+    2: 0,
+    3: 0,
+    4: 0,
+    5: 0,
+    6: 0,
+    7: 0,
+    8: 0,
+    9: 0,
+    10: 0,
+    11: 0,
+    12: 0,
+    13: 0,
+    14: 0,
+    15: 0,
+    16: 0,
+    17: 0,
+    18: 0,
+  };
+  const createReaction = (e) => {
+    e.preventDefault();
+    console.log("in creation");
+    setModalContent(<ReactionModal commentId={currComment} />);
+  };
   let buildBook;
   const commentMenu = (commentId) => {
     if (showComment && commentId === currComment) {
@@ -37,26 +82,6 @@ function BookPage() {
     setCurrComment(commentId);
     setShowComment(true);
   };
-
-  //   if (Object.values(bookComments).length && book) {
-  //     buildBook = Object.values(bookComments).map((comment) => {
-  //       const position = comment.book_location.split(":");
-  //       let text = content.slice(Number(position[0]), Number(position[1]));
-  //       let commentInsert = <span className="comment">{text}</span>;
-
-  //       return (
-  //         <>
-  //           {content.slice(0, position[0])}
-  //           <span ref={ulRef} onClick={() => commentMenu(comment.id)}>
-  //             {commentInsert}
-  //           </span>
-  //           {content.slice(position[1])}
-  //         </>
-  //       );
-  //     });
-  //   } else {
-  //     buildBook = content;
-  //   }
 
   if (Object.values(bookComments).length && book) {
     let currPosition = content.length;
@@ -103,7 +128,7 @@ function BookPage() {
     <div className="book-details">
       <p className="book-content">{buildBook}</p>
       {showComment && (
-        <span className="comment-content">
+        <div className="comment-content">
           <img className="comment-avatar" src={avatar} />
           <div>
             <div
@@ -114,8 +139,20 @@ function BookPage() {
             </div>
             <div className="comment-user">{userName}</div>
             <div className="comment-message">{comment}</div>
+            <div className="comment-reactions">
+              <div
+                className="add-reaction"
+                title="Add Reaction"
+                onClick={createReaction}
+              >
+                <div className="add-emoji">
+                  <i class="fa-solid fa-plus"></i>
+                </div>
+                <i class="fa-regular fa-face-smile"></i>
+              </div>
+            </div>
           </div>
-        </span>
+        </div>
       )}
     </div>
   );
