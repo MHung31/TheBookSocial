@@ -21,7 +21,7 @@ def seed_books():
 # it will reset the primary keys for you as well.
 def undo_books():
     if environment == "production":
-        db.session.execute(f"TRUNCATE table {SCHEMA}.users RESTART IDENTITY CASCADE;")
+        db.session.execute(f"TRUNCATE table {SCHEMA}.books RESTART IDENTITY CASCADE;")
     else:
         db.session.execute(text("DELETE FROM books"))
 

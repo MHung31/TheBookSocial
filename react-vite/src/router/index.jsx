@@ -3,6 +3,7 @@ import LoginFormPage from "../components/LoginFormPage";
 import SignupFormPage from "../components/SignupFormPage";
 import LandingPage from "../components/LandingPage";
 import HomePage from "../components/HomePage";
+import BookPage from "../components/BookPage";
 
 import Layout from "./Layout";
 
@@ -26,6 +27,10 @@ export const router = createBrowserRouter([
       {
         path: "/clubs/:clubId",
         element: <LandingPage />,
+      },
+      {
+        path: "/books/:bookId",
+        element: <BookPage />,
       },
     ],
   },

@@ -26,10 +26,10 @@ class Comment(db.Model, UserMixin):
         return {
             "id": self.id,
             "comment": self.comment,
-            "user_id": self.user_id,
             "book_id": self.book_id,
             "book_location": self.book_location,
             "visibility": self.visibility,
             "flagged": self.flagged,
-            "created_at": self.created_at
+            "created_at": self.created_at,
+            "user": self.comments_user.to_dict()
         }

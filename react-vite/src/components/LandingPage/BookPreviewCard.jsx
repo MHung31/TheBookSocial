@@ -56,13 +56,13 @@ function BookPreviewCard({ book }) {
       <NavLink to={`/books/${id}`} className="book-preview">
         <div className="book-preview-content">
           <img src={preview} alt="Preview Not Available" />
-          <div
+          {/* <div
             title="Progress Bar"
             className="progress-bar"
             style={{
               background: `linear-gradient(90deg, green 0 70%, white 0% 100%)`,
             }}
-          ></div>
+          ></div> */}
           <h3 className="preview-title">{title}</h3>
           <h5 className="preview-author">{author}</h5>
           <h5 className="preview-comments-count">
@@ -71,11 +71,11 @@ function BookPreviewCard({ book }) {
           </h5>
         </div>
       </NavLink>{" "}
-      <div onClick={toggleFavorite} className="favorite-star">
+      <div onClick={toggleFavorite} className="favorite-star" >
         {favorites[id] ? (
-          <i class="fa-solid fa-star" style={{ color: "gold" }}></i>
+          <i title='Remove from favorites' class="fa-solid fa-star" style={{ color: "gold" }}></i>
         ) : (
-          <i class="fa-regular fa-star"></i>
+          <i title='Add to favorites'class="fa-regular fa-star"></i>
         )}
       </div>
     </div>

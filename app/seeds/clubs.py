@@ -15,7 +15,7 @@ def seed_clubs():
 
 def undo_clubs():
     if environment == "production":
-        db.session.execute(f"TRUNCATE table {SCHEMA}.users RESTART IDENTITY CASCADE;")
+        db.session.execute(f"TRUNCATE table {SCHEMA}.clubs RESTART IDENTITY CASCADE;")
     else:
         db.session.execute(text("DELETE FROM clubs"))
 

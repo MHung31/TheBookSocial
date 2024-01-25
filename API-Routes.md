@@ -425,10 +425,21 @@ Returns all the comments for a book specified by id.
     {
       "comments": [
         {
-          "id": 1,
-          "comment": "This is my favorite part!",
-          "createdAt": "2021-11-19 20:39:36",
-          "updatedAt": "2021-11-20 10:06:40"
+          "book_id": 2,
+          "book_location": "23:34",
+          "comment": "This is my favorite part",
+          "created_at": "Tue, 23 Jan 2024 23:45:01 GMT",
+          "flagged": false,
+          "id": 20,
+          "user": {
+            "avatar": "https://appliedpost.com/wp-content/uploads/2019/04/livedemo-1.png",
+            "email": "demo@aa.io",
+            "first_name": "De",
+            "id": 1,
+            "last_name": "Mo",
+            "username": "Demo"
+          },
+          "visibility": "Club1; Club2"
         }
       ]
     }

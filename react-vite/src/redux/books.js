@@ -1,10 +1,24 @@
 const SET_ALL_BOOKS = "books/all";
 const SET_FAVORITE_BOOKS = "books/favorites";
-const SET_CLUB_BOOKS = "books/clubs";
 const SET_BOOK_DETAILS = "books/details";
 const ADD_FAVORITE_BOOK = "/books/favorites/add";
 const DELETE_FAVORITE_BOOK = "/books/favorites/delete";
 
+const setBookDetails = (bookDetails) => ({
+  type: SET_BOOK_DETAILS,
+  payload: bookDetails,
+});
+
+export const thunkGetBookDetails = (bookId) => async (dispatch) => {
+  const response = await fetch(`/api/books/${bookId}`);
+  if (response.ok) {
+    const data = await response.json();
+    if (data.errors) {
+      return;
+    }
+    dispatch(setBookDetails(data));
+  }
+};
 
 const setAllBooks = (allBooks) => ({
   type: SET_ALL_BOOKS,
@@ -113,7 +127,8 @@ function booksReducer(books = initialState, action) {
       };
       delete new_books.favorite_books[action.payload];
       return new_books;
-
+    case SET_BOOK_DETAILS:
+      return { ...books, book_details: { ...action.payload } };
     default:
       return books;
   }

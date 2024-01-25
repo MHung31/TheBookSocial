@@ -41,9 +41,10 @@ def post_reactions(id):
     data = request.json
     form = ReactionForm()
     form['csrf_token'].data = request.cookies['csrf_token']
-    existing_reaction = Reaction.query.join(Comment.comment_reactions).filter(Reaction.user_id==current_user.id).first()
-    if existing_reaction:
-        return {"message": "User already has a reaction for this comment"}
+    # existing_reaction = Reaction.query.join(Comment.comment_reactions).filter(Reaction.user_id==current_user.id).first()
+    # print('existing?----->',existing_reaction.to_dict())
+    # if existing_reaction:
+    #     return {"errors": "User already has a reaction for this comment"}
     if form.validate_on_submit():
         new_reaction = Reaction(
             reaction = data['reaction'],

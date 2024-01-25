@@ -26,6 +26,7 @@ else
 
     # Local development database setup
     flask db upgrade
+    flask seed undo
     flask seed all
 
     # Start Gunicorn with binding for local testing

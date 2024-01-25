@@ -8,11 +8,15 @@ import thunk from "redux-thunk";
 import sessionReducer from "./session";
 import booksReducer from "./books";
 import clubsReducer from "./clubs";
+import commentsReducer from "./comments";
+import reactionsReducer from "./reactions";
 
 const rootReducer = combineReducers({
   session: sessionReducer,
   books: booksReducer,
   clubs: clubsReducer,
+  comments: commentsReducer,
+  reactions: reactionsReducer,
 });
 
 let enhancer;

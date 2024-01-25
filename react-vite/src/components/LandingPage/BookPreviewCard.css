@@ -1,6 +1,6 @@
 a.book-preview {
   display: flex;
-  height: 370px;
+  height: 360px;
   width: 200px;
   color: black;
   padding: 10px;
@@ -34,7 +34,7 @@ a.book-preview {
   max-width: 200px;
   max-height: 300px;
   object-fit: contain;
-  box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.43);
+  box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.659);
 }
 
 .book-preview-content > h5 {
@@ -71,7 +71,7 @@ a.book-preview {
 
 .book-preview-search {
   display: flex;
-  height: 250px;
+  height: 260px;
   width: 150px;
   color: black;
   padding: 10px;
