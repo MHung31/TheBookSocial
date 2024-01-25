@@ -10,7 +10,6 @@ function ReactionModal({commentId}) {
   const selectReaction = (reactionId) => {
     const reaction = { reaction: String(reactionId), flagger: false };
     dispatch(thunkAddReaction(commentId, reaction));
-    closeModal();
   };
   return (
     <div className="reaction-menu">
