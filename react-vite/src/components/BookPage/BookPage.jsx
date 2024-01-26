@@ -25,6 +25,7 @@ function BookPage() {
   const [avatar, setAvatar] = useState("");
   const [userName, setUsername] = useState("");
   const [currComment, setCurrComment] = useState(-1);
+  const [seeOriginal, setSeeOriginal] = useState(false);
   const ulRef = useRef();
   //REACTION LEGEND
   //1 - 😍 &#128525;
@@ -54,7 +55,6 @@ function BookPage() {
         reactionList[reaction.reaction] += 1;
       } else reactionList[reaction.reaction] = 1;
     });
-
   }
 
   let reactionComponent = [];
@@ -161,7 +161,9 @@ function BookPage() {
     setModalContent(<ReactionModal commentId={currComment} />);
   };
 
-  const commentMenu = (commentId) => {
+  const commentMenu = (e, commentId) => {
+    e.preventDefault();
+    e.stopPropagation();
     if (showComment && commentId === currComment) {
       setShowComment(false);
       dispatch(thunkResetReactions());
@@ -193,7 +195,15 @@ function BookPage() {
       currPosition = position[0];
       return (
         <>
-          <span ref={ulRef} onClick={() => commentMenu(comment.id)}>
+          <span
+            title="Click to see comment"
+            ref={ulRef}
+            onMouseDown={(e)=>e.stopPropagation()}
+            onClick={(e) => {
+              e.stopPropagation();
+              commentMenu(e, comment.id);
+            }}
+          >
             {commentInsert}
           </span>
           {postContent}
@@ -206,7 +216,7 @@ function BookPage() {
       buildBook.push(lastPart);
     }
 
-    buildBook.reverse();
+    buildBook.reverse().join("");
   } else {
     buildBook = content;
   }
@@ -216,10 +226,42 @@ function BookPage() {
     dispatch(getBookComments(bookId));
   }, [dispatch]);
 
+  const addComment = () => {
+    console.log("add comment");
+    const bookRef =
+      document.getElementsByClassName("book-content")[0].innerText;
+    const selected = document.getSelection();
+    const range = selected.getRangeAt(0);
+    const { startOffset, endOffset } = range;
+
+    console.log(startOffset, endOffset);
+  };
+
+  const shiftBook = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    console.log("---------");
+    setSeeOriginal(true);
+  };
+
   if (!book) return <></>;
   return (
     <div className="book-details">
-      <p className="book-content">{buildBook}</p>
+      {seeOriginal ? (
+        <p
+          className="book-content book-original"
+          onMouseUp={() => {
+            addComment();
+            setSeeOriginal(false);
+          }}
+        >
+          {content}
+        </p>
+      ) : (
+        <p className="book-content" onMouseDown={() => setSeeOriginal(true)}>
+          {buildBook}
+        </p>
+      )}
       {showComment && (
         <div className="comment-content">
           <img className="comment-avatar" src={avatar} />
@@ -237,6 +279,7 @@ function BookPage() {
             <div className="comment-message">{comment}</div>
             <div className="comment-reactions">
               {reactionComponent}
+
               <div
                 className="add-reaction"
                 title="Add Reaction"
