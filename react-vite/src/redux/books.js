@@ -3,7 +3,16 @@ const SET_FAVORITE_BOOKS = "books/favorites";
 const SET_BOOK_DETAILS = "books/details";
 const ADD_FAVORITE_BOOK = "/books/favorites/add";
 const DELETE_FAVORITE_BOOK = "/books/favorites/delete";
+const RESET_BOOK_DETAILS = "books/reset-details";
 
+const resetBookDetails = () => ({
+  type: RESET_BOOK_DETAILS,
+  payload: null,
+});
+
+export const thunkResetBookDetails = () => async (dispatch) => {
+  dispatch(resetBookDetails());
+};
 const setBookDetails = (bookDetails) => ({
   type: SET_BOOK_DETAILS,
   payload: bookDetails,
@@ -129,6 +138,9 @@ function booksReducer(books = initialState, action) {
       return new_books;
     case SET_BOOK_DETAILS:
       return { ...books, book_details: { ...action.payload } };
+    case RESET_BOOK_DETAILS:
+      new_books = { books, book_details: {} };
+      return new_books;
     default:
       return books;
   }

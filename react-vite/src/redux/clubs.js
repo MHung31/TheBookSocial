@@ -28,7 +28,7 @@ export const thunkUpdateClub = (clubInfo, clubId) => async (dispatch) => {
     if (data.errors) {
       return data.errors;
     }
-    // dispatch(updateClub(data));
+
     dispatch(thunkSessionClubs());
     return data;
   }
