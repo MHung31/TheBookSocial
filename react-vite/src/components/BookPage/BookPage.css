@@ -57,6 +57,10 @@
   left: 36%;
 }
 
+.user-comment {
+  border-bottom: 3px double rgba(29, 13, 200, 0.693);
+}
+
 .close-comment {
   position: absolute;
   right: 10px;

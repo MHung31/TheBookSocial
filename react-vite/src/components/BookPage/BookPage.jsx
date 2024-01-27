@@ -19,6 +19,7 @@ function BookPage() {
   const book = useSelector((state) => state.books.book_details);
   const bookComments = useSelector((state) => state.comments);
   const commentReactions = useSelector((state) => state.reactions);
+  const sessionUser = useSelector((state) => state.session.user);
   if (book.error) return <>Book not found</>;
   let { author, content, id, preview, title } = book;
   const [showComment, setShowComment] = useState(false);
@@ -191,7 +192,11 @@ function BookPage() {
     buildBook = sortedComments.map((comment) => {
       const position = comment.book_location.split(":");
       let text = content.slice(Number(position[0]), Number(position[1]));
-      let commentInsert = <span className="comment">{text}</span>;
+      let commentClass = "comment";
+      if (comment.user.id === sessionUser.id) {
+        commentClass += " user-comment";
+      }
+      let commentInsert = <span className={commentClass}>{text}</span>;
       let postContent = content.slice(position[1], currPosition);
       currPosition = position[0];
       return (
