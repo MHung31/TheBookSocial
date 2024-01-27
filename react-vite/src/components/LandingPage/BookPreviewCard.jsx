@@ -43,7 +43,7 @@ function BookPreviewCard({ book }) {
       />
     );
   };
-
+  if (!book) return <>Loading...</>;
   return (
     <div className="preview-card">
       {isClub && ownsClub ? (
@@ -71,11 +71,15 @@ function BookPreviewCard({ book }) {
           </h5>
         </div>
       </NavLink>{" "}
-      <div onClick={toggleFavorite} className="favorite-star" >
+      <div onClick={toggleFavorite} className="favorite-star">
         {favorites[id] ? (
-          <i title='Remove from favorites' class="fa-solid fa-star" style={{ color: "gold" }}></i>
+          <i
+            title="Remove from favorites"
+            class="fa-solid fa-star"
+            style={{ color: "gold" }}
+          ></i>
         ) : (
-          <i title='Add to favorites'class="fa-regular fa-star"></i>
+          <i title="Add to favorites" class="fa-regular fa-star"></i>
         )}
       </div>
     </div>

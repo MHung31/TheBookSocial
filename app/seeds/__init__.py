@@ -26,7 +26,7 @@ def seed():
     seed_users()
     seed_books()
     seed_clubs()
-    seed_comments()
+    # seed_comments()
     # Add other seed functions here
 
 
