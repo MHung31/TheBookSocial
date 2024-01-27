@@ -180,6 +180,7 @@ function BookPage() {
   };
 
   let buildBook;
+  let positionSet = new Set();
   if (Object.values(bookComments).length && book) {
     let currPosition = content.length;
     let sortedComments = Object.values(bookComments).sort((a, b) => {
@@ -190,6 +191,7 @@ function BookPage() {
     });
 
     buildBook = sortedComments.map((comment) => {
+      positionSet.add(comment.book_location);
       const position = comment.book_location.split(":");
       let text = content.slice(Number(position[0]), Number(position[1]));
       let commentClass = "comment";
@@ -226,7 +228,7 @@ function BookPage() {
   } else {
     buildBook = content;
   }
-
+  console.log(positionSet);
   useEffect(() => {
     dispatch(thunkGetBookDetails(bookId));
     dispatch(getBookComments(bookId));
@@ -236,13 +238,18 @@ function BookPage() {
     const selected = document.getSelection();
     const range = selected.getRangeAt(0);
     const { startOffset, endOffset } = range;
+    if (range.cloneContents().textContent === " ") return;
     if (startOffset - endOffset)
-      setModalContent(
-        <CreateCommentModal
-          position={`${startOffset}:${endOffset}`}
-          bookId={bookId}
-        />
-      );
+      if (positionSet.has(`${startOffset}:${endOffset}`)) {
+        alert('Cannot comment on existing comment')
+        return;
+      }
+    setModalContent(
+      <CreateCommentModal
+        position={`${startOffset}:${endOffset}`}
+        bookId={bookId}
+      />
+    );
   };
 
   if (!book) return <></>;
@@ -251,8 +258,8 @@ function BookPage() {
       {seeOriginal ? (
         <p
           className="book-content book-original"
-          onMouseUp={() => {
-            addComment();
+          onDoubleClick={addComment}
+          onMouseMove={() => {
             setSeeOriginal(false);
           }}
         >

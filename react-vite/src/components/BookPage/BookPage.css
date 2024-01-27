@@ -73,11 +73,12 @@
   margin: 0px 0px;
   border-radius: 40px;
   object-fit: contain;
+  margin-right: 5px;
 }
 .comment-user {
   font-weight: bold;
-  padding-top: 6px;
-  height: 30px;
+  padding-top: 16px;
+  height: 20px;
 }
 
 .comment-message {
