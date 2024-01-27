@@ -3,12 +3,18 @@ import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useModal } from "../../context/Modal";
-import { thunkGetBookDetails } from "../../redux/books";
+import { thunkGetBookDetails, thunkResetBookDetails } from "../../redux/books";
 import "./BookPage.css";
-import { getBookComments, thunkCreateComment } from "../../redux/comments";
+import {
+  getBookComments,
+  thunkDeleteComment,
+  thunkResetComments,
+  thunkEditComment,
+} from "../../redux/comments";
 import ReactionModal from "../ReactionModal";
 import { thunkGetReactions, thunkResetReactions } from "../../redux/reactions";
 import CreateCommentModal from "../CreateCommentModal";
+import DeleteConfirmModal from "../DeleteConfirmModal";
 
 function BookPage() {
   const { bookId } = useParams();
@@ -28,6 +34,8 @@ function BookPage() {
   const [userName, setUsername] = useState("");
   const [currComment, setCurrComment] = useState(-1);
   const [seeOriginal, setSeeOriginal] = useState(false);
+  const [userCommentMenu, setUserCommentMenu] = useState(false);
+  const [placeholder, setPlaceholder] = useState("");
   const ulRef = useRef();
   //REACTION LEGEND
   //1 - 😍 &#128525;
@@ -175,13 +183,16 @@ function BookPage() {
     setComment(bookComments[commentId].comment);
     setAvatar(bookComments[commentId].user.avatar);
     setUsername(bookComments[commentId].user.username);
+    bookComments[commentId].user.id === sessionUser.id
+      ? setUserCommentMenu(true)
+      : setUserCommentMenu(false);
     setCurrComment(commentId);
     setShowComment(true);
   };
 
   let buildBook;
   let positionSet = new Set();
-  if (Object.values(bookComments).length && book) {
+  if (Object.values(bookComments).length && Object.values(book).length) {
     let currPosition = content.length;
     let sortedComments = Object.values(bookComments).sort((a, b) => {
       let posA = Number(a.book_location.split(":")[0]);
@@ -228,10 +239,13 @@ function BookPage() {
   } else {
     buildBook = content;
   }
-  console.log(positionSet);
   useEffect(() => {
     dispatch(thunkGetBookDetails(bookId));
     dispatch(getBookComments(bookId));
+    return () => {
+      dispatch(thunkResetBookDetails());
+      dispatch(thunkResetComments());
+    };
   }, [dispatch]);
 
   const addComment = () => {
@@ -241,7 +255,7 @@ function BookPage() {
     if (range.cloneContents().textContent === " ") return;
     if (startOffset - endOffset)
       if (positionSet.has(`${startOffset}:${endOffset}`)) {
-        alert('Cannot comment on existing comment')
+        alert("Cannot comment on existing comment");
         return;
       }
     setModalContent(
@@ -250,6 +264,19 @@ function BookPage() {
         bookId={bookId}
       />
     );
+  };
+
+  const editComment = () => {
+    const commentObj = {
+      comment: comment,
+      visibility: "public",
+      flagged: false,
+    };
+    if (!comment) {
+      setPlaceholder("Please enter a comment...");
+      return;
+    }
+    dispatch(thunkEditComment(commentObj, currComment));
   };
 
   if (!book) return <></>;
@@ -274,6 +301,25 @@ function BookPage() {
         <div className="comment-content">
           <img className="comment-avatar" src={avatar} />
           <div>
+            {userCommentMenu ? (
+              <div
+                className="delete-comment"
+                title="Delete Comment"
+                onClick={() => {
+                  setModalContent(
+                    <DeleteConfirmModal
+                      thunk={thunkDeleteComment(currComment)}
+                      message="Delete comment?"
+                    />
+                  );
+                  setShowComment(false);
+                }}
+              >
+                <i class="fa-solid fa-eraser"></i>
+              </div>
+            ) : (
+              <></>
+            )}
             <div
               className="close-comment"
               onClick={() => {
@@ -284,7 +330,22 @@ function BookPage() {
               <i class="fa-solid fa-xmark"></i>
             </div>
             <div className="comment-user">{userName}</div>
-            <div className="comment-message">{comment}</div>
+
+            {userCommentMenu ? (
+              <textarea
+                className="comment-message edit-message"
+                type="text"
+                value={comment}
+                onChange={(e) => setComment(e.target.value)}
+                required
+                maxlength="250"
+                placeholder={placeholder}
+                onBlur={editComment}
+                title='Edit Comment'
+              />
+            ) : (
+              <div className="comment-message">{comment}</div>
+            )}
             <div className="comment-reactions">
               {reactionComponent}
 
