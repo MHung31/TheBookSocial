@@ -78,6 +78,7 @@
 
 .comment-message {
   overflow-y: auto;
+  word-wrap: break-word;
   height: 80px;
   width: 290px;
 }
@@ -114,4 +115,3 @@
   margin: 3px;
   width: 40px;
 }
-

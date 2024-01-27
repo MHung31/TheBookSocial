@@ -5,9 +5,10 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { useModal } from "../../context/Modal";
 import { thunkGetBookDetails } from "../../redux/books";
 import "./BookPage.css";
-import { getBookComments } from "../../redux/comments";
+import { getBookComments, thunkCreateComment } from "../../redux/comments";
 import ReactionModal from "../ReactionModal";
 import { thunkGetReactions, thunkResetReactions } from "../../redux/reactions";
+import CreateCommentModal from "../CreateCommentModal";
 
 function BookPage() {
   const { bookId } = useParams();
@@ -198,7 +199,7 @@ function BookPage() {
           <span
             title="Click to see comment"
             ref={ulRef}
-            onMouseDown={(e)=>e.stopPropagation()}
+            onMouseDown={(e) => e.stopPropagation()}
             onClick={(e) => {
               e.stopPropagation();
               commentMenu(e, comment.id);
@@ -216,7 +217,7 @@ function BookPage() {
       buildBook.push(lastPart);
     }
 
-    buildBook.reverse().join("");
+    buildBook.reverse();
   } else {
     buildBook = content;
   }
@@ -227,21 +228,16 @@ function BookPage() {
   }, [dispatch]);
 
   const addComment = () => {
-    console.log("add comment");
-    const bookRef =
-      document.getElementsByClassName("book-content")[0].innerText;
     const selected = document.getSelection();
     const range = selected.getRangeAt(0);
     const { startOffset, endOffset } = range;
-
-    console.log(startOffset, endOffset);
-  };
-
-  const shiftBook = (e) => {
-    e.preventDefault();
-    e.stopPropagation();
-    console.log("---------");
-    setSeeOriginal(true);
+    if (startOffset - endOffset)
+      setModalContent(
+        <CreateCommentModal
+          position={`${startOffset}:${endOffset}`}
+          bookId={bookId}
+        />
+      );
   };
 
   if (!book) return <></>;
