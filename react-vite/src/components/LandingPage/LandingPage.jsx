@@ -49,8 +49,9 @@ function LandingPage() {
     if (!sessionUser) {
       navigate("/");
     } else {
-      dispatch(thunkSetFavoriteBooks());
       dispatch(thunkSetAllBooks());
+      dispatch(thunkSetFavoriteBooks());
+
       if (pathname.startsWith("/clubs/")) {
         dispatch(thunkGetClubBooks(clubId));
         return () => dispatch(thunkResetClubsBooks());
