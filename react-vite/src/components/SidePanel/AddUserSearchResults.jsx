@@ -10,7 +10,14 @@ function AddUserSearchResults({ user, clubId }) {
   };
   return (
     <div onClick={addUser} className="user-search-results">
-      <img className="search-avatar" src={user.avatar} />
+      {user.avatar !== "none" ? (
+          <img className="search-avatar" src={user.avatar} />
+        ) : (
+          <div className="profile-no-avatar" >
+            {user.first_name[0] + user.last_name[0]}
+          </div>
+        )}
+
       <div>{user.username}</div>
     </div>
   );

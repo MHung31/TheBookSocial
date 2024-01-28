@@ -5,7 +5,7 @@
   border-radius: 5px;
   padding: 20px;
   margin: 5px;
-  width: 250px;
+  width: 300px;
 }
 
 .signup-modal > form {
@@ -18,9 +18,12 @@
   width: 100px;
   margin: 0px auto;
   margin-top: 20px;
-  background-color: white;
+  background-color: rgb(247, 214, 117);
+
   color: black;
   font-weight: bold;
+  border-radius: 5px;
+  border: 1px solid black;
 }
 
 .signup-modal > h2 {
@@ -31,6 +34,7 @@
 
 .signup-modal > * label {
   margin-top: 10px;
+  font-weight: bold;
 }
 
 .sign-up-error {
@@ -54,4 +58,7 @@
   margin: 1px;
   font-size: x-small;
   font-style: italic;
+}
+.signup-modal > * input {
+  height: 25px;
 }

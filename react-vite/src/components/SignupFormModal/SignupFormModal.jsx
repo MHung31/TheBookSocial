@@ -69,7 +69,7 @@ function SignupFormModal() {
 
   return (
     <div className="signup-modal">
-      <h2>Sign Up</h2>
+      <h2>Create account</h2>
       <p >(Fill in all fields)</p>
 
       {errors.server && <p className="sign-up-error">{errors.server}</p>}

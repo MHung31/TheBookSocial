@@ -36,6 +36,8 @@ function BookPage() {
   const [seeOriginal, setSeeOriginal] = useState(false);
   const [userCommentMenu, setUserCommentMenu] = useState(false);
   const [placeholder, setPlaceholder] = useState("");
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
   const ulRef = useRef();
   //REACTION LEGEND
   //1 - 😍 &#128525;
@@ -183,6 +185,8 @@ function BookPage() {
     setComment(bookComments[commentId].comment);
     setAvatar(bookComments[commentId].user.avatar);
     setUsername(bookComments[commentId].user.username);
+    setFirstName(bookComments[commentId].user.first_name);
+    setLastName(bookComments[commentId].user.last_name);
     bookComments[commentId].user.id === sessionUser.id
       ? setUserCommentMenu(true)
       : setUserCommentMenu(false);
@@ -299,7 +303,14 @@ function BookPage() {
       )}
       {showComment && (
         <div className="comment-content">
-          <img className="comment-avatar" src={avatar} />
+          {avatar !== "none" ? (
+            <img className="comment-avatar" src={avatar} />
+          ) : (
+            <div className="comment-no-avatar">
+              {firstName[0] + lastName[0]}
+            </div>
+          )}
+
           <div>
             {userCommentMenu ? (
               <div
@@ -341,7 +352,7 @@ function BookPage() {
                 maxlength="250"
                 placeholder={placeholder}
                 onBlur={editComment}
-                title='Edit Comment'
+                title="Edit Comment"
               />
             ) : (
               <div className="comment-message">{comment}</div>

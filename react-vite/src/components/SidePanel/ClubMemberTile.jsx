@@ -22,7 +22,13 @@ function ClubMemberTile({ member, clubOwner, clubId }) {
         ) : (
           <span className="tile-placeholder"> </span>
         )}
-        <img className="search-avatar" src={member.avatar} />
+        {member.avatar !== "none" ? (
+          <img className="search-avatar" src={member.avatar} />
+        ) : (
+          <div className="profile-no-avatar" >
+            {member.first_name[0] + member.last_name[0]}
+          </div>
+        )}
 
         {member.username}
       </div>

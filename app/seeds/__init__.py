@@ -3,6 +3,7 @@ from .users import seed_users, undo_users
 from .books import seed_books, undo_books
 from .clubs import seed_clubs, undo_clubs
 from .comments import seed_comments, undo_comments
+from .reactions import seed_reactions, undo_reactions
 
 from app.models.db import db, environment, SCHEMA
 
@@ -23,6 +24,7 @@ def seed():
         undo_books()
         undo_clubs()
         undo_comments()
+        undo_reactions()
     seed_users()
     seed_books()
     seed_clubs()
@@ -37,4 +39,5 @@ def undo():
     undo_books()
     undo_clubs()
     undo_comments()
+    undo_reactions()
     # Add other undo functions here
