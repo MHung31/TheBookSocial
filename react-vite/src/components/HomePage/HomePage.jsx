@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import SignupFormModal from "../SignupFormModal";
 import LoginFormModal from "../LoginFormModal";
 import { useModal } from "../../context/Modal";
+import backgroundImage from "../../../public/background.png";
 
 function HomePage() {
   const { setModalContent, closeModal } = useModal();
@@ -18,10 +19,7 @@ function HomePage() {
   return (
     <div className="homepage">
       <div className="homepage-intro">
-        <img
-          className="intro-background"
-          src="../../../public/background.png"
-        ></img>
+        <img className="intro-background" src={backgroundImage}></img>
         <div className="intro-content">
           <h1>The Book Social</h1>
           <h3>Read together and socialize at your pace</h3>

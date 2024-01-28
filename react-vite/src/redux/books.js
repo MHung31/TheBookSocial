@@ -116,7 +116,7 @@ function booksReducer(books = initialState, action) {
         new_all_books[book.id] = book;
       });
       new_books = { ...books };
-      new_books.all_books = new_all_books;
+      new_books.all_books = {...new_all_books};
       return new_books;
     case SET_FAVORITE_BOOKS:
       action.payload.forEach((book) => {
@@ -137,9 +137,12 @@ function booksReducer(books = initialState, action) {
       delete new_books.favorite_books[action.payload];
       return new_books;
     case SET_BOOK_DETAILS:
-      return { ...books, book_details: { ...action.payload } };
+      new_books = { ...books };
+      new_books.book_details = {};
+      new_books.book_details = {...action.payload};
+      return new_books;
     case RESET_BOOK_DETAILS:
-      new_books = { books, book_details: {} };
+      new_books = { ...books, book_details: {} };
       return new_books;
     default:
       return books;
