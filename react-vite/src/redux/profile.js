@@ -17,7 +17,7 @@ export const thunkGetProfile = (profileId) => async (dispatch) => {
     profile["user"] = user;
   }
 
-  const friendsResponse = await fetch(`/api/session/friends`);
+  const friendsResponse = await fetch(`/api/users/${profileId}/friends`);
   if (friendsResponse.ok) {
     const friends = await friendsResponse.json();
     if (friendsResponse.errors) {
@@ -25,6 +25,15 @@ export const thunkGetProfile = (profileId) => async (dispatch) => {
     }
     profile["followers"] = friends.followers;
     profile["following"] = friends.following;
+  }
+
+  const reactionsResponse = await fetch(`/api/users/${profileId}/reactions`);
+  if (reactionsResponse.ok) {
+    const reactions = await reactionsResponse.json();
+    if (reactionsResponse.errors) {
+      return;
+    }
+    profile["reactions"] = reactions;
   }
 
   dispatch(getProfile(profile));
@@ -58,6 +67,7 @@ function profileReducer(profileStore = initialState, action) {
       action.payload.followers.forEach((user) => {
         new_profile.followers[user.id] = user;
       });
+      new_profile.reactions = action.payload.reactions;
       return new_profile;
     case RESET_PROFILE:
       return {
