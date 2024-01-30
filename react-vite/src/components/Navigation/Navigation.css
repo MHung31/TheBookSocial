@@ -12,6 +12,9 @@
   border-radius: 5px;
   padding: 20px;
   margin: 5px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 .profile-dropdown > li {
   display: flex;
@@ -20,7 +23,7 @@
 }
 .profile-dropdown > h4 {
   padding: 0px;
-  margin: 0px;
+  margin: 10px 0px;
 }
 
 .login-button {
@@ -35,15 +38,28 @@
 .profile-dropdown > * button {
   height: 35px;
   width: 100px;
-  margin: 20px auto;
-  background-color: white;
-  color: black;
+  margin: 10px auto;
+
   font-weight: bold;
 }
 
 .profile-dropdown > ul {
   padding: 5px;
   margin: 5px;
+}
+
+.logout {
+  background-color: rgb(251, 74, 74);
+  color: white;
+}
+
+.profile-button {
+  background-color: white;
+  border: none;
+}
+
+.profile-button:hover {
+  background-color: rgba(177, 133, 13, 0.153);
 }
 
 .navigation {
@@ -115,5 +131,4 @@
   align-items: center;
   margin: 0px 5px;
   font-size: small;
-
 }

@@ -1242,7 +1242,14 @@ Add a friend to users friend list
   - Body:
 
     ```json
-    { "message": "Friend added" }
+    {
+      "avatar": "avatarURL",
+      "email": "marnie@aa.io",
+      "first_name": "mar",
+      "id": 2,
+      "last_name": "nie",
+      "username": "marnie"
+    }
     ```
 
 ### Remove a friend

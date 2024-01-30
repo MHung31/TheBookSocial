@@ -4,7 +4,8 @@ import SignupFormPage from "../components/SignupFormPage";
 import LandingPage from "../components/LandingPage";
 import HomePage from "../components/HomePage";
 import BookPage from "../components/BookPage";
-import Navigation from '../components/Navigation/Navigation'
+import Navigation from "../components/Navigation/Navigation";
+import ProfilePage from "../components/ProfilePage";
 
 import Layout from "./Layout";
 
@@ -32,6 +33,10 @@ export const router = createBrowserRouter([
       {
         path: "/books/:bookId",
         element: <BookPage />,
+      },
+      {
+        path: "/users/:userId",
+        element: <ProfilePage />,
       },
     ],
   },

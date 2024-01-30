@@ -80,7 +80,7 @@ def add_friends():
         return {'error': 'User not found'}
     self.following.append(friend)
     db.session.commit()
-    return {"message": 'Friend added'}
+    return friend.to_dict()
 
 @session_routes.route('/friends/<int:friendId>', methods=['DELETE'])
 @login_required

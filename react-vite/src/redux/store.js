@@ -10,6 +10,7 @@ import booksReducer from "./books";
 import clubsReducer from "./clubs";
 import commentsReducer from "./comments";
 import reactionsReducer from "./reactions";
+import profileReducer from "./profile";
 
 const rootReducer = combineReducers({
   session: sessionReducer,
@@ -17,6 +18,7 @@ const rootReducer = combineReducers({
   clubs: clubsReducer,
   comments: commentsReducer,
   reactions: reactionsReducer,
+  profile: profileReducer,
 });
 
 let enhancer;

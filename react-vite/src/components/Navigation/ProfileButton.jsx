@@ -5,7 +5,7 @@ import OpenModalMenuItem from "./OpenModalMenuItem";
 import LoginFormModal from "../LoginFormModal";
 import SignupFormModal from "../SignupFormModal";
 import "./Navigation.css";
-import {  useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 function ProfileButton() {
   const dispatch = useDispatch();
@@ -63,6 +63,11 @@ function ProfileButton() {
     navigate("/");
   };
 
+  const navigateProfile = () => {
+    navigate(`/users/${user.id}`);
+    closeMenu();
+  };
+
   return (
     <div>
       {user ? (
@@ -83,11 +88,17 @@ function ProfileButton() {
         <ul className={"profile-dropdown"} ref={ulRef}>
           {user ? (
             <>
-              <h4>Account</h4>
-              <li>{`${user.username} ${user.last_name[0]}`}</li>
-              <li>{user.email}</li>
+              <h4>Welcome {`${user.username}`}</h4>
+
               <li>
-                <button onClick={logout}>Log Out</button>
+                <button className="profile-button" onClick={navigateProfile}>
+                  My Profile
+                </button>
+              </li>
+              <li>
+                <button className="logout" onClick={logout}>
+                  Log Out
+                </button>
               </li>
             </>
           ) : (
