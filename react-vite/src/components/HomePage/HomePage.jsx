@@ -18,14 +18,21 @@ function HomePage() {
     if (sessionUser) navigate("/all");
   }, [sessionUser]);
 
-  const demoUser = async () => {
-    const demoUser = {
-      email: "demo@aa.io",
-      password: "password",
-    };
-    dispatch(thunkLogin(demoUser));
+  const demoUser = async (e) => {
+    e.preventDefault();
 
-    navigate("/all");
+    const serverResponse = await dispatch(
+      thunkLogin({
+        email: "demo@aa.io",
+        password: "password",
+      })
+    );
+
+    if (serverResponse) {
+      setErrors(serverResponse);
+    } else {
+      navigate("/all");
+    }
   };
 
   return (
