@@ -46,3 +46,19 @@
   border: none;
   cursor: pointer;
 }
+
+.profile-reactions {
+  width: 600px;
+  height: 300px;
+  border: 1px solid black;
+  border-radius: 10px;
+  padding: 5px 10px;
+}
+
+.profile-bottom {
+  display: flex;
+}
+
+.profile-friends {
+  display: flex;
+}

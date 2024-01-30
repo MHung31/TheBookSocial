@@ -33,7 +33,7 @@ export const thunkGetProfile = (profileId) => async (dispatch) => {
     if (reactionsResponse.errors) {
       return;
     }
-    profile["reactions"] = reactions;
+    profile["reactions"] = reactions.reactions;
   }
 
   dispatch(getProfile(profile));
@@ -67,7 +67,7 @@ function profileReducer(profileStore = initialState, action) {
       action.payload.followers.forEach((user) => {
         new_profile.followers[user.id] = user;
       });
-      new_profile.reactions = action.payload.reactions;
+      new_profile.reactions = action.payload.reactions ;
       return new_profile;
     case RESET_PROFILE:
       return {

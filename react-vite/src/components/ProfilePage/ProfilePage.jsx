@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import "./ProfilePage.css";
 import { thunkGetProfile, thunkResetProfile } from "../../redux/profile";
+import { BarChart } from "./BarChart";
 
 function ProfilePage() {
   const navigate = useNavigate();
@@ -12,6 +13,7 @@ function ProfilePage() {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [avatar, setAvatar] = useState("");
+  const [friendsToggle, setFriendsToggle] = useState(true);
 
   const { user, following, followers, reactions } = profile;
 
@@ -77,50 +79,62 @@ function ProfilePage() {
         <button>Add Friend</button>
       </div>
       <div className="profile-bottom">
-        <div className="profile-reactions"></div>
+        <div className="profile-reactions">
+          <BarChart reactions={reactions} />
+        </div>
         <div className="profile-friends">
-          <div>Following</div>
-          {Object.values(following).map((user) => {
-            return (
+          <div>
+            <button className={`friends-${friendsToggle}`} onClick={() => setFriendsToggle(true)}>Following</button>
+            <button className={`friends-${friendsToggle}`}onClick={() => setFriendsToggle(false)}>Followers</button>
+            {friendsToggle ? (
               <>
-                <div
-                  onClick={() => profileClick(user.id)}
-                  className="user-search-results"
-                >
-                  {user.avatar !== "none" ? (
-                    <img className="search-avatar" src={user.avatar} />
-                  ) : (
-                    <div className="profile-no-avatar">
-                      {user.first_name[0] + user.last_name[0]}
-                    </div>
-                  )}
+                {Object.values(following).map((user) => {
+                  return (
+                    <>
+                      <div
+                        onClick={() => profileClick(user.id)}
+                        className="user-search-results"
+                      >
+                        {user.avatar !== "none" ? (
+                          <img className="search-avatar" src={user.avatar} />
+                        ) : (
+                          <div className="profile-no-avatar">
+                            {user.first_name[0] + user.last_name[0]}
+                          </div>
+                        )}
 
-                  <div>{user.username}</div>
-                </div>
+                        <div>{user.username}</div>
+                      </div>
+                    </>
+                  );
+                })}{" "}
               </>
-            );
-          })}
-          <div>Followers</div>
-          {Object.values(followers).map((user) => {
-            return (
+            ) : (
               <>
-                <div
-                  onClick={() => profileClick(user.id)}
-                  className="user-search-results"
-                >
-                  {user.avatar !== "none" ? (
-                    <img className="search-avatar" src={user.avatar} />
-                  ) : (
-                    <div className="profile-no-avatar">
-                      {user.first_name[0] + user.last_name[0]}
-                    </div>
-                  )}
+                {Object.values(followers).map((user) => {
+                  return (
+                    <>
+                      <div
+                        onClick={() => profileClick(user.id)}
+                        className="user-search-results"
+                      >
+                        {user.avatar !== "none" ? (
+                          <img className="search-avatar" src={user.avatar} />
+                        ) : (
+                          <div className="profile-no-avatar">
+                            {user.first_name[0] + user.last_name[0]}
+                          </div>
+                        )}
 
-                  <div>{user.username}</div>
-                </div>
+                        <div>{user.username}</div>
+                      </div>
+                    </>
+                  );
+                })}
               </>
-            );
-          })}
+            )}
+          </div>
+          <div></div>
         </div>
       </div>
     </div>
