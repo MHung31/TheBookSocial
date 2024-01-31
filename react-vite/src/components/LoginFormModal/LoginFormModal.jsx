@@ -41,6 +41,7 @@ function LoginFormModal() {
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           required
+          maxlength="100"
         />
         {errors.email && <p>{errors.email}</p>}
         <label>Password</label>{" "}
@@ -49,6 +50,7 @@ function LoginFormModal() {
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           required
+          maxlength="100"
         />
         {errors.password && <p>{errors.password}</p>}
         <button type="submit">Sign In</button>
