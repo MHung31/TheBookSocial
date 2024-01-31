@@ -6,15 +6,34 @@ import SignupFormModal from "../SignupFormModal";
 import LoginFormModal from "../LoginFormModal";
 import { useModal } from "../../context/Modal";
 import backgroundImage from "../../../public/background.png";
+import { thunkLogin } from "../../redux/session";
 
 function HomePage() {
   const { setModalContent, closeModal } = useModal();
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   const sessionUser = useSelector((state) => state.session.user);
 
   useEffect(() => {
     if (sessionUser) navigate("/all");
   }, [sessionUser]);
+
+  const demoUser = async (e) => {
+    e.preventDefault();
+
+    const serverResponse = await dispatch(
+      thunkLogin({
+        email: "demo@aa.io",
+        password: "password",
+      })
+    );
+
+    if (serverResponse) {
+      setErrors(serverResponse);
+    } else {
+      navigate("/all");
+    }
+  };
 
   return (
     <div className="homepage">
@@ -23,7 +42,6 @@ function HomePage() {
         <div className="intro-content">
           <h1>The Book Social</h1>
           <h3>Read together and socialize at your pace</h3>
-
           <button
             className="homepage-signup homepage-button"
             onClick={() => setModalContent(<SignupFormModal />)}
@@ -36,6 +54,9 @@ function HomePage() {
           >
             Sign in to your account
           </button>
+          <div onClick={demoUser} id="demologin">
+            Demo Login
+          </div>
         </div>
       </div>
       <div className="homepage-body"></div>

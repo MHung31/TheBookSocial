@@ -1,0 +1,91 @@
+.profile-user-info {
+  display: flex;
+}
+
+.profile-text {
+  display: flex;
+  flex-direction: column;
+  width: 700px;
+  margin: 40px 20px;
+}
+
+.profile-avatar,
+.profile-default {
+  height: 200px;
+  width: 200px;
+  object-fit: contain;
+}
+
+.profile-page {
+  width: 900px;
+  margin: auto;
+}
+
+.profile-user-info > button {
+  height: 40px;
+  width: 100px;
+  margin: 40px 0px;
+  font-weight: bold;
+  border-radius: 5px;
+  border: 1px solid black;
+  background-color: rgba(177, 133, 13, 0.153);
+}
+
+.profile-text > div,
+.profile-text > label {
+  font-weight: bold;
+  height: 30px;
+  font-size: large;
+}
+
+.profile-user-info > div span {
+  font-weight: normal;
+}
+
+.profile-text > * input {
+  border: none;
+  cursor: pointer;
+}
+
+.profile-reactions {
+  width: 600px;
+  height: 300px;
+  border: 1px solid black;
+  border-radius: 10px;
+  padding: 5px 10px;
+}
+
+.profile-bottom,
+.friends-buttons {
+  display: flex;
+}
+
+.profile-friends {
+  display: flex;
+  flex-direction: column;
+  margin-left: 90px;
+  width: 187px;
+  height: 310px;
+}
+
+.profile-friends > * button {
+  width: 93.5px;
+  height: 20px;
+  border: 1px solid black;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+}
+.friends-true {
+  background-color: rgba(177, 133, 13, 0.153);
+}
+.friends-false {
+  background-color: white;
+}
+
+.friends-list {
+  border: 1px solid black;
+  overflow-y: auto;
+  overflow-x: hidden;
+  width: 187px;
+  height: 290px;
+}

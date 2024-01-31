@@ -1242,7 +1242,14 @@ Add a friend to users friend list
   - Body:
 
     ```json
-    { "message": "Friend added" }
+    {
+      "avatar": "avatarURL",
+      "email": "marnie@aa.io",
+      "first_name": "mar",
+      "id": 2,
+      "last_name": "nie",
+      "username": "marnie"
+    }
     ```
 
 ### Remove a friend
@@ -1252,14 +1259,11 @@ Removes a friend from your friend list
 - Require Authentication: true
 
   - Method: DELETE
-  - URL: /api/friends/:friendId
+  - URL: /api/session/friends/:friendId
   - Headers:
     - Content-Type: application/json
   - Body: None
 
-    ```
-
-    ```
 
 - Successful Response
 
