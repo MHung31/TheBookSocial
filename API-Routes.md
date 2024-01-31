@@ -1259,14 +1259,11 @@ Removes a friend from your friend list
 - Require Authentication: true
 
   - Method: DELETE
-  - URL: /api/friends/:friendId
+  - URL: /api/session/friends/:friendId
   - Headers:
     - Content-Type: application/json
   - Body: None
 
-    ```
-
-    ```
 
 - Successful Response
 

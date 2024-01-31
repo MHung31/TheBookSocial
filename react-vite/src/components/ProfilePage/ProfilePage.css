@@ -55,10 +55,37 @@
   padding: 5px 10px;
 }
 
-.profile-bottom {
+.profile-bottom,
+.friends-buttons {
   display: flex;
 }
 
 .profile-friends {
   display: flex;
+  flex-direction: column;
+  margin-left: 90px;
+  width: 187px;
+  height: 310px;
+}
+
+.profile-friends > * button {
+  width: 93.5px;
+  height: 20px;
+  border: 1px solid black;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+}
+.friends-true {
+  background-color: rgba(177, 133, 13, 0.153);
+}
+.friends-false {
+  background-color: white;
+}
+
+.friends-list {
+  border: 1px solid black;
+  overflow-y: auto;
+  overflow-x: hidden;
+  width: 187px;
+  height: 290px;
 }

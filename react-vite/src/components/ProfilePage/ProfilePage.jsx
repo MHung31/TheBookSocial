@@ -4,24 +4,34 @@ import { useNavigate, useParams } from "react-router-dom";
 import "./ProfilePage.css";
 import { thunkGetProfile, thunkResetProfile } from "../../redux/profile";
 import { BarChart } from "./BarChart";
+import {
+  thunkGetFollowing,
+  thunkAddFriend,
+  thunkRemoveFriend,
+} from "../../redux/session";
 
 function ProfilePage() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { userId } = useParams();
   const profile = useSelector((state) => state.profile);
+  const session = useSelector((state) => state.session);
+  const sessionFollowing = useSelector((state) => state.session.following);
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [avatar, setAvatar] = useState("");
   const [friendsToggle, setFriendsToggle] = useState(true);
+  const [friends, setFriends] = useState(false);
 
   const { user, following, followers, reactions } = profile;
 
   useEffect(() => {
     dispatch(thunkGetProfile(userId));
-
+    dispatch(thunkGetFollowing(session.user.id));
     return () => dispatch(thunkResetProfile());
-  }, [dispatch, userId]);
+  }, [dispatch, userId, friends]);
+
+
 
   const profileClick = (userId) => {
     navigate(`/users/${userId}`);
@@ -32,9 +42,20 @@ function ProfilePage() {
       setFirstName(user.first_name);
       setLastName(user.last_name);
       setAvatar(user.avatar);
+      if (Number(userId) in sessionFollowing) {
+        setFriends(true);
+      } else setFriends(false);
     }
   }, [profile]);
+  const addFriend = () => {
+    dispatch(thunkAddFriend({ user_id: Number(userId) }, session.user));
+    setFriends(true);
+  };
 
+  const removeFriend = () => {
+    dispatch(thunkRemoveFriend(Number(userId), session.user));
+    setFriends(false);
+  };
   if (!Object.values(profile.user).length) return <div></div>;
 
   return (
@@ -55,37 +76,41 @@ function ProfilePage() {
           <div>
             Email: <span>{user.email}</span>{" "}
           </div>
-          <label>
-            First Name:
-            <input
-              id="signup-first-input"
-              type="text"
-              value={firstName}
-              onChange={(e) => setFirstName(e.target.value)}
-              required
-            />
-          </label>
-          <label>
-            Last Name:
-            <input
-              id="signup-first-input"
-              type="text"
-              value={lastName}
-              onChange={(e) => setLastName(e.target.value)}
-              required
-            />
-          </label>
+          <div>
+            First Name: <span>{user.first_name}</span>{" "}
+          </div>
+          <div>
+            Last Name: <span>{user.last_name}</span>{" "}
+          </div>
         </div>
-        <button>Add Friend</button>
+        {Number(userId) === session.user.id ? (
+          <></>
+        ) : friends ? (
+          <button onClick={removeFriend}>Remove Friend</button>
+        ) : (
+          <button onClick={addFriend}>Add Friend</button>
+        )}
       </div>
       <div className="profile-bottom">
         <div className="profile-reactions">
           <BarChart reactions={reactions} />
         </div>
         <div className="profile-friends">
-          <div>
-            <button className={`friends-${friendsToggle}`} onClick={() => setFriendsToggle(true)}>Following</button>
-            <button className={`friends-${friendsToggle}`}onClick={() => setFriendsToggle(false)}>Followers</button>
+          <div className="friends-buttons">
+            <button
+              className={`friends-${friendsToggle}`}
+              onClick={() => setFriendsToggle(true)}
+            >
+              Following
+            </button>
+            <button
+              className={`friends-${!friendsToggle}`}
+              onClick={() => setFriendsToggle(false)}
+            >
+              Followers
+            </button>
+          </div>
+          <div className="friends-list">
             {friendsToggle ? (
               <>
                 {Object.values(following).map((user) => {
@@ -134,7 +159,6 @@ function ProfilePage() {
               </>
             )}
           </div>
-          <div></div>
         </div>
       </div>
     </div>
