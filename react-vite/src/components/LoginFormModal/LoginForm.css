@@ -4,7 +4,7 @@
   color: black;
   border-radius: 5px;
   padding: 20px;
-  width: 250px;
+  width: 300px;
 }
 
 .login-modal > form {
@@ -17,9 +17,15 @@
   width: 100px;
   margin: 0px auto;
   margin-top: 20px;
-  background-color: white;
+  background-image: linear-gradient(
+    rgb(251, 240, 198),
+    rgb(247, 214, 117),
+    rgb(235, 219, 163)
+  );
   color: black;
   font-weight: bold;
+  border-radius: 5px;
+  border: 1px solid black;
 }
 
 .login-modal > h2 {
@@ -30,4 +36,15 @@
 
 .login-modal > * label {
   margin-top: 10px;
+  font-weight: bold;
+}
+
+.login-modal > * p {
+  margin: 0px;
+  padding: 0px;
+  color: red;
+}
+
+.login-modal > * input {
+  height: 25px;
 }

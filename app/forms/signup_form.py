@@ -27,7 +27,6 @@ class SignUpForm(FlaskForm):
     password = StringField('password', validators=[DataRequired()])
     first_name = StringField('first_name', validators=[DataRequired(), Length(max=40)])
     last_name = StringField('last_name', validators=[DataRequired(), Length(max=40)])
-    avatar = StringField('avatar', validators=[DataRequired(), Length(max=255)])
 
 class FriendsForm(FlaskForm):
     follower_id = IntegerField('follower_id', validators=[DataRequired()])

@@ -1,0 +1,63 @@
+.homepage-button {
+  height: 40px;
+  width: 250px;
+  border-radius: 5px;
+  font-size: medium;
+  font-weight: bold;
+  border: 1px solid black;
+  margin: 30px 0px;
+}
+
+.homepage-signup {
+  background-image: linear-gradient(
+    rgba(228, 228, 228, 0.223),
+    rgb(228, 228, 228),
+    rgba(228, 228, 228, 0.533)
+  );
+  margin: 10px 5px;
+}
+
+.homepage-login {
+  background-image: linear-gradient(
+    rgb(251, 240, 198),
+    rgb(247, 214, 117),
+    rgb(235, 219, 163)
+  );
+  margin: 10px 5px;
+}
+
+.homepage,
+.homepage-intro {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  margin: auto;
+  color: white;
+}
+
+.homepage {
+  overflow-y: auto;
+  height: auto;
+  width: 100%;
+}
+.homepage-intro > * h1 {
+  margin-top: 100px;
+  font-size: 40px;
+  margin-bottom: 0px;
+}
+
+.homepage-intro > * h3 {
+  margin: 10px 0px;
+}
+
+.intro-content {
+  position: absolute;
+  padding-left: 50px;
+}
+
+.intro-background {
+  z-index: -1;
+  opacity: 1;
+  object-fit: contain;
+  width: 100%;
+}

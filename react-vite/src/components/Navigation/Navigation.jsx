@@ -15,24 +15,29 @@ function Navigation() {
   const { pathname } = location;
   const navigate = useNavigate();
 
-
   return (
-    <ul className="navigation">
-      <li>
-        {user ? (
-          <NavLink id="logo" to="/all">
-            <i class="fa-solid fa-book-bookmark"></i> TheBookSocial
-          </NavLink>
-        ) : (
-          <NavLink id="logo" to="/">
-            <i class="fa-solid fa-book-bookmark"></i> TheBookSocial
-          </NavLink>
-        )}
-      </li>
-      <li>
-        <ProfileButton />
-      </li>
-    </ul>
+    <>
+      {user ? (
+        <ul className="navigation">
+          <li>
+            {user ? (
+              <NavLink id="logo" to="/all">
+                <i class="fa-solid fa-book-bookmark"></i> TheBookSocial
+              </NavLink>
+            ) : (
+              <NavLink id="logo" to="/">
+                <i class="fa-solid fa-book-bookmark"></i> TheBookSocial
+              </NavLink>
+            )}
+          </li>
+          <li>
+            <ProfileButton />
+          </li>
+        </ul>
+      ) : (
+        <></>
+      )}
+    </>
   );
 }
 

@@ -43,7 +43,7 @@ function BookPreviewCard({ book }) {
       />
     );
   };
-  if (!book) return <>Loading...</>;
+  if (!Object.values(book).length) return <>Loading...</>;
   return (
     <div className="preview-card">
       {isClub && ownsClub ? (

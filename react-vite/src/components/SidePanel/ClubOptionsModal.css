@@ -87,9 +87,10 @@
   position: absolute;
   top: 132px;
   left: 176px;
-  width: 210px;
+  width: 197px;
   height: 100px;
   overflow-y: auto;
+border: 1px 0px solid black
 }
 
 .club-member-info {
