@@ -21,7 +21,6 @@ export const thunkAddFollowers = (user) => async (dispatch) => {
 };
 
 export const thunkRemoveFollowers = (user) => async (dispatch) => {
-  console.log("remove followers");
   dispatch(removeFollowers(user));
   return;
 };
@@ -91,14 +90,11 @@ function profileReducer(profileStore = initialState, action) {
       delete new_profile.followers[action.payload.id];
       return new_profile;
     case ADD_FOLLOWERS:
-      console.log("-------new added profile");
       new_profile = {
         ...profileStore,
         followers: { ...profileStore.followers },
       };
-      console.log("-------new added profile");
       new_profile.followers[action.payload.id] = action.payload;
-      console.log("-------new added profile");
       return new_profile;
     case GET_PROFILE:
       new_profile = { ...profileStore };

@@ -61,6 +61,7 @@
   padding: 10px;
   margin: 2px 0px;
   align-items: center;
+  cursor: pointer;
 }
 
 .club-add-member {
@@ -90,7 +91,7 @@
   width: 197px;
   height: 100px;
   overflow-y: auto;
-border: 1px 0px solid black
+  border: 1px 0px solid black;
 }
 
 .club-member-info {

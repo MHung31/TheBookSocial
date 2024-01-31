@@ -85,6 +85,7 @@
   border-radius: 40px;
   object-fit: contain;
   margin-right: 5px;
+  cursor: pointer;
 }
 .comment-no-avatar {
   background-color: rgb(249, 152, 87);
@@ -98,7 +99,8 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  font-weight: bold
+  font-weight: bold;
+  cursor: pointer;
 }
 .comment-user {
   font-weight: bold;

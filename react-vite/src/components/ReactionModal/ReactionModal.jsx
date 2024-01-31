@@ -16,13 +16,11 @@ function ReactionModal({ commentId }) {
   };
 
   const unselectReaction = (selectedReaction) => {
-    console.log('in unselect-----------')
     Object.values(reactions).forEach((reaction) => {
       if (
         reaction.user_id === sessionUser.id &&
         reaction.reaction === String(selectedReaction)
       ) {
-        console.log('found reaction--------')
         dispatch(thunkDeleteReaction(reaction.id));
         return;
       }
