@@ -31,8 +31,6 @@ function ProfilePage() {
     return () => dispatch(thunkResetProfile());
   }, [dispatch, userId, friends]);
 
-
-
   const profileClick = (userId) => {
     navigate(`/users/${userId}`);
   };
@@ -93,6 +91,14 @@ function ProfilePage() {
       </div>
       <div className="profile-bottom">
         <div className="profile-reactions">
+          {!Object.values(reactions).length && (
+            <div className="no-reaction-container">
+              <div className="profile-no-reactions">
+                <div>No reactions yet!</div>
+                <div>Make more comments to get reactions!</div>
+              </div>
+            </div>
+          )}
           <BarChart reactions={reactions} />
         </div>
         <div className="profile-friends">
