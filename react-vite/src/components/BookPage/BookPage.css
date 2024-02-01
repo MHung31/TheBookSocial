@@ -48,7 +48,7 @@
   border-bottom: 1px solid black;
 
   font-size: medium;
-  margin-left: 10px;
+
   width: 350px;
   height: 175px;
 }
@@ -82,8 +82,10 @@
 }
 
 .delete-comment {
-  position: absolute;
-  left: 18px;
+  position: relative;
+  height: 0px;
+  width: 0px;
+  right: 46px;
   top: 90px;
   cursor: pointer;
   font-size: larger;
@@ -101,12 +103,13 @@
 }
 .comment-no-avatar {
   background-color: rgb(249, 152, 87);
-  width: 35px;
-  height: 35px;
-  margin: 7px 0px;
+  width: 40px;
+  height: 40px;
+  margin: 5px 5px;
+  margin-right: 10px;
   border-radius: 40px;
   object-fit: contain;
-  margin-right: 5px;
+
   font-size: small;
   display: flex;
   justify-content: center;
@@ -159,7 +162,7 @@
   cursor: pointer;
   color: gray;
   left: 10px;
-  top: 120px;
+  top: 130px;
 }
 
 .reaction-display {

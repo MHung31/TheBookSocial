@@ -305,13 +305,17 @@ function BookPage() {
         <div className="comment-content">
           {avatar !== "none" ? (
             <img
-              onClick={() => navigate(`/users/${bookComments[currComment].user.id}`)}
+              onClick={() =>
+                navigate(`/users/${bookComments[currComment].user.id}`)
+              }
               className="comment-avatar"
               src={avatar}
             />
           ) : (
             <div
-              onClick={() => navigate(`/users/${bookComments[currComment].user.id}`)}
+              onClick={() =>
+                navigate(`/users/${bookComments[currComment].user.id}`)
+              }
               className="comment-no-avatar"
             >
               {firstName[0] + lastName[0]}

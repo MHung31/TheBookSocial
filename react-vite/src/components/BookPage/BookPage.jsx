@@ -40,6 +40,11 @@ function BookPage() {
     };
   }, [dispatch]);
 
+  useEffect(() => {
+    if (Object.values(book).length && !commentList[currCommentKey]?.length)
+      setShowComment(false);
+  }, [bookComments]);
+
   if (!Object.values(book).length) return <></>;
 
   const commentList = {};
@@ -115,12 +120,27 @@ function BookPage() {
 
     buildBook.reverse();
   } else buildBook = book.content;
+
+  const addComment = () => {
+    const selected = document.getSelection();
+    const range = selected.getRangeAt(0);
+    const { startOffset, endOffset } = range;
+    if (range.cloneContents().textContent === " ") return;
+    if (startOffset - endOffset)
+      setModalContent(
+        <CreateCommentModal
+          position={`${startOffset}:${endOffset}`}
+          bookId={bookId}
+        />
+      );
+  };
+
   return (
     <div className="book-details">
       {seeOriginal ? (
         <p
           className="book-content book-original"
-          // onDoubleClick={addComment}
+          onDoubleClick={addComment}
           onMouseMove={() => {
             setSeeOriginal(false);
           }}
