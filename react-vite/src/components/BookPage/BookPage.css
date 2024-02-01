@@ -44,18 +44,30 @@
 }
 
 .comment-content {
-  position: absolute;
   display: flex;
-  border: 1px solid black;
-  background-color: rgb(250, 236, 227);
-  border-radius: 5px;
-  padding: 5px;
+  border-bottom: 1px solid black;
+
   font-size: medium;
   margin-left: 10px;
   width: 350px;
   height: 175px;
+}
+
+.comment-holder {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  border: 1px solid black;
+  background-color: rgb(250, 236, 227);
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+  padding: 5px;
+  margin-left: 10px;
+  width: 370px;
+  height: 175px;
   bottom: 1px;
-  left: 36%;
+  left: 34%;
+  overflow-y: auto;
 }
 
 .user-comment {
@@ -133,21 +145,21 @@
 }
 
 .add-emoji {
-  position: absolute;
-  bottom: 12px;
+  position: relative;
+  top: 7px;
   left: 12px;
   font-size: x-small;
   font-weight: bold;
 }
 
 .add-reaction {
-  position: absolute;
-  height: 20px;
-  width: 20px;
+  position: relative;
+  height: 0px;
+  width: 0px;
   cursor: pointer;
   color: gray;
-  left: 20px;
-  bottom: 20px;
+  left: 10px;
+  top: 120px;
 }
 
 .reaction-display {

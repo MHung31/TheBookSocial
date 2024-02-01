@@ -15,6 +15,7 @@ import ReactionModal from "../ReactionModal";
 import { thunkGetReactions, thunkResetReactions } from "../../redux/reactions";
 import CreateCommentModal from "../CreateCommentModal";
 import DeleteConfirmModal from "../DeleteConfirmModal";
+import CommentView from "./CommentView";
 
 function BookPage() {
   const { bookId } = useParams();
@@ -84,13 +85,14 @@ function BookPage() {
         commentClass += " user-comment";
       }
 
-      let commentInsert = <span className={commentClass}>{text}</span>;
+      // let commentInsert = <span className={commentClass}>{text}</span>;
 
       let postContent = book.content.slice(position[1], currPosition);
       currPosition = position[0];
       return (
         <>
           <span
+            className={commentClass}
             title="Click to see comment"
             ref={ulRef}
             onMouseDown={(e) => e.stopPropagation()}
@@ -99,7 +101,7 @@ function BookPage() {
               commentMenu(e, commentKey);
             }}
           >
-            {commentInsert}
+            {text}
           </span>
           {postContent}
         </>
@@ -113,7 +115,6 @@ function BookPage() {
 
     buildBook.reverse();
   } else buildBook = book.content;
-
   return (
     <div className="book-details">
       {seeOriginal ? (
@@ -132,8 +133,10 @@ function BookPage() {
         </p>
       )}
       {showComment && (
-        <div className="comment-content">
-          comment{" "}
+        <div className="comment-holder">
+          {commentList[currCommentKey]?.map((comment) => (
+            <CommentView commentInfo={comment} />
+          ))}
           <div
             className="close-comment"
             onClick={() => {
