@@ -114,3 +114,19 @@
 .no-reaction-container {
   position: absolute;
 }
+
+.profile-default {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  border: 3px solid black;
+  margin: 10px 0px;
+  height: 180px;
+  width: 180px;
+  background-color: orange;
+  color: white;
+  font-weight: bold;
+  font-size: 80px;
+  border-radius: 90px;
+}
