@@ -1,6 +1,6 @@
 from flask import Blueprint, jsonify, request
 from flask_login import login_required, current_user
-from app.models import User, Book, Comment, db, Bookmark
+from app.models import User, Book, Comment, db, Bookmark, Reaction
 from app.forms import CommentForm, BookmarkForm
 
 book_routes = Blueprint('books', __name__)
@@ -22,6 +22,12 @@ def full(id):
 def book_comments(id):
     comments = Comment.query.join(Book.book_comments).filter(Book.id==id).all()
     return {'comments': [comment.to_dict() for comment in comments]}
+
+
+@book_routes.route('/<int:id>/reactions')
+def book_reactions(id):
+    reactions = Reaction.query.join(Comment).filter(Comment.book_id==id).all()
+    return {'reactions': [reaction.to_dict() for reaction in reactions]}
 
 
 @book_routes.route('/<int:id>/comments', methods=['POST'])

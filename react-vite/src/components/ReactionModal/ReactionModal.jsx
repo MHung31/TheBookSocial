@@ -7,7 +7,7 @@ import { useDispatch, useSelector } from "react-redux";
 function ReactionModal({ commentId }) {
   const dispatch = useDispatch();
   const { closeModal } = useModal();
-  const reactions = useSelector((state) => state.reactions);
+  const reactions = useSelector((state) => state.reactions[commentId]);
   const sessionUser = useSelector((state) => state.session.user);
 
   const selectReaction = (reactionId) => {
@@ -16,19 +16,19 @@ function ReactionModal({ commentId }) {
   };
 
   const unselectReaction = (selectedReaction) => {
-    Object.values(reactions).forEach((reaction) => {
+    reactions?.forEach((reaction) => {
       if (
         reaction.user_id === sessionUser.id &&
         reaction.reaction === String(selectedReaction)
       ) {
-        dispatch(thunkDeleteReaction(reaction.id));
+        dispatch(thunkDeleteReaction(commentId, reaction.id));
         return;
       }
     });
   };
 
   const userReactions = [];
-  Object.values(reactions).forEach((reaction) => {
+  reactions?.forEach((reaction) => {
     if (
       reaction.user_id === sessionUser.id &&
       !userReactions.includes(reaction.reaction)

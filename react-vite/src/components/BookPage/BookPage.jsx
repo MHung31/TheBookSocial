@@ -34,9 +34,11 @@ function BookPage() {
   useEffect(() => {
     dispatch(thunkGetBookDetails(bookId));
     dispatch(getBookComments(bookId));
+    dispatch(thunkGetReactions(bookId));
     return () => {
       dispatch(thunkResetBookDetails());
       dispatch(thunkResetComments());
+      dispatch(thunkResetReactions());
     };
   }, [dispatch]);
 
@@ -161,7 +163,6 @@ function BookPage() {
             className="close-comment"
             onClick={() => {
               setShowComment(false);
-              dispatch(thunkResetReactions());
             }}
           >
             <i class="fa-solid fa-xmark"></i>
