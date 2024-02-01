@@ -92,8 +92,6 @@ function BookPage() {
         commentClass += " user-comment";
       }
 
-      // let commentInsert = <span className={commentClass}>{text}</span>;
-
       let postContent = book.content.slice(position[1], currPosition);
       currPosition = position[0];
       return (
@@ -156,17 +154,32 @@ function BookPage() {
       )}
       {showComment && (
         <div className="comment-holder">
+          <div className="comment-menu">
+            <div
+              className="menu-choice new-comment"
+              onClick={() =>
+                setModalContent(
+                  <CreateCommentModal
+                    position={currCommentKey}
+                    bookId={bookId}
+                  />
+                )
+              }
+            >
+              Add Comment
+            </div>
+            <div
+              className="menu-choice close-comment"
+              onClick={() => {
+                setShowComment(false);
+              }}
+            >
+              <i class="fa-solid fa-xmark"></i>
+            </div>
+          </div>
           {commentList[currCommentKey]?.map((comment) => (
             <CommentView commentInfo={comment} />
           ))}
-          <div
-            className="close-comment"
-            onClick={() => {
-              setShowComment(false);
-            }}
-          >
-            <i class="fa-solid fa-xmark"></i>
-          </div>
         </div>
       )}
     </div>

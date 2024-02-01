@@ -5,12 +5,12 @@
 .profile-text {
   display: flex;
   flex-direction: column;
-  width: 700px;
+  width: 550px;
   margin: 40px 20px;
 }
 
 .profile-avatar,
-.profile-default {
+.profile-default-image {
   height: 200px;
   width: 200px;
   object-fit: contain;
@@ -115,18 +115,17 @@
   position: absolute;
 }
 
-.profile-default {
+.profile-default-image {
   display: flex;
   align-items: center;
   justify-content: center;
-  box-sizing: border-box;
   border: 3px solid black;
   margin: 10px 0px;
-  height: 180px;
-  width: 180px;
+  height: 200px;
+  width: 200px;
   background-color: orange;
   color: white;
   font-weight: bold;
   font-size: 80px;
-  border-radius: 90px;
+  border-radius: 100px;
 }

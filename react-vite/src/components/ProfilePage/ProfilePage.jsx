@@ -62,7 +62,7 @@ function ProfilePage() {
         {user.avatar !== "none" ? (
           <img className="profile-avatar" src={user.avatar} />
         ) : (
-          <div className="profile-default">
+          <div className="profile-default-image">
             {user.first_name[0] + user.last_name[0]}
           </div>
         )}

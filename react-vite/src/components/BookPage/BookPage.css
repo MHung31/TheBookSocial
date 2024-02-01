@@ -64,7 +64,7 @@
   border-top-right-radius: 5px;
   padding: 5px;
   margin-left: 10px;
-  width: 370px;
+  width: 380px;
   height: 180px;
   bottom: 1px;
   left: 34%;
@@ -73,13 +73,6 @@
 
 .user-comment {
   border-bottom: 3px double rgba(29, 13, 200, 0.693);
-}
-
-.close-comment {
-  position: absolute;
-  right: 10px;
-  cursor: pointer;
-  font-size: larger;
 }
 
 .delete-comment {
@@ -171,4 +164,38 @@
   border-radius: 8px;
   margin: 3px;
   width: 40px;
+}
+
+.comment-menu {
+  display: flex;
+
+  position: fixed;
+  padding: 5px;
+  width: 380px;
+  bottom: 187px;
+  justify-content: space-between;
+}
+.close-comment {
+  display: flex;
+  justify-content: center;
+  background-color: white;
+  cursor: pointer;
+  font-size: larger;
+  width: 20px;
+  border: 1px solid black;
+  border-bottom: none;
+  align-items: center;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+}
+
+.new-comment {
+  background-color: rgb(255, 203, 181);
+  font-family: 'Times New Roman', Times, serif;
+  border: 1px solid black;
+  border-bottom: none;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+  padding: 3px;
+  cursor: pointer;
 }
