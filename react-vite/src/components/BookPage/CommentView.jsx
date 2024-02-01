@@ -55,7 +55,6 @@ function CommentView({ commentInfo }) {
 
   return (
     <div className="comment-content">
-      {" "}
       <div
         className="add-reaction"
         title="Add Reaction"
@@ -101,7 +100,10 @@ function CommentView({ commentInfo }) {
           <></>
         )}
 
-        <div className="comment-user">{user.username}</div>
+        <div className="comment-user">
+          {user.username}
+          {userCommentMenu && " (you)"}
+        </div>
 
         {userCommentMenu ? (
           <textarea
