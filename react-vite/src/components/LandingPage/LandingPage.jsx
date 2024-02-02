@@ -34,7 +34,7 @@ function LandingPage() {
 
   if (pathname.startsWith("/clubs/")) {
     if (!clubs[clubId]) {
-      navigate("/");
+      navigate("/all");
     }
     books = useSelector((state) => state.clubs.club_books);
     isClub = true;
