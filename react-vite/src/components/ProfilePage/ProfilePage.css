@@ -5,12 +5,12 @@
 .profile-text {
   display: flex;
   flex-direction: column;
-  width: 700px;
+  width: 550px;
   margin: 40px 20px;
 }
 
 .profile-avatar,
-.profile-default {
+.profile-default-image {
   height: 200px;
   width: 200px;
   object-fit: contain;
@@ -88,4 +88,44 @@
   overflow-x: hidden;
   width: 187px;
   height: 290px;
+}
+
+.profile-no-reactions {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: absolute;
+  box-sizing: border-box;
+  top: 150px;
+  left: 150px;
+  width: 300px;
+  margin: auto;
+  height: 55px;
+  padding-left: 0px;
+  rotate: -20deg;
+  color: red;
+  border: 3px red outset;
+  justify-content: center;
+  box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.218);
+  background-color: white;
+  font-weight: bold;
+}
+
+.no-reaction-container {
+  position: absolute;
+}
+
+.profile-default-image {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 3px solid black;
+  margin: 10px 0px;
+  height: 200px;
+  width: 200px;
+  background-color: orange;
+  color: white;
+  font-weight: bold;
+  font-size: 80px;
+  border-radius: 100px;
 }

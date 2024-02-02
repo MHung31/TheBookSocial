@@ -44,42 +44,34 @@
 }
 
 .comment-content {
-  display: flex;
-  border-bottom: 1px solid black;
-
-  font-size: medium;
-  margin-left: 8px;
-  width: 350px;
-  height: 175px;
-  padding-bottom: 5px;
-}
-
-.comment-holder {
   position: absolute;
   display: flex;
-  flex-direction: column;
   border: 1px solid black;
   background-color: rgb(250, 236, 227);
-  border-top-left-radius: 5px;
-  border-top-right-radius: 5px;
+  border-radius: 5px;
   padding: 5px;
+  font-size: medium;
   margin-left: 10px;
-  width: 380px;
-  height: 180px;
+  width: 350px;
+  height: 175px;
   bottom: 1px;
-  left: 34%;
-  overflow-y: auto;
+  left: 36%;
 }
 
 .user-comment {
   border-bottom: 3px double rgba(29, 13, 200, 0.693);
 }
 
+.close-comment {
+  position: absolute;
+  right: 10px;
+  cursor: pointer;
+  font-size: larger;
+}
+
 .delete-comment {
-  position: relative;
-  height: 0px;
-  width: 0px;
-  right: 46px;
+  position: absolute;
+  left: 18px;
   top: 90px;
   cursor: pointer;
   font-size: larger;
@@ -97,13 +89,12 @@
 }
 .comment-no-avatar {
   background-color: rgb(249, 152, 87);
-  width: 40px;
-  height: 40px;
-  margin: 5px 5px;
-  margin-right: 10px;
+  width: 35px;
+  height: 35px;
+  margin: 7px 0px;
   border-radius: 40px;
   object-fit: contain;
-
+  margin-right: 5px;
   font-size: small;
   display: flex;
   justify-content: center;
@@ -142,21 +133,21 @@
 }
 
 .add-emoji {
-  position: relative;
-  top: 7px;
+  position: absolute;
+  bottom: 12px;
   left: 12px;
   font-size: x-small;
   font-weight: bold;
 }
 
 .add-reaction {
-  position: relative;
-  height: 0px;
-  width: 0px;
+  position: absolute;
+  height: 20px;
+  width: 20px;
   cursor: pointer;
   color: gray;
-  left: 10px;
-  top: 130px;
+  left: 20px;
+  bottom: 20px;
 }
 
 .reaction-display {
@@ -164,38 +155,4 @@
   border-radius: 8px;
   margin: 3px;
   width: 40px;
-}
-
-.comment-menu {
-  display: flex;
-
-  position: fixed;
-  padding: 5px;
-  width: 380px;
-  bottom: 187px;
-  justify-content: space-between;
-}
-.close-comment {
-  display: flex;
-  justify-content: center;
-  background-color: white;
-  cursor: pointer;
-  font-size: larger;
-  width: 20px;
-  border: 1px solid black;
-  border-bottom: none;
-  align-items: center;
-  border-top-left-radius: 5px;
-  border-top-right-radius: 5px;
-}
-
-.new-comment {
-  background-color: rgb(255, 203, 181);
-  font-family: 'Times New Roman', Times, serif;
-  border: 1px solid black;
-  border-bottom: none;
-  border-top-left-radius: 5px;
-  border-top-right-radius: 5px;
-  padding: 3px;
-  cursor: pointer;
 }

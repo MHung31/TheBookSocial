@@ -70,7 +70,7 @@ function SignupFormModal() {
   return (
     <div className="signup-modal">
       <h2>Create account</h2>
-      <p >(Fill in all fields)</p>
+      <p>(Fill in all fields)</p>
 
       {errors.server && <p className="sign-up-error">{errors.server}</p>}
       <form onSubmit={handleSubmit}>
@@ -81,6 +81,7 @@ function SignupFormModal() {
           value={firstName}
           onChange={(e) => setFirstName(e.target.value)}
           required
+          maxlength="39"
         />
         <label>Last Name</label>
         <input
@@ -88,6 +89,7 @@ function SignupFormModal() {
           value={lastName}
           onChange={(e) => setLastName(e.target.value)}
           required
+          maxlength="39"
         />
         <label>Email</label>
         <input
@@ -96,6 +98,7 @@ function SignupFormModal() {
           onChange={(e) => setEmail(e.target.value)}
           required
           placeholder="email@email.com"
+          maxlength="100"
         />
 
         {errors.email && <p className="sign-up-error">{errors.email}</p>}
@@ -106,6 +109,7 @@ function SignupFormModal() {
           onChange={(e) => setUsername(e.target.value)}
           required
           placeholder="Must be at least 4 characters"
+          maxlength="40"
         />
 
         {errors.username && <p className="sign-up-error">{errors.username}</p>}
@@ -116,6 +120,7 @@ function SignupFormModal() {
           onChange={(e) => setPassword(e.target.value)}
           required
           placeholder="Must be at least 6 characters"
+          maxlength="100"
         />
 
         {errors.password && <p className="sign-up-error">{errors.password}</p>}
@@ -125,6 +130,7 @@ function SignupFormModal() {
           value={confirmPassword}
           onChange={(e) => setConfirmPassword(e.target.value)}
           required
+          maxlength="100"
         />
 
         {errors.confirmPassword && <p>{errors.confirmPassword}</p>}
