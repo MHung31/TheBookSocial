@@ -9,8 +9,11 @@ import {
   thunkAddFriend,
   thunkRemoveFriend,
 } from "../../redux/session";
+import UploadPicture from "./AvatarUpload";
+import { useModal } from "../../context/Modal";
 
 function ProfilePage() {
+  const { closeModal, setModalContent } = useModal();
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { userId } = useParams();
@@ -56,6 +59,10 @@ function ProfilePage() {
   };
   if (!Object.values(profile.user).length) return <div></div>;
 
+  const imageUpload = () => {
+    setModalContent(<UploadPicture />);
+  };
+
   return (
     <div className="profile-page">
       <div className="profile-user-info">
@@ -66,6 +73,16 @@ function ProfilePage() {
             {user.first_name[0] + user.last_name[0]}
           </div>
         )}
+        {session.user.id === user.id && (
+          <div
+            className="update-profile"
+            title="Update avatar"
+            onClick={imageUpload}
+          >
+            <div>Update Avatar</div>
+          </div>
+        )}
+
         <div className="profile-text">
           <div>
             Username: <span>{user.username}</span>

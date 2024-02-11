@@ -1,5 +1,6 @@
 .profile-user-info {
   display: flex;
+  margin-bottom: 10px;
 }
 
 .profile-text {
@@ -19,6 +20,32 @@
 .profile-page {
   width: 900px;
   margin: auto;
+}
+
+.update-profile {
+  position: absolute;
+  height: 200px;
+  width: 200px;
+  cursor: pointer;
+  opacity: 0;
+  background-color: white;
+  border-radius: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: bold;
+  font-size: larger;
+}
+.update-profile:hover {
+  background-color: rgba(255, 255, 255, 0.753);
+  opacity: 1;
+}
+
+.update-profile > div {
+  border: 3px solid black;
+  padding: 5px;
+  background-color: white;
+  border-radius: 5px;
 }
 
 .profile-user-info > button {
@@ -119,10 +146,6 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  border: 3px solid black;
-  margin: 10px 0px;
-  height: 200px;
-  width: 200px;
   background-color: orange;
   color: white;
   font-weight: bold;

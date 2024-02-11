@@ -6,3 +6,4 @@ from .club_form import ClubForm, ClubBooksForm, ClubMembersForm
 from .comment_form import CommentForm
 from .favorites_form import FavoritesForm
 from .reaction_form import ReactionForm
+from .avatar_form import AvatarForm
