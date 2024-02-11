@@ -1,6 +1,6 @@
 .upload-avatar-modal {
   background-color: white;
-  height: 400px;
+  height: 450px;
   width: 300px;
   display: flex;
   flex-direction: column;
@@ -12,11 +12,17 @@
 .upload-avatar-modal > img {
   border: 3px solid black;
   border-radius: 20px;
-  margin-top: 20px;
+
+}
+
+.upload-avatar-modal > .profile-default-image {
+  border: 3px solid black;
+
 }
 
 .upload-avatar-modal > h2 {
   margin: 0px;
+  margin-bottom: 20px;
 }
 
 .upload-avatar-modal > button {

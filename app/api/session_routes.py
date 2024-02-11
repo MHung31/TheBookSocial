@@ -94,14 +94,21 @@ def remove_friends(friendId):
     db.session.commit()
     return {"message": 'Friend removed'}
 
-@session_routes.route("/avatar", methods=["POST"])
+@session_routes.route("/avatar", methods=["PUT"])
 @login_required
 def upload_image():
-    form = AvatarForm()
     self = User.query.get(current_user.id)
+    data = request.json
+    if data["avatar"] == "none":
+        self.avatar = "none"
+        db.session.commit()
+        return self.to_dict()
 
+    form = AvatarForm()
+    form['csrf_token'].data = request.cookies['csrf_token']
+    print("route----",data)
     if form.validate_on_submit():
-        image = form.data["image"]
+        image = data["avatar"]
         image.filename = get_unique_filename(image.filename)
         upload = upload_file_to_s3(image)
         print(upload)

@@ -4,5 +4,5 @@ from wtforms import SubmitField
 from app.api.aws_helpers import ALLOWED_EXTENSIONS
 
 class AvatarForm(FlaskForm):
-    image = FileField("Image File", validators=[FileRequired(), FileAllowed(list(ALLOWED_EXTENSIONS))])
-    submit = SubmitField("Create Post")
+    avatar = FileField("Image File", validators=[FileRequired(), FileAllowed(list(ALLOWED_EXTENSIONS))])
+
