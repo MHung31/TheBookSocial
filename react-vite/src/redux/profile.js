@@ -1,3 +1,5 @@
+import { thunkSetProfile } from "./session";
+
 const GET_PROFILE = "profile/get";
 const RESET_PROFILE = "profile/reset";
 const ADD_FOLLOWERS = "profile/addFollowers";
@@ -9,11 +11,10 @@ const updateProfile = (userInfo) => ({
   payload: userInfo,
 });
 
-export const thunkUpdateProfile = (formInfo) => async (dispatch) => {
+export const thunkUpdateProfileImage = (formData) => async (dispatch) => {
   const response = await fetch(`/api/session/avatar`, {
     method: "PUT",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(formInfo),
+    body: formData,
   });
 
   if (response.ok) {
@@ -23,10 +24,29 @@ export const thunkUpdateProfile = (formInfo) => async (dispatch) => {
     }
 
     dispatch(updateProfile(data));
+    dispatch(thunkSetProfile(data));
     return data;
   }
 };
 
+export const thunkDefaultProfileImage = (userObj) => async (dispatch) => {
+  const response = await fetch(`/api/session/avatar`, {
+    method: "PUT",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(userObj),
+  });
+
+  if (response.ok) {
+    const data = await response.json();
+    if (data.errors) {
+      return data.errors;
+    }
+
+    dispatch(updateProfile(data));
+    dispatch(thunkSetProfile(data));
+    return data;
+  }
+};
 export const addFollowers = (user) => ({
   type: ADD_FOLLOWERS,
   payload: user,

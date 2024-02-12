@@ -9,16 +9,7 @@
   border-radius: 10px;
 }
 
-.upload-avatar-modal > img {
-  border: 3px solid black;
-  border-radius: 20px;
 
-}
-
-.upload-avatar-modal > .profile-default-image {
-  border: 3px solid black;
-
-}
 
 .upload-avatar-modal > h2 {
   margin: 0px;

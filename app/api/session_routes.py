@@ -98,17 +98,16 @@ def remove_friends(friendId):
 @login_required
 def upload_image():
     self = User.query.get(current_user.id)
-    data = request.json
-    if data["avatar"] == "none":
+
+    if request.headers.get('Content-Type').startswith('application/json'):
         self.avatar = "none"
         db.session.commit()
         return self.to_dict()
 
     form = AvatarForm()
     form['csrf_token'].data = request.cookies['csrf_token']
-    print("route----",data)
     if form.validate_on_submit():
-        image = data["avatar"]
+        image = form.data["avatar"]
         image.filename = get_unique_filename(image.filename)
         upload = upload_file_to_s3(image)
         print(upload)
@@ -122,6 +121,6 @@ def upload_image():
         url = upload["url"]
         self.avatar = url
         db.session.commit()
-        return self.to_dictate()
+        return self.to_dict()
     print(form.errors)
     return form.errors, 401
