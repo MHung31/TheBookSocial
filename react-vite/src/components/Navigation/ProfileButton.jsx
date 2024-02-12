@@ -56,11 +56,11 @@ function ProfileButton() {
 
   const closeMenu = () => setShowMenu(false);
 
-  const logout = (e) => {
+  const logout = async (e) => {
     e.preventDefault();
-    dispatch(thunkLogout());
+    await dispatch(thunkLogout());
     closeMenu();
-
+    navigate("/");
   };
 
   const navigateProfile = () => {
