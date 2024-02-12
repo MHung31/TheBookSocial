@@ -1,0 +1,44 @@
+.upload-avatar-modal {
+  background-color: white;
+  height: 450px;
+  width: 300px;
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  align-items: center;
+  border-radius: 10px;
+}
+
+
+
+.upload-avatar-modal > h2 {
+  margin: 0px;
+  margin-bottom: 20px;
+}
+
+.upload-avatar-modal > button {
+  height: 40px;
+  width: 300px;
+  font-size: large;
+  margin: 5px 10px;
+  color: white;
+  font-weight: bold;
+}
+
+.avatar-clear {
+  background-color: rgb(251, 74, 74);
+}
+
+.avatar-submit {
+  background-color: rgb(48, 163, 28);
+}
+
+#preview-text {
+  font-style: italic;
+  font-size: medium;
+}
+
+.upload-avatar-modal > input {
+  margin: 20px 0px;
+  height: 30px;
+}

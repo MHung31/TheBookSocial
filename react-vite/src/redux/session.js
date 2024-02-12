@@ -90,6 +90,10 @@ const removeUser = () => ({
   type: REMOVE_USER,
 });
 
+export const thunkSetProfile = (user) => async (dispatch) => {
+  dispatch(setUser(user));
+};
+
 export const thunkAuthenticate = () => async (dispatch) => {
   const response = await fetch("/api/auth/");
   if (response.ok) {

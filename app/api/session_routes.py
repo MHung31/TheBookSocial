@@ -1,7 +1,8 @@
 from flask import Blueprint, jsonify, request
 from flask_login import login_required, current_user
 from app.models import User, Book, db, Club
-from app.forms import FavoritesForm, ClubForm, ClubMembersForm, ClubBooksForm
+from app.forms import FavoritesForm, ClubForm, ClubMembersForm, ClubBooksForm, AvatarForm
+from .aws_helpers import (upload_file_to_s3, get_unique_filename)
 
 session_routes = Blueprint('session', __name__)
 
@@ -92,3 +93,34 @@ def remove_friends(friendId):
     self.following.remove(friend)
     db.session.commit()
     return {"message": 'Friend removed'}
+
+@session_routes.route("/avatar", methods=["PUT"])
+@login_required
+def upload_image():
+    self = User.query.get(current_user.id)
+
+    if request.headers.get('Content-Type').startswith('application/json'):
+        self.avatar = "none"
+        db.session.commit()
+        return self.to_dict()
+
+    form = AvatarForm()
+    form['csrf_token'].data = request.cookies['csrf_token']
+    if form.validate_on_submit():
+        image = form.data["avatar"]
+        image.filename = get_unique_filename(image.filename)
+        upload = upload_file_to_s3(image)
+        print(upload)
+
+        if "url" not in upload:
+        # if the dictionary doesn't have a url key
+        # it means that there was an error when we tried to upload
+        # so we send back that error message (and we printed it above)
+            return {"error": upload}
+
+        url = upload["url"]
+        self.avatar = url
+        db.session.commit()
+        return self.to_dict()
+    print(form.errors)
+    return form.errors, 401

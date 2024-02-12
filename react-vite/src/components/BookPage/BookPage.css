@@ -163,7 +163,8 @@
   border: 1px solid gray;
   border-radius: 8px;
   margin: 3px;
-  width: 40px;
+  width: 35px;
+  font-size: 13px;
 }
 
 .comment-menu {
@@ -191,7 +192,7 @@
 
 .new-comment {
   background-color: rgb(255, 203, 181);
-  font-family: 'Times New Roman', Times, serif;
+  font-family: "Times New Roman", Times, serif;
   border: 1px solid black;
   border-bottom: none;
   border-top-left-radius: 5px;

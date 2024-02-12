@@ -1,10 +1,53 @@
+import { thunkSetProfile } from "./session";
+
 const GET_PROFILE = "profile/get";
 const RESET_PROFILE = "profile/reset";
 const ADD_FOLLOWERS = "profile/addFollowers";
 const REMOVE_FOLLOWERS = "profile/addFollowers";
+const UPDATE_PROFILE = "profile/updateProfile";
 
+const updateProfile = (userInfo) => ({
+  type: UPDATE_PROFILE,
+  payload: userInfo,
+});
+
+export const thunkUpdateProfileImage = (formData) => async (dispatch) => {
+  const response = await fetch(`/api/session/avatar`, {
+    method: "PUT",
+    body: formData,
+  });
+
+  if (response.ok) {
+    const data = await response.json();
+    if (data.errors) {
+      return data.errors;
+    }
+
+    dispatch(updateProfile(data));
+    dispatch(thunkSetProfile(data));
+    return data;
+  }
+};
+
+export const thunkDefaultProfileImage = (userObj) => async (dispatch) => {
+  const response = await fetch(`/api/session/avatar`, {
+    method: "PUT",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(userObj),
+  });
+
+  if (response.ok) {
+    const data = await response.json();
+    if (data.errors) {
+      return data.errors;
+    }
+
+    dispatch(updateProfile(data));
+    dispatch(thunkSetProfile(data));
+    return data;
+  }
+};
 export const addFollowers = (user) => ({
-
   type: ADD_FOLLOWERS,
   payload: user,
 });
@@ -15,7 +58,6 @@ export const removeFollowers = (user) => ({
 });
 
 export const thunkAddFollowers = (user) => async (dispatch) => {
-
   dispatch(addFollowers(user));
   return;
 };
@@ -82,6 +124,9 @@ const initialState = {
 function profileReducer(profileStore = initialState, action) {
   let new_profile = {};
   switch (action.type) {
+    case UPDATE_PROFILE:
+      new_profile = { ...profileStore, user: { ...action.payload } };
+      return new_profile;
     case REMOVE_FOLLOWERS:
       new_profile = {
         ...profileStore,
