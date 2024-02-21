@@ -65,11 +65,12 @@
 #demologin {
   cursor: pointer;
   border: 2px solid white;
+
   width: 100px;
   text-align: center;
   margin: 6px;
   font-weight: bold;
   height: 18px;
   padding: 8px 0px;
-  border-radius: 0px;
+  border-radius: 10px;
 }

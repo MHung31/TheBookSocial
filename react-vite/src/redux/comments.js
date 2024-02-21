@@ -3,6 +3,33 @@ const CREATE_COMMENT = "comments/create";
 const EDIT_COMMENT = "comments/edit";
 const DELETE_COMMENT = "comments/delete";
 const RESET_COMMENTS = "comments/reset";
+const DEFINITION = "comments/definition";
+
+const addDefinition = (definition) => ({
+  type: DEFINITION,
+  payload: definition,
+});
+
+export const thunkAddDefinition = (word) => async (dispatch) => {
+  const response = await fetch(
+    `https://api.dictionaryapi.dev/api/v2/entries/en/${word}`
+  );
+  if (response.ok) {
+    const data = await response.json();
+    if (data.errors) {
+      return;
+    }
+    // dispatch(addDefinition(data));
+    const { word, phonetic, meanings } = data[0];
+    const definitions = meanings.map((meaning) => {
+      return {
+        partOfSpeech: meaning.partOfSpeech,
+        definition: meaning.definitions[0].definition,
+      };
+    });
+    dispatch(addDefinition({ word, phonetic, definitions }));
+  }
+};
 
 const resetComments = () => ({
   type: RESET_COMMENTS,
@@ -114,6 +141,8 @@ function commentsReducer(commentStore = initialState, action) {
       return new_comments;
     case RESET_COMMENTS:
       return {};
+    case DEFINITION:
+      return { ...commentStore, definition: action.payload };
     default:
       return commentStore;
   }

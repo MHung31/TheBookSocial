@@ -10,6 +10,7 @@ import {
   thunkDeleteComment,
   thunkResetComments,
   thunkEditComment,
+  thunkAddDefinition,
 } from "../../redux/comments";
 import ReactionModal from "../ReactionModal";
 import { thunkGetReactions, thunkResetReactions } from "../../redux/reactions";
@@ -30,7 +31,12 @@ function BookPage() {
   const [seeOriginal, setSeeOriginal] = useState(false);
   const [showComment, setShowComment] = useState(false);
   const [currCommentKey, setCurrCommentKey] = useState("");
+  const [selectedWord, setSelectedWord] = useState("");
+  const [currMenu, setCurrMenu] = useState("");
 
+  useEffect(() => {
+    if (selectedWord) dispatch(thunkAddDefinition(selectedWord));
+  }, [selectedWord]);
   useEffect(() => {
     dispatch(thunkGetBookDetails(bookId));
     dispatch(getBookComments(bookId));
@@ -88,7 +94,7 @@ function BookPage() {
       let commentClass = "comment";
       if (commentList[commentKey].length > 1) {
         commentClass += " multi-comment";
-      } else if (commentList[commentKey][0].user.id === sessionUser.id) {
+      } else if (commentList[commentKey][0].user?.id === sessionUser.id) {
         commentClass += " user-comment";
       }
 
@@ -104,6 +110,7 @@ function BookPage() {
             onClick={(e) => {
               e.stopPropagation();
               commentMenu(e, commentKey);
+              setCurrMenu("view");
             }}
           >
             {text}
@@ -126,13 +133,16 @@ function BookPage() {
     const range = selected.getRangeAt(0);
     const { startOffset, endOffset } = range;
     if (range.cloneContents().textContent === " ") return;
-    if (startOffset - endOffset)
+    if (startOffset - endOffset) {
+      setSelectedWord(range.cloneContents().textContent);
+      setCurrMenu("add");
       setModalContent(
         <CreateCommentModal
           position={`${startOffset}:${endOffset}`}
           bookId={bookId}
         />
       );
+    }
   };
 
   return (
@@ -156,17 +166,25 @@ function BookPage() {
         <div className="comment-holder">
           <div className="comment-menu">
             <div
-              className="menu-choice new-comment"
-              onClick={() =>
-                setModalContent(
-                  <CreateCommentModal
-                    position={currCommentKey}
-                    bookId={bookId}
-                  />
-                )
-              }
+              className={`menu-choice new-comment menu-${currMenu==='view'? 'selected':'not-selected'}`}
+              onClick={() => setCurrMenu("view")}
+            >
+              Comments
+            </div>
+            <div
+              className={`menu-choice add-comment menu-${currMenu==='add'? 'selected':'not-selected'}`}
+              onClick={() => setCurrMenu("add")}
             >
               Add Comment
+            </div>
+            <div
+              className={`menu-choice definition menu-${currMenu==='definition'? 'selected':'not-selected'}`}
+              onClick={() =>
+                setCurrMenu("definition")
+
+              }
+            >
+              Definition
             </div>
             <div
               className="menu-choice close-comment"
@@ -177,9 +195,11 @@ function BookPage() {
               <i class="fa-solid fa-xmark"></i>
             </div>
           </div>
-          {commentList[currCommentKey]?.map((comment) => (
+          {currMenu === "view" && commentList[currCommentKey]?.map((comment) => (
             <CommentView commentInfo={comment} />
           ))}
+          {currMenu === "add" && <>Add</>}
+          {currMenu === "definition" && <>Definitions</>}
         </div>
       )}
     </div>

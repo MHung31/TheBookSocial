@@ -169,12 +169,10 @@
 
 .comment-menu {
   display: flex;
-
   position: fixed;
   padding: 5px;
   width: 380px;
   bottom: 187px;
-  justify-content: space-between;
 }
 .close-comment {
   display: flex;
@@ -192,6 +190,26 @@
 
 .new-comment {
   background-color: rgb(255, 203, 181);
+  width: 80px;
+}
+.add-comment {
+  background-color: rgb(181, 219, 255);
+  width: 110px;
+}
+.definition {
+  background-color: rgb(186, 255, 181);
+  width: 80px;
+}
+
+.menu-not-selected {
+  font-weight: normal;
+}
+
+.menu-selected {
+  font-weight: bold;
+}
+
+.menu-choice {
   font-family: "Times New Roman", Times, serif;
   border: 1px solid black;
   border-bottom: none;
@@ -199,4 +217,12 @@
   border-top-right-radius: 5px;
   padding: 3px;
   cursor: pointer;
+  margin-right: 1px;
+  text-align: center;
+}
+
+.close-comment {
+  margin-left: 55px;
+  background-color: rgb(254, 108, 108);
+  color: white;
 }
