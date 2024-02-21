@@ -37,6 +37,17 @@ function BookPage() {
   useEffect(() => {
     if (selectedWord) dispatch(thunkAddDefinition(selectedWord));
   }, [selectedWord]);
+
+  useEffect(() => {
+    if (
+      Object.values(bookComments)?.filter(
+        (comment) => comment.book_location === currCommentKey
+      ).length
+    ) {
+      setCurrMenu("view");
+    } else setCurrMenu("add");
+  }, [bookComments]);
+
   useEffect(() => {
     dispatch(thunkGetBookDetails(bookId));
     dispatch(getBookComments(bookId));
@@ -47,11 +58,6 @@ function BookPage() {
       dispatch(thunkResetReactions());
     };
   }, [dispatch]);
-
-  useEffect(() => {
-    if (Object.values(book).length && !commentList[currCommentKey]?.length)
-      setShowComment(false);
-  }, [bookComments]);
 
   if (!Object.values(book).length) return <></>;
 
@@ -66,6 +72,7 @@ function BookPage() {
       }
     });
   }
+
   const commentMenu = (e, commentKey) => {
     e.preventDefault();
     e.stopPropagation();
@@ -136,12 +143,14 @@ function BookPage() {
     if (startOffset - endOffset) {
       setSelectedWord(range.cloneContents().textContent);
       setCurrMenu("add");
-      setModalContent(
-        <CreateCommentModal
-          position={`${startOffset}:${endOffset}`}
-          bookId={bookId}
-        />
-      );
+      setCurrCommentKey(`${startOffset}:${endOffset}`);
+      setShowComment(true);
+      // setModalContent(
+      //   <CreateCommentModal
+      //     position={`${startOffset}:${endOffset}`}
+      //     bookId={bookId}
+      //   />
+      // );
     }
   };
 
@@ -165,24 +174,31 @@ function BookPage() {
       {showComment && (
         <div className="comment-holder">
           <div className="comment-menu">
+            {commentList[currCommentKey] ? (
+              <div
+                className={`menu-choice new-comment menu-${
+                  currMenu === "view" ? "selected" : "not-selected"
+                }`}
+                onClick={() => setCurrMenu("view")}
+              >
+                Comments
+              </div>
+            ) : (
+              <></>
+            )}
             <div
-              className={`menu-choice new-comment menu-${currMenu==='view'? 'selected':'not-selected'}`}
-              onClick={() => setCurrMenu("view")}
-            >
-              Comments
-            </div>
-            <div
-              className={`menu-choice add-comment menu-${currMenu==='add'? 'selected':'not-selected'}`}
+              className={`menu-choice add-comment menu-${
+                currMenu === "add" ? "selected" : "not-selected"
+              }`}
               onClick={() => setCurrMenu("add")}
             >
               Add Comment
             </div>
             <div
-              className={`menu-choice definition menu-${currMenu==='definition'? 'selected':'not-selected'}`}
-              onClick={() =>
-                setCurrMenu("definition")
-
-              }
+              className={`menu-choice definition menu-${
+                currMenu === "definition" ? "selected" : "not-selected"
+              }`}
+              onClick={() => setCurrMenu("definition")}
             >
               Definition
             </div>
@@ -195,10 +211,15 @@ function BookPage() {
               <i class="fa-solid fa-xmark"></i>
             </div>
           </div>
-          {currMenu === "view" && commentList[currCommentKey]?.map((comment) => (
-            <CommentView commentInfo={comment} />
-          ))}
-          {currMenu === "add" && <>Add</>}
+          {currMenu === "view" &&
+            commentList[currCommentKey]?.map((comment) => (
+              <CommentView commentInfo={comment} />
+            ))}
+          {currMenu === "add" && (
+            <>
+              <CreateCommentModal position={currCommentKey} bookId={bookId} />
+            </>
+          )}
           {currMenu === "definition" && <>Definitions</>}
         </div>
       )}

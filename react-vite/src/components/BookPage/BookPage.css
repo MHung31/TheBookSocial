@@ -222,7 +222,9 @@
 }
 
 .close-comment {
-  margin-left: 55px;
+  position: absolute;
+  right: 10px;
+  /* margin-left: 55px; */
   background-color: rgb(254, 108, 108);
   color: white;
 }
