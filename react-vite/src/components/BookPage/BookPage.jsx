@@ -26,7 +26,7 @@ function BookPage() {
   const ulRef = useRef();
   const book = useSelector((state) => state.books.book_details);
   const bookComments = useSelector((state) => state.comments);
-  const commentReactions = useSelector((state) => state.reactions);
+  const definition = useSelector((state) => state.comments?.definition);
   const sessionUser = useSelector((state) => state.session.user);
   const [seeOriginal, setSeeOriginal] = useState(false);
   const [showComment, setShowComment] = useState(false);
@@ -110,7 +110,9 @@ function BookPage() {
       return (
         <>
           <span
-            className={commentClass}
+            className={`${commentClass} comment-${
+              currCommentKey === commentKey ? "selected" : "unselected"
+            }`}
             title="Click to see comment"
             ref={ulRef}
             onMouseDown={(e) => e.stopPropagation()}
@@ -118,6 +120,7 @@ function BookPage() {
               e.stopPropagation();
               commentMenu(e, commentKey);
               setCurrMenu("view");
+              setSelectedWord(text);
             }}
           >
             {text}
@@ -145,12 +148,6 @@ function BookPage() {
       setCurrMenu("add");
       setCurrCommentKey(`${startOffset}:${endOffset}`);
       setShowComment(true);
-      // setModalContent(
-      //   <CreateCommentModal
-      //     position={`${startOffset}:${endOffset}`}
-      //     bookId={bookId}
-      //   />
-      // );
     }
   };
 
@@ -206,6 +203,7 @@ function BookPage() {
               className="menu-choice close-comment"
               onClick={() => {
                 setShowComment(false);
+                setCurrCommentKey("")
               }}
             >
               <i class="fa-solid fa-xmark"></i>
@@ -220,7 +218,25 @@ function BookPage() {
               <CreateCommentModal position={currCommentKey} bookId={bookId} />
             </>
           )}
-          {currMenu === "definition" && <>Definitions</>}
+          {currMenu === "definition" &&
+            (definition !== "none" || !definition ? (
+              <div className="definition-content">
+                <h3>{definition.word}</h3>
+                <div>
+                  {definition.definitions?.map((def) => {
+                    return (
+                      <>
+                        <div>{def.partOfSpeech}</div>
+                        <div>{def.definition}</div>
+                        <br></br>
+                      </>
+                    );
+                  })}
+                </div>
+              </div>
+            ) : (
+              <div className="definition-content">No definition was found</div>
+            ))}
         </div>
       )}
     </div>

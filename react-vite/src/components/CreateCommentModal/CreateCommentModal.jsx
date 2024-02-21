@@ -21,7 +21,7 @@ function CreateCommentModal({ position, bookId }) {
       return;
     }
     dispatch(thunkCreateComment(commentObj, bookId));
-    setComment("")
+    // setComment("")
 
   };
   return (

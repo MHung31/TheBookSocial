@@ -14,21 +14,19 @@ export const thunkAddDefinition = (word) => async (dispatch) => {
   const response = await fetch(
     `https://api.dictionaryapi.dev/api/v2/entries/en/${word}`
   );
+
   if (response.ok) {
     const data = await response.json();
-    if (data.errors) {
-      return;
-    }
-    // dispatch(addDefinition(data));
-    const { word, phonetic, meanings } = data[0];
+    console.log(data)
+    const { word,  meanings } = data[0];
     const definitions = meanings.map((meaning) => {
       return {
         partOfSpeech: meaning.partOfSpeech,
         definition: meaning.definitions[0].definition,
       };
     });
-    dispatch(addDefinition({ word, phonetic, definitions }));
-  }
+    dispatch(addDefinition({ word,  definitions }));
+  } else dispatch(addDefinition("none"))
 };
 
 const resetComments = () => ({
