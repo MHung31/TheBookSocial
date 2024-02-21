@@ -78,7 +78,7 @@ function BookPage() {
     e.stopPropagation();
     if (showComment && commentKey === currCommentKey) {
       setShowComment(false);
-      // dispatch(thunkResetReactions());
+      setCurrCommentKey("")
       return;
     }
     // dispatch(thunkGetReactions(commentKey));

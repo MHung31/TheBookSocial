@@ -36,6 +36,7 @@
   margin: 0px;
 }
 
+
 .comment {
   border-bottom: 3px double rgba(200, 150, 13, 0.833);
   cursor: pointer;
@@ -193,7 +194,7 @@
 }
 
 .comment-unselected {
-  background-color: none
+  background-color: none;
 }
 
 .new-comment {
