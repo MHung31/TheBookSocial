@@ -6,6 +6,7 @@ a.book-preview {
   padding: 10px;
   margin: 10px;
   overflow: hidden;
+  justify-content: center;
 }
 
 .add-book {
@@ -30,9 +31,15 @@ a.book-preview {
   font-size: 120px;
 }
 
+.book-preview-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: end;
+}
+
 .book-preview-content > img {
   max-width: 200px;
-  max-height: 300px;
+  max-height: 290px;
   object-fit: contain;
   box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.659);
 }
@@ -49,7 +56,10 @@ a.book-preview {
   margin: 3px;
   padding: 0px;
   text-overflow: ellipsis;
-  max-width: 160px;
+  overflow: hidden;
+  white-space: nowrap;
+  height: 20.5px;
+  width: 160px;
 }
 
 .favorite-star {
@@ -81,8 +91,8 @@ a.book-preview {
 }
 
 .book-preview-search > .book-preview-content > img {
-  max-width: 150px;
-  max-height: 200px;
+  max-width: 123px;
+  max-height: 190px;
   object-fit: contain;
   box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.43);
 }
@@ -113,8 +123,8 @@ a.book-preview {
 
 .club-remove-book {
   position: relative;
-  left: 210px;
-  top: 12px;
+  left: 90px;
+  bottom: 35px;
   font-size: 20px;
   visibility: hidden;
   z-index: 2;
@@ -123,6 +133,8 @@ a.book-preview {
   padding: 0px;
   width: 0px;
   height: 0px;
+  font-size: x-large;
+  color: rgb(255, 60, 60);
 }
 
 .preview-card:hover .club-remove-book {

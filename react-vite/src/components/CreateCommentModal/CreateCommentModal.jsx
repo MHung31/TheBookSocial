@@ -21,12 +21,13 @@ function CreateCommentModal({ position, bookId }) {
       return;
     }
     dispatch(thunkCreateComment(commentObj, bookId));
-    closeModal();
+    // setComment("")
+
   };
   return (
     <div className="create-comment">
       {" "}
-      <h2>Comment</h2>
+
       <textarea
         autoFocus
         id="input-comment"
@@ -44,9 +45,7 @@ function CreateCommentModal({ position, bookId }) {
         >
           Submit
         </button>
-        <button className="comment-button comment-cancel" onClick={closeModal}>
-          Cancel
-        </button>
+
       </div>
     </div>
   );

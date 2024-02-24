@@ -1,6 +1,6 @@
 .profile-user-info {
   display: flex;
-  margin-bottom: 10px;
+  margin: 10px 0px;
 }
 
 .profile-text {
@@ -85,6 +85,10 @@
 .profile-bottom,
 .friends-buttons {
   display: flex;
+}
+
+.profile-bottom {
+  margin-bottom: 100px;
 }
 
 .profile-friends {

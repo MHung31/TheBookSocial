@@ -10,6 +10,7 @@ function Navigation() {
   const { setModalContent } = useModal();
   const [showMenu, setShowMenu] = useState(false);
   const user = useSelector((store) => store.session.user);
+  const bookDetails = useSelector((store) => store.books.book_details);
   const ulRef = useRef();
   const location = useLocation();
   const { pathname } = location;
@@ -28,6 +29,17 @@ function Navigation() {
               <NavLink id="logo" to="/">
                 <i class="fa-solid fa-book-bookmark"></i> TheBookSocial
               </NavLink>
+            )}
+          </li>
+          <li>
+            {Object.values(bookDetails)?.length ? (
+              <>
+                <h2 className="navigation-title">
+                  {bookDetails.title}
+                </h2>
+              </>
+            ) : (
+              <></>
             )}
           </li>
           <li>

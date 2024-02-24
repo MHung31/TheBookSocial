@@ -36,8 +36,9 @@
   margin: 0px;
 }
 
+
 .comment {
-  border-bottom: 3px double rgba(200, 150, 13, 0.693);
+  border-bottom: 3px double rgba(200, 150, 13, 0.833);
   cursor: pointer;
   padding-bottom: 5px;
   position: static;
@@ -51,7 +52,7 @@
   margin-left: 8px;
   width: 350px;
   height: 175px;
-  padding-bottom: 5px;
+  padding-top: 5px;
 }
 
 .comment-holder {
@@ -72,7 +73,7 @@
 }
 
 .user-comment {
-  border-bottom: 3px double rgba(29, 13, 200, 0.693);
+  border-bottom: 3px double rgba(200, 150, 13, 0.833);
 }
 
 .delete-comment {
@@ -169,12 +170,10 @@
 
 .comment-menu {
   display: flex;
-
   position: fixed;
   padding: 5px;
   width: 380px;
   bottom: 187px;
-  justify-content: space-between;
 }
 .close-comment {
   display: flex;
@@ -190,8 +189,36 @@
   border-top-right-radius: 5px;
 }
 
+.comment-selected {
+  background-color: rgba(246, 200, 73, 0.552);
+}
+
+.comment-unselected {
+  background-color: none;
+}
+
 .new-comment {
   background-color: rgb(255, 203, 181);
+  width: 80px;
+}
+.add-comment {
+  background-color: rgb(181, 219, 255);
+  width: 110px;
+}
+.definition {
+  background-color: rgb(186, 255, 181);
+  width: 80px;
+}
+
+.menu-not-selected {
+  font-weight: normal;
+}
+
+.menu-selected {
+  font-weight: bold;
+}
+
+.menu-choice {
   font-family: "Times New Roman", Times, serif;
   border: 1px solid black;
   border-bottom: none;
@@ -199,4 +226,23 @@
   border-top-right-radius: 5px;
   padding: 3px;
   cursor: pointer;
+  margin-right: 1px;
+  text-align: center;
+}
+
+.close-comment {
+  position: absolute;
+  right: 10px;
+  /* margin-left: 55px; */
+  background-color: rgb(254, 108, 108);
+  color: white;
+}
+
+.definition-content {
+  padding: 10px;
+}
+
+.definition-content > h3 {
+  margin: 0px;
+  margin-bottom: 10px;
 }

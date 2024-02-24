@@ -27,7 +27,7 @@ def seed():
         undo_reactions()
     seed_users()
     seed_books()
-    seed_clubs()
+    # seed_clubs()
     # seed_comments()
     # Add other seed functions here
 
