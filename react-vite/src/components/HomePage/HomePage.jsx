@@ -75,7 +75,7 @@ function HomePage() {
               class="fa-regular fa-face-grin-stars"
               style={{ color: "rgb(175, 0, 134)" }}
             ></i>
-            <h2>React to the comments you see to show how you feel.</h2>
+            <h2>React to comments</h2>
           </div>
           <div>
             <i
