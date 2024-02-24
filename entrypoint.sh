@@ -10,8 +10,8 @@ if [ "$FLASK_ENV" = "production" ]; then
     sleep 3
     # Standard database migrations
     flask db upgrade
-    flask seed undo
-    flask seed all
+    # flask seed undo
+    # flask seed all
 
     # Start Gunicorn for production
     exec gunicorn app:app
@@ -26,8 +26,8 @@ else
 
     # Local development database setup
     flask db upgrade
-    flask seed undo
-    flask seed all
+    # flask seed undo
+    # flask seed all
 
     # Start Gunicorn with binding for local testing
     exec gunicorn app:app --bind 0.0.0.0:8000
