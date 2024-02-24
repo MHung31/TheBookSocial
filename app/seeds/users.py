@@ -5,11 +5,11 @@ from sqlalchemy.sql import text
 # Adds a demo user, you can add other users here if you want
 def seed_users():
     demo = User(
-        username='Demo', email='demo@aa.io', password='password', first_name="De", last_name="Mo", avatar="https://appliedpost.com/wp-content/uploads/2019/04/livedemo-1.png")
+        username='Demo', email='demo@aa.io', password='password', first_name="Demo", last_name="Lition", avatar="https://mh-appacademy-practice.s3.us-east-2.amazonaws.com/ca1be523d557421d97f428ad716ad767.jpg")
     marnie = User(
-        username='marnie', email='marnie@aa.io', password='password', first_name="mar", last_name="nie", avatar="https://iheartcraftythings.com/wp-content/uploads/2022/01/6-49.jpg")
+        username='Marnie', email='marnie@aa.io', password='password', first_name="Marnie", last_name="Mantou", avatar="https://mh-appacademy-practice.s3.us-east-2.amazonaws.com/1e0f7d6e07644d0fa0167fe85283ec42.jpg")
     bobbie = User(
-        username='bobbie', email='bobbie@aa.io', password='password', first_name="bob", last_name="bie", avatar="https://t4.ftcdn.net/jpg/06/24/89/75/240_F_624897595_ofLf2oLGj0HncCIx6w5n3gvaU6XiM46D.jpg")
+        username='Bobbie', email='bobbie@aa.io', password='password', first_name="Bobbie", last_name="Burgers", avatar="https://mh-appacademy-practice.s3.us-east-2.amazonaws.com/0fab409f3c684570b76fb46cdd6ff627.jpg")
 
     db.session.add(demo)
     db.session.add(marnie)

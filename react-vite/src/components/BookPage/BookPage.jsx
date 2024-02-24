@@ -143,6 +143,7 @@ function BookPage() {
     const range = selected.getRangeAt(0);
     const { startOffset, endOffset } = range;
     if (range.cloneContents().textContent === " ") return;
+    
     if (startOffset - endOffset) {
       setSelectedWord(range.cloneContents().textContent);
       setCurrMenu("add");

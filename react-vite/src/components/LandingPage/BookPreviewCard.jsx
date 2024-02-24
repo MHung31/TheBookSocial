@@ -36,6 +36,8 @@ function BookPreviewCard({ book }) {
   };
 
   const removeBook = (e) => {
+    e.stopPropagation();
+    e.preventDefault();
     setModalContent(
       <DeleteConfirmModal
         thunk={thunkDeleteClubBook(id, clubId)}
@@ -46,16 +48,9 @@ function BookPreviewCard({ book }) {
   if (!Object.values(book).length) return <>Loading...</>;
   return (
     <div className="preview-card">
-      {isClub && ownsClub ? (
-        <div className="club-remove-book" onClick={removeBook}>
-          <i class="fa-solid fa-circle-xmark"></i>
-        </div>
-      ) : (
-        <></>
-      )}
       <NavLink to={`/books/${id}`} className="book-preview">
         <div className="book-preview-content">
-          <img src={preview} alt="Preview Not Available" />
+          <img src={preview} title={title} alt="Preview Not Available" />
           {/* <div
             title="Progress Bar"
             className="progress-bar"
@@ -63,7 +58,16 @@ function BookPreviewCard({ book }) {
               background: `linear-gradient(90deg, green 0 70%, white 0% 100%)`,
             }}
           ></div> */}
-          <h3 className="preview-title">{title}</h3>
+          {isClub && ownsClub ? (
+            <div className="club-remove-book" title="Remove Book" onClick={removeBook}>
+              <i class="fa-solid fa-circle-xmark"></i>
+            </div>
+          ) : (
+            <></>
+          )}
+          <h3 className="preview-title" title={title}>
+            {title}
+          </h3>
           <h5 className="preview-author">{author}</h5>
           <h5 className="preview-comments-count">
             <i class="fa-sharp fa-regular fa-comment"></i>

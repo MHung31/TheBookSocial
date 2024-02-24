@@ -17,7 +17,6 @@ export const thunkAddDefinition = (word) => async (dispatch) => {
 
   if (response.ok) {
     const data = await response.json();
-    console.log(data)
     const { word,  meanings } = data[0];
     const definitions = meanings.map((meaning) => {
       return {

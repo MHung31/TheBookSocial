@@ -47,7 +47,7 @@ function ProfilePage() {
         setFriends(true);
       } else setFriends(false);
     }
-  }, [profile]);
+  }, [dispatch]);
   const addFriend = () => {
     dispatch(thunkAddFriend({ user_id: Number(userId) }, session.user));
     setFriends(true);
