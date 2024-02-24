@@ -22,7 +22,7 @@ def seed():
         # Make sure to add all your other model's undo functions below
         undo_users()
         undo_books()
-        # undo_clubs()
+        undo_clubs()
         undo_comments()
         undo_reactions()
     seed_users()
@@ -37,7 +37,7 @@ def seed():
 def undo():
     undo_users()
     undo_books()
-    # undo_clubs()
-    # undo_comments()
-    # undo_reactions()
+    undo_clubs()
+    undo_comments()
+    undo_reactions()
     # Add other undo functions here
